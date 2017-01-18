@@ -1,1 +1,1 @@
-# CS1530-Hnefatafl-
+# CS1530-Hnefatafl
