@@ -28,7 +28,7 @@ public class Board extends JFrame
 	{
 		board = new JPanel(new GridLayout(0, 12));
 		board.setBorder(new CompoundBorder (new EmptyBorder(12, 12, 12, 12), new LineBorder(Color.BLACK)));
-		// todo: allow user to change board colors. 
+		// the background color if the board is smaller than the panel where it is contained. 
 		Color ochre = new Color(204, 119, 34);
 		JPanel boardConstrain = new JPanel(new GridBagLayout());
 		boardConstrain.setBackground(ochre);
@@ -47,6 +47,7 @@ public class Board extends JFrame
 			{
 				
 				JButton square = new JButton();
+				// todo: allow user to change board colors? 
 				if (( j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0))
 				{
 					square.setBackground(Color.lightGray);
@@ -56,7 +57,7 @@ public class Board extends JFrame
 					square.setBackground(Color.darkGray);
 				}
 				square.setMargin(buttonMargin);
-			    // the square needs to be opaque to use the setBackground method. 
+				// the square needs to be opaque to use the setBackground method. 
 				//https://docs.oracle.com/javase/7/docs/api/javax/swing/JComponent.html#setBackground(java.awt.Color)
 				square.setOpaque(true); 
 				square.setBorderPainted(false);
