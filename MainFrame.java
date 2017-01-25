@@ -4,12 +4,12 @@ import javax.swing.*;
 
 public class MainFrame 
 {
-    private final int HEIGHT = 800;
-    private final int WIDTH = 1000;
+    private final int HEIGHT = 1000;
+    private final int WIDTH = 1200;
     
     private JFrame _frame = new JFrame("Hnefatafl ");
 
-    private MainPanel _mainPanel; //actual board game
+    private Board board; //actual board game
 
     private ButtonPanel _buttonPanel; //button panel
     
@@ -21,13 +21,14 @@ public class MainFrame
 		
 		// Add Main Panel and Button Panel
 		 
-		_mainPanel = new MainPanel();// adds cells to the main frame
+		board = new Board();// adds cells to the main frame
 
-		_buttonPanel = new ButtonPanel(_mainPanel);
+		_buttonPanel = new ButtonPanel(board);
 		
-		_frame.add(_mainPanel, BorderLayout.NORTH); 
+		_frame.add(board.getBoard(), BorderLayout.NORTH); 
 		_frame.add(_buttonPanel, BorderLayout.SOUTH);
 		
+	
 		_frame.setVisible(true);	
     }
 }

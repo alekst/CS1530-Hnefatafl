@@ -3,16 +3,19 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class Board extends JFrame
+public class Board extends JPanel
 {
 	
 	private JButton[][] boardSquares = new JButton[11][11];
 	private JPanel board;
 	private static final String COLS = "ABCDEFGHIJK";
+	private static final int height = 640;
+	private static final int width = 480;
 	
 	
 	public Board()
 	{
+		super();
 		setUpBoard();
 		createSquares();
 		fillSquares();
@@ -92,32 +95,32 @@ public class Board extends JFrame
 	}	
 	
 	// used for testing purposes only 
-	// public static void main(String[] args)
-// 	{
-// 		Runnable r = new Runnable()
-// 		{
-// 			@Override
-// 			public void run()
-// 			{
-// 				// creating a fake gui container for teating purposes
-// 				JPanel gui = new JPanel(new BorderLayout(3, 3));
-// 				gui.setBorder(new EmptyBorder(5, 5, 5, 5));
-// 				Board b = new Board();
-// 				gui.add(b.getBoard());
-// 				JFrame f = new JFrame("Testing");
-// 				f.add(gui);
-// 				f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-// 				f.setLocationByPlatform(true);
-//
-// 				f.pack();
-// 				f.setVisible(true);
-//
-// 			}
-// 		};
+	/* public static void main(String[] args)
+ 	{
+ 		Runnable r = new Runnable()
+ 		{
+ 			@Override
+ 			public void run()
+ 			{
+ 				// creating a fake gui container for teating purposes
+ 				JPanel gui = new JPanel(new BorderLayout(3, 3));
+ 				gui.setBorder(new EmptyBorder(5, 5, 5, 5));
+ 				Board b = new Board();
+ 				gui.add(b.getBoard());
+ 				JFrame f = new JFrame("Testing");
+ 				f.add(gui);
+ 				f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+ 				f.setLocationByPlatform(true);
+
+ 				f.pack();
+ 				f.setVisible(true);
+
+ 			}
+ 		};
 // 		// Swing GUIs should be created and updated on the EDT
 // 		// http://docs.oracle.com/javase/tutorial/uiswing/concurrency
-// 		SwingUtilities.invokeLater(r);
-// 	}
+		SwingUtilities.invokeLater(r);
+ 	}*/
 	
 }
 
