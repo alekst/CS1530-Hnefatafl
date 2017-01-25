@@ -19,7 +19,7 @@ public class ButtonPanel extends JPanel
   * the ButtonPanel.
   */
     
-  public ButtonPanel(MainPanel m) 
+  public ButtonPanel(Board m) 
   {
 
     // Send a reference to the Main Panel

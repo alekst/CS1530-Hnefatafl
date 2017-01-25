@@ -9,8 +9,8 @@ public class Board extends JPanel
 	private JButton[][] boardSquares = new JButton[11][11];
 	private JPanel board;
 	private static final String COLS = "ABCDEFGHIJK";
-	private static final int height = 640;
-	private static final int width = 480;
+	private static final int height = 2000;
+	private static final int width = 1080;
 	
 	
 	public Board()
