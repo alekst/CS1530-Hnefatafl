@@ -6,9 +6,9 @@ import java.util.*;
 public class NewGameButton extends JButton 
 {
 
-  private MainPanel _m;
+  private Board _m;
     
-  public NewGameButton(MainPanel m) 
+  public NewGameButton(Board m) 
   {
     super("New Game");
 	  _m = m;

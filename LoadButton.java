@@ -6,9 +6,9 @@ import java.util.*;
 public class LoadButton extends JButton 
 {
 
-  private MainPanel _m;
+  private Board _m;
     
-  public LoadButton(MainPanel m) 
+  public LoadButton(Board m) 
   {
     super("Load");
 	  _m = m;

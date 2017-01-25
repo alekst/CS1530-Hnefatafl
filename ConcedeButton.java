@@ -6,9 +6,9 @@ import java.util.*;
 public class ConcedeButton extends JButton 
 {
 
-  private MainPanel _m;
+  private Board _m;
     
-  public ConcedeButton(MainPanel m) 
+  public ConcedeButton(Board m) 
   {
     super("Concede");
 	  _m = m;

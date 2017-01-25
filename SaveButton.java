@@ -9,9 +9,9 @@ import java.util.*;
 public class SaveButton extends JButton 
 {
 
-  private MainPanel _m;
+  private Board _m;
     
-  public SaveButton(MainPanel m) 
+  public SaveButton(Board m) 
   {
     super("Save");
 	  _m = m;
