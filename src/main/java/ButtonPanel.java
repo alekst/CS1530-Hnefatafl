@@ -25,15 +25,15 @@ public class ButtonPanel extends JPanel
     // Send a reference to the Main Panel
     // to all of the buttons.
 	
-    _save = new SaveButton(m);
-    _load = new LoadButton(m);
-    _newGame = new NewGameButton(m);
-    _concede = new ConcedeButton(m);
-    setLayout(new FlowLayout());
+	_save = new SaveButton(m);
+	_load = new LoadButton(m);
+	_newGame = new NewGameButton(m);
+	_concede = new ConcedeButton(m);
+	setLayout(new FlowLayout());
 
 	  // Add all of the buttons
 	  add(_save);
-    add(_load);
+	  add(_load);
 	  add(_newGame);
 	  add(_concede);
   }

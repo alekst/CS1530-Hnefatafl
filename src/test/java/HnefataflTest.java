@@ -3,9 +3,9 @@ import static org.junit.Assert.*;
 
 public class HnefataflTest {
 
-    @Test
-    public void testHnefatafl() {
-      assertEquals(1, 1);
-    }
-    
+	@Test
+	public void testHnefatafl() {
+		assertEquals(1, 1);
+	}
+	
 }

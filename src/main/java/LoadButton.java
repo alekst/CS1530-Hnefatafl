@@ -6,21 +6,20 @@ import java.util.*;
 public class LoadButton extends JButton 
 {
 
-  private Board _m;
-    
-  public LoadButton(Board m) 
-  {
-    super("Load");
-	  _m = m;
-	  addActionListener(new LoadButtonListener());
-  }
+	private Board _m;
+	
+	public LoadButton(Board m) 
+	{
+		super("Load");
+		_m = m;
+		addActionListener(new LoadButtonListener());
+	}
 
-  class LoadButtonListener implements ActionListener 
-  {
-    
-    public void actionPerformed(ActionEvent e) 
-    {
-    
-    }
-  }      
+	class LoadButtonListener implements ActionListener 
+	{
+		public void actionPerformed(ActionEvent e) 
+		{
+			
+		}
+	}
 }

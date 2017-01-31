@@ -9,21 +9,21 @@ import java.util.*;
 public class SaveButton extends JButton 
 {
 
-  private Board _m;
-    
-  public SaveButton(Board m) 
-  {
-    super("Save");
-	  _m = m;
-    addActionListener(new SaveButtonListener());
-  }
+	private Board _m;
 
-  class SaveButtonListener implements ActionListener 
-  {
-    
-	  public void actionPerformed(ActionEvent e) 
-    {
-	      
-	  }
-  }      
+	public SaveButton(Board m) 
+	{
+		super("Save");
+		_m = m;
+		addActionListener(new SaveButtonListener());
+	}
+
+	class SaveButtonListener implements ActionListener 
+	{
+		
+		public void actionPerformed(ActionEvent e) 
+		{
+
+		}
+	}
 }

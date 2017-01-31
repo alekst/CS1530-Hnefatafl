@@ -4,17 +4,17 @@ import javax.swing.*;
 
 public class MainFrame 
 {
-    private final int HEIGHT = 1000;
-    private final int WIDTH = 1200;
-    
-    private JFrame _frame = new JFrame("Hnefatafl ");
+	private final int HEIGHT = 1000;
+	private final int WIDTH = 1200;
 
-    private Board board; //actual board game
+	private JFrame _frame = new JFrame("Hnefatafl ");
 
-    private ButtonPanel _buttonPanel; //button panel
-    
-    public MainFrame() 
-    {
+	private Board board; //actual board game
+
+	private ButtonPanel _buttonPanel; //button panel
+
+	public MainFrame() 
+	{
 		_frame.setSize(WIDTH, HEIGHT);
 		// Close program when window is closed
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,5 +30,5 @@ public class MainFrame
 		
 	
 		_frame.setVisible(true);	
-    }
+	}
 }
