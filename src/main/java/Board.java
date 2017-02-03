@@ -11,6 +11,14 @@ public class Board extends JPanel
 	private static final String COLS = "ABCDEFGHIJK";
 	private static final int height = 2000;
 	private static final int width = 1080;
+	private String blackPiece = new String("\u265F");
+	private String whitePiece = new String("\u2659");
+	private String whiteKing = new String("\u2654");
+	private static final int kingIndex = 0;
+	private static final int whiteIndex = 1;
+	private static final int blackIndex = 13;
+	private static final int numWhites = 12;
+	private static final int numBlacks = 24;
 	
 	
 	public Board()
@@ -54,10 +62,12 @@ public class Board extends JPanel
 				if (( j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0))
 				{
 					square.setBackground(Color.lightGray);
+					square.setText(blackPiece);
 				}
 				else
 				{
 					square.setBackground(Color.darkGray);
+					square.setText(whitePiece);
 				}
 				square.setMargin(buttonMargin);
 				// the square needs to be opaque to use the setBackground method. 
@@ -93,6 +103,64 @@ public class Board extends JPanel
 			}
 		}
 	}	
+	
+	public int printBlack(coorindate square)
+	{
+		if(coordinate.x < 0 || coordinate.y < 0)
+		{
+			return 1;
+		}
+		JButton square = boardSquares[coordinate.x][coordinate.y];
+		square.setText(blackPiece);
+		return 0;
+	}
+	
+	public int printWhite(coordinate square)
+	{
+		if(coordinate.x < 0 || coordinate.y < 0)
+		{
+			return 1;
+		}
+		JButton square = boardSquares[coordinate.x][coordinate.y];
+		square.setText(whitePiece);
+		return 0;
+	}
+	
+	public int printKing(coordinate square)
+	{
+		if(coordinate.x < 0 || coordinate.y < 0)
+		{
+			return 1;
+		}
+		JButton square = boardSquares[coordinate.x][coordinate.y];
+		square.setText(whiteKing);
+		return 0;
+	}
+	
+	public int removePiece(coordinate square)
+	{
+		if(coordinate.x < 0 || coordinate.y < 0)
+		{
+			return 1;
+		}
+		JButton square = boardSquares[coordinate.x][coordinate.y];
+		square.setText("");
+		return 0;
+	}
+	
+	public int printAllPieces()
+	{
+		printKing(pieces[kingIndex]);
+		for(int i = 0 ; i < numWhites ; i++)
+		{
+			printWhite(pieces[whiteIndex + i]);
+		}
+		for(int i = 0 ; i < numBlacks ; i++)
+		{
+			printBlack(pieces[blackIndex + i]);
+		}
+		
+	}
 	
 	// used for testing purposes only 
 	/* public static void main(String[] args)
