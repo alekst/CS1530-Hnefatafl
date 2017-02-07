@@ -72,4 +72,31 @@ public class Data implements DataInterface
 		int index = getIndex(olddata);
 		boardData[index] = newValue;
 	}
+	
+	public boolean isWhite(Coordinate data)
+	{
+		// returns true if the piece is white. white means its index is between 0 and 12. The method assumes that the coordinate contains a piece. 
+		int index = getIndex(data);
+		if (index < 13 && index > 0)
+			return true;
+		else 
+			return false;
+	}
+	
+	public boolean isPathClear(Coordinate origin, Coordinate destination)
+	{
+		if (origin.getX() == destination.getX())
+		{
+			// that means the path is up/down
+			// to be implemented. 
+		}
+		else if (origin.getY() == destination.getY())
+		{
+			// that means the path is left/right
+		}
+	}
+	
+	
+	
+	
 }
