@@ -49,7 +49,6 @@ public class Data implements DataInterface
 	public int getIndex(Coordinate data)
 	{
 		int value = encode(data);
-		System.out.println(Arrays.toString(boardData));
 		int index = Arrays.asList(boardData).indexOf(value);
 		return index;
 		
@@ -58,6 +57,11 @@ public class Data implements DataInterface
 	public boolean isMember (Coordinate data)
 	{
 		int value = encode(data);
+		return Arrays.asList(boardData).contains(value);
+	}
+	
+	private boolean isMember(int value)
+	{
 		return Arrays.asList(boardData).contains(value);
 	}
 	
@@ -83,19 +87,36 @@ public class Data implements DataInterface
 			return false;
 	}
 	
-	// public boolean isPathClear(Coordinate origin, Coordinate destination)
-// 	{
-// 		if (origin.getX() == destination.getX())
-// 		{
-// 			// that means the path is up/down
-// 			// to be implemented.
-// 		}
-// 		else if (origin.getY() == destination.getY())
-// 		{
-// 			// that means the path is left/right
-// 		}
-// 	}
+	public boolean isPathClear(Coordinate origin, Coordinate destination)
+	{
+		int origin = encode(origin);
+		int destination = encode(destination);
+		
+		if (origin.getX() == destination.getX())
+		{
+			// that means the path is up/down
+			if (origin.getY() > destination.getY())
+			{
+				// going down
+				
+			}
+			else
+			{
+				// going up
+			}
+			
+		}
+		else if (origin.getY() == destination.getY())
+		{
+			// that means the path is left/right
+		}
+		else
+		{
+			//not a valid move
+		}
+	}
 	
+
 	
 	
 	
