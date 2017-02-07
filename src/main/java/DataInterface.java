@@ -25,9 +25,9 @@ public interface DataInterface
 	
 	boolean isWhite(Coordinate data); // returns true if the piece is white. white means its index is between 0 and 12.
 	
-	boolean isPathClear(Coordinate origin, Coordinate destination); // returns true if the path between the source and the destination of the piece is clear. 
+	//boolean isPathClear(Coordinate origin, Coordinate destination); // returns true if the path between the source and the destination of the piece is clear. 
 	
-	void deleteLocation(Coordinate data); // deletes a piece from its location. 
+	//void deleteLocation(Coordinate data); // deletes a piece from its location. 
 }
 
 

@@ -83,18 +83,18 @@ public class Data implements DataInterface
 			return false;
 	}
 	
-	public boolean isPathClear(Coordinate origin, Coordinate destination)
-	{
-		if (origin.getX() == destination.getX())
-		{
-			// that means the path is up/down
-			// to be implemented. 
-		}
-		else if (origin.getY() == destination.getY())
-		{
-			// that means the path is left/right
-		}
-	}
+	// public boolean isPathClear(Coordinate origin, Coordinate destination)
+// 	{
+// 		if (origin.getX() == destination.getX())
+// 		{
+// 			// that means the path is up/down
+// 			// to be implemented.
+// 		}
+// 		else if (origin.getY() == destination.getY())
+// 		{
+// 			// that means the path is left/right
+// 		}
+// 	}
 	
 	
 	
