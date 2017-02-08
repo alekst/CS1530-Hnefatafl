@@ -62,14 +62,15 @@ public class Board extends JPanel
 				if (( j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0))
 				{
 					square.setBackground(Color.lightGray);
-					square.setText(blackPiece);
 				}
 				else
 				{
 					square.setBackground(Color.darkGray);
-					square.setText(whitePiece);
+					square.setText(whiteKing);
 				}
+					//square.setFont(new Font("Serif", Font.PLAIN, 20));
 				square.setMargin(buttonMargin);
+				square.setPreferredSize(new Dimension(50, 50));
 				// the square needs to be opaque to use the setBackground method. 
 				//https://docs.oracle.com/javase/7/docs/api/javax/swing/JComponent.html#setBackground(java.awt.Color)
 				square.setOpaque(true); 
@@ -104,7 +105,7 @@ public class Board extends JPanel
 		}
 	}	
 	
-	public int printBlack(coorindate square)
+/*	public int printBlack(coorindate square)
 	{
 		if(coordinate.x < 0 || coordinate.y < 0)
 		{
@@ -161,7 +162,7 @@ public class Board extends JPanel
 		}
 		
 	}
-	
+	*/
 	// used for testing purposes only 
 	/* public static void main(String[] args)
  	{
