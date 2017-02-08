@@ -25,6 +25,8 @@ public class Data implements DataInterface
     }
 	/**
 	* Encodes the Coordinate object for storage
+	* @param data-the coordinate object of the piece
+	* @return returns the int value of that location
 	*/
     public int encode(Coordinate data)
     {
@@ -33,6 +35,8 @@ public class Data implements DataInterface
 	
 	/**
 	* Decodes the Coordinate object for storage
+	* @param-value the int value of the location
+	* @return returns a coordinate object for that location
 	*/
 	public Coordinate decode(int value)
 	{
@@ -46,7 +50,9 @@ public class Data implements DataInterface
 	}
 	
 	/**
-	*	Returns an index based on the coordinates. It would return -1 if the index is not found. 
+	* Returns an index based on the coordinates. It would return -1 if the index is not found. 
+	* @param data-coordinates of a piece
+	* @return returns an index value
 	*/
 	public int getIndex(Coordinate data)
 	{
@@ -56,8 +62,11 @@ public class Data implements DataInterface
 		return index;	
 	}
 	/**
-	*	Returns the Coordinate object, based on the index (0-36) of the array. If there is no piece in
-	* 	the game, it will return 0. 
+	* Returns the Coordinate object, based on the index (0-36) of the array. If there is no piece in
+	* the game, it will return 0. 
+	* @param index-index value from array
+	* @return 0 if no piece in the game
+	* @return the decoded value of the index if the piece is in the game
 	*/
 	public Coordinate getCoordinate(int index)
 	{
@@ -69,7 +78,7 @@ public class Data implements DataInterface
 	}
 	
 	/** 
-	* Returns a current board status as an array of Coordinate objects
+	* @Return a current board status as an array of Coordinate objects
 	*
 	*/ 
 	public Coordinate[] getBoardStatus()
@@ -84,7 +93,9 @@ public class Data implements DataInterface
 	}
 	/**
 	* Returns true if the coordinates are in the array. Otherwise, it returns false. 
-	*
+	* @param data-coordinate of a location
+	* @return true if the coordinates are in the array
+	* @return false if the coordinats are not in the array
 	*/	
 	public boolean isMember (Coordinate data)
 	{
@@ -110,6 +121,9 @@ public class Data implements DataInterface
 	}
 	/**
 	* Returns true if the piece in the given coordinate is white. Otherwise, returns false
+	* @param data-coordinate of a location
+	* @return true if the piece is white
+	* @return false if the piece is not white
 	*/
 	public boolean isWhite(Coordinate data)
 	{
