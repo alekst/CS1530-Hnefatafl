@@ -51,8 +51,34 @@ public class Data implements DataInterface
 		int value = encode(data);
 		System.out.println(Arrays.toString(boardData));
 		int index = Arrays.asList(boardData).indexOf(value);
-		return index;
-		
+		return index;	
+	}
+	/**
+	*	Returns the Coordinate object, based on the index (0-36) of the array. If there is no piece in
+	* 	the game, it will return 0. 
+	*/
+	public Coordinate getCoordinate(int index)
+	{
+		int value = boardData[index];
+		if (value == 0)
+			return null;
+		else
+			return decode(value);		
+	}
+	
+	/** 
+	* Returns a current board status as an array of Coordinate objects
+	*
+	*/ 
+	public Coordinate[] getBoardStatus()
+	{
+		Coordinate[] board = new Coordinate[36];
+		for (int i = 0; i < 36; i++)
+		{
+			Coordinate c = getCoordinate(i);
+			board[i] = c;
+		}
+		return board;
 	}
 	
 	public boolean isMember (Coordinate data)

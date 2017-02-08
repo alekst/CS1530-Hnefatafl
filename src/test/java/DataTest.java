@@ -117,6 +117,21 @@ public class DataTest
 	
 	}
 	
+	@Test
+	public void testIfBoardStatusReturnsBoard()
+	{
+		// arrange
+		Data d = new Data();
+		d. initialize();
+		 
+		// act
+		Coordinate[] board = d.getBoardStatus();
+		
+		// assert
+		assertEquals(board.length, 36);
+		
+	}
+	
 }
 
 
