@@ -5,7 +5,8 @@ import java.util.stream.*;
 public class Data implements DataInterface
 {
  
-	private Integer[] boardData;
+	public Integer[] boardData; // Should be public so that the Board object can actually access the coordinates
+	
 	public Data()
 	{
 		// an empty constructor

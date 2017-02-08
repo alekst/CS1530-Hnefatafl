@@ -13,13 +13,14 @@ public class Board extends JPanel
 	private static final int width = 1080;
 	private String blackPiece = new String("\u265F");
 	private String whitePiece = new String("\u2659");
-	private String whiteKing = new String("\u2654");
+	private String whiteKing = new String("\u2655");
 	private static final int kingIndex = 0;
 	private static final int whiteIndex = 1;
 	private static final int blackIndex = 13;
 	private static final int numWhites = 12;
 	private static final int numBlacks = 24;
 	
+	private Data pieces = new Data();
 	
 	public Board()
 	{
@@ -65,8 +66,7 @@ public class Board extends JPanel
 				}
 				else
 				{
-					square.setBackground(Color.darkGray);
-					square.setText(whiteKing);
+					square.setBackground(Color.gray);
 				}
 					//square.setFont(new Font("Serif", Font.PLAIN, 20));
 				square.setMargin(buttonMargin);
@@ -74,7 +74,8 @@ public class Board extends JPanel
 				// the square needs to be opaque to use the setBackground method. 
 				//https://docs.oracle.com/javase/7/docs/api/javax/swing/JComponent.html#setBackground(java.awt.Color)
 				square.setOpaque(true); 
-				square.setBorderPainted(false);
+				square.setBorderPainted(true);
+				square.setFont(new Font("UNI-8", Font.PLAIN, 36));
 				boardSquares[j][i] = square;
 			}
 		}
@@ -103,66 +104,68 @@ public class Board extends JPanel
 		
 			}
 		}
+		pieces.initialize();
+		printAllPieces();
 	}	
 	
-/*	public int printBlack(coorindate square)
+	public int printBlack(Coordinate coor)
 	{
-		if(coordinate.x < 0 || coordinate.y < 0)
+		if(coor.getX() < 0 || coor.getY() < 0)
 		{
 			return 1;
 		}
-		JButton square = boardSquares[coordinate.x][coordinate.y];
+		JButton square = boardSquares[coor.getX()][coor.getY()];
 		square.setText(blackPiece);
 		return 0;
 	}
 	
-	public int printWhite(coordinate square)
+	public int printWhite(Coordinate coor)
 	{
-		if(coordinate.x < 0 || coordinate.y < 0)
+		if(coor.getX() < 0 || coor.getY() < 0)
 		{
 			return 1;
 		}
-		JButton square = boardSquares[coordinate.x][coordinate.y];
+		JButton square = boardSquares[coor.getX()][coor.getY()];
 		square.setText(whitePiece);
 		return 0;
 	}
 	
-	public int printKing(coordinate square)
+	public int printKing(Coordinate coor)
 	{
-		if(coordinate.x < 0 || coordinate.y < 0)
+		if(coor.getX() < 0 || coor.getY() < 0)
 		{
 			return 1;
 		}
-		JButton square = boardSquares[coordinate.x][coordinate.y];
+		JButton square = boardSquares[coor.getX()][coor.getY()];
 		square.setText(whiteKing);
 		return 0;
 	}
 	
-	public int removePiece(coordinate square)
+	public int removePiece(Coordinate coor)
 	{
-		if(coordinate.x < 0 || coordinate.y < 0)
+		if(coor.getX() < 0 || coor.getY() < 0)
 		{
 			return 1;
 		}
-		JButton square = boardSquares[coordinate.x][coordinate.y];
+		JButton square = boardSquares[coor.getX()][coor.getY()];
 		square.setText("");
 		return 0;
 	}
 	
 	public int printAllPieces()
 	{
-		printKing(pieces[kingIndex]);
+		printKing(pieces.decode(pieces.boardData[kingIndex]));
 		for(int i = 0 ; i < numWhites ; i++)
 		{
-			printWhite(pieces[whiteIndex + i]);
+			printWhite(pieces.decode(pieces.boardData[whiteIndex + i]));
 		}
 		for(int i = 0 ; i < numBlacks ; i++)
 		{
-			printBlack(pieces[blackIndex + i]);
+			printBlack(pieces.decode(pieces.boardData[blackIndex + i]));
 		}
-		
-	}
-	*/
+		return 0;
+	} 
+	
 	// used for testing purposes only 
 	/* public static void main(String[] args)
  	{
