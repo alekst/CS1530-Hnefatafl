@@ -107,7 +107,7 @@ public class DataTest
 		// arrange
 		Data d = new Data();
 		d.initialize();
-		Coordinate c = new Coordinate(0, 0); // the first square
+		Coordinate c = new Coordinate(0, 0); // the first square is empty
 	
 		// act
 		boolean b = d.isMember(c);
@@ -129,6 +129,12 @@ public class DataTest
 		
 		// assert
 		assertEquals(board.length, 36);
+		
+	}
+	
+	@Test
+	public void testIfBoardIsUpdated()
+	{
 		
 	}
 	

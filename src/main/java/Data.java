@@ -45,7 +45,9 @@ public class Data implements DataInterface
 		return new Coordinate(x, y);
 	}
 	
-	
+	/**
+	*	Returns an index based on the coordinates. It would return -1 if the index is not found. 
+	*/
 	public int getIndex(Coordinate data)
 	{
 		int value = encode(data);
@@ -80,25 +82,35 @@ public class Data implements DataInterface
 		}
 		return board;
 	}
-	
+	/**
+	* Returns true if the coordinates are in the array. Otherwise, it returns false. 
+	*
+	*/	
 	public boolean isMember (Coordinate data)
 	{
 		int value = encode(data);
 		return Arrays.asList(boardData).contains(value);
 	}
 	
+	/**
+	* Resets the array to its initial state
+	*/
 	public void reset()
 	{
 		initialize();
 	}
-	
+	/** 
+	* Takes the source coordinates and the destination coordinates and updates the array
+	*/
 	public void updateLocation(Coordinate newdata, Coordinate olddata)
 	{
 		int newValue = encode(newdata);
 		int index = getIndex(olddata);
 		boardData[index] = newValue;
 	}
-	
+	/**
+	* Returns true if the piece in the given coordinate is white. Otherwise, returns false
+	*/
 	public boolean isWhite(Coordinate data)
 	{
 		// returns true if the piece is white. white means its index is between 0 and 12. The method assumes that the coordinate contains a piece. 
@@ -109,7 +121,9 @@ public class Data implements DataInterface
 			return false;
 	}
 	
-	// public boolean isPathClear(Coordinate origin, Coordinate destination)
+	
+	
+// public boolean isPathClear(Coordinate origin, Coordinate destination)
 // 	{
 // 		if (origin.getX() == destination.getX())
 // 		{
