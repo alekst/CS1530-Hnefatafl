@@ -20,6 +20,9 @@ public class Board extends JPanel
 	private static final int numWhites = 12;
 	private static final int numBlacks = 24;
 	
+	private Coordinate first_clicked = new Coordinate(-1,-1);
+	private Coordinate second_clicked = new Coordinate(-1,-1);
+	
 	private Data pieces = new Data();
 	
 	public Board()
@@ -59,6 +62,7 @@ public class Board extends JPanel
 			{
 				
 				JButton square = new JButton();
+				square.addActionListener(actionListener);
 				// todo: allow user to change board colors? 
 				if (( j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0))
 				{
@@ -76,6 +80,7 @@ public class Board extends JPanel
 				square.setOpaque(true); 
 				square.setBorderPainted(true);
 				square.setFont(new Font("UNI-8", Font.PLAIN, 36));
+				square.setMaximumSize(new Dimension(j * 1000, i * 1000));
 				boardSquares[j][i] = square;
 			}
 		}
@@ -154,17 +159,62 @@ public class Board extends JPanel
 	
 	public int printAllPieces()
 	{
-		printKing(pieces.decode(pieces.boardData[kingIndex]));
+		Coordinate[] coor_array = new Coordinate[36];
+		coor_array = pieces.getBoardStatus();
+		
+		printKing(coor_array[kingIndex]);
 		for(int i = 0 ; i < numWhites ; i++)
 		{
-			printWhite(pieces.decode(pieces.boardData[whiteIndex + i]));
+			printWhite(coor_array[whiteIndex + i]);
 		}
 		for(int i = 0 ; i < numBlacks ; i++)
 		{
-			printBlack(pieces.decode(pieces.boardData[blackIndex + i]));
+			printBlack(coor_array[blackIndex + i]);
 		}
 		return 0;
 	} 
+	
+	ActionListener actionListener = new ActionListener()
+	{
+		public void actionPerformed(ActionEvent actionEvent)
+		{
+			JButton b = (JButton)actionEvent.getSource();
+			Coordinate coor = getButtonCoordinate(b);
+			if(first_clicked.getX() == -1 && first_clicked.getY() == -1)
+			{
+				first_clicked = coor;
+			}
+			else if(first_clicked.getX() == coor.getX() && first_clicked.getY() == coor.getY())
+			{
+				// Do nothing
+			}
+			else
+			{
+				second_clicked = coor;
+				if(pieces.isValid(first_clicked, second_clicked))
+				{
+					removePiece(first_clicked);
+					if(pieces.isWhite(first_clicked))
+					{
+						printWhite(second_clicked);
+					}
+					else
+					{
+						printBlack(second_clicked);
+					}
+					pieces.updateLocation(second_clicked, first_clicked);
+					first_clicked = new Coordinate(-1, -1);
+					second_clicked = new Coordinate(-1, -1);
+				}
+				
+			}
+		}
+	};
+	
+	public Coordinate getButtonCoordinate(JButton b)
+	{
+		return new Coordinate((int)(b.getMaximumSize().getWidth()/1000), (int)(b.getMaximumSize().getHeight()/1000));
+	}
 	
 	// used for testing purposes only 
 	/* public static void main(String[] args)
