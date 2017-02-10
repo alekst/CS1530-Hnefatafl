@@ -133,9 +133,25 @@ public class DataTest
 	}
 	
 	@Test
-	public void testIfBoardIsUpdated()
+	public void testIfCoordinatesAreValid()
 	{
+		Coordinate c = new Coordinate(5, 5);
+		Coordinate b = new Coordinate(1, 5);
+		Data d = new Data();
+		d.initialize();
 		
+		assertTrue(d.isValid(c, b));	
+	}
+	
+	@Test
+	public void testIfCoordinatesAreInvalid()
+	{
+		Coordinate c = new Coordinate(5, 5);
+		Coordinate b = new Coordinate(10, 4);
+		Data d = new Data();
+		d.initialize();
+		
+		assertFalse(d.isValid(c, b));	
 	}
 	
 }
