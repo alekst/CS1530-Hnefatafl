@@ -25,6 +25,8 @@ public class Data implements DataInterface
     }
 	/**
 	* Encodes the Coordinate object for storage
+	* @param data-the coordinate object of the piece
+	* @return returns the int value of that location
 	*/
     public int encode(Coordinate data)
     {
@@ -33,6 +35,8 @@ public class Data implements DataInterface
 	
 	/**
 	* Decodes the Coordinate object for storage
+	* @param-value the int value of the location
+	* @return returns a coordinate object for that location
 	*/
 	public Coordinate decode(int value)
 	{
@@ -45,38 +49,81 @@ public class Data implements DataInterface
 		return new Coordinate(x, y);
 	}
 	
-	
+	/**
+	* Returns an index based on the coordinates. It would return -1 if the index is not found. 
+	* @param data-coordinates of a piece
+	* @return returns an index value
+	*/
 	public int getIndex(Coordinate data)
 	{
 		int value = encode(data);
 		int index = Arrays.asList(boardData).indexOf(value);
-		return index;
-		
+		return index;	
+	}
+	/**
+	* Returns the Coordinate object, based on the index (0-36) of the array. If there is no piece in
+	* the game, it will return 0. 
+	* @param index-index value from array
+	* @return 0 if no piece in the game
+	* @return the decoded value of the index if the piece is in the game
+	*/
+	public Coordinate getCoordinate(int index)
+	{
+		int value = boardData[index];
+		if (value == 0)
+			return null;
+		else
+			return decode(value);		
 	}
 	
+	/** 
+	* @Return a current board status as an array of Coordinate objects
+	*
+	*/ 
+	public Coordinate[] getBoardStatus()
+	{
+		Coordinate[] board = new Coordinate[36];
+		for (int i = 0; i < 36; i++)
+		{
+			Coordinate c = getCoordinate(i);
+			board[i] = c;
+		}
+		return board;
+	}
+	/**
+	* Returns true if the coordinates are in the array. Otherwise, it returns false. 
+	* @param data-coordinate of a location
+	* @return true if the coordinates are in the array
+	* @return false if the coordinats are not in the array
+	*/	
 	public boolean isMember (Coordinate data)
 	{
 		int value = encode(data);
 		return Arrays.asList(boardData).contains(value);
 	}
 	
-	private boolean isMember(int value)
-	{
-		return Arrays.asList(boardData).contains(value);
-	}
-	
+	/**
+	* Resets the array to its initial state
+	*/
 	public void reset()
 	{
 		initialize();
 	}
-	
+	/** 
+	* Takes the source coordinates and the destination coordinates and updates the array
+	*/
 	public void updateLocation(Coordinate newdata, Coordinate olddata)
 	{
 		int newValue = encode(newdata);
 		int index = getIndex(olddata);
 		boardData[index] = newValue;
 	}
-	
+	/**
+	* Returns true if the piece in the given coordinate is white. Otherwise, returns false
+	* @param data-coordinate of a location
+	* @return true if the piece is white
+	* @return false if the piece is not white
+	*/
 	public boolean isWhite(Coordinate data)
 	{
 		// returns true if the piece is white. white means its index is between 0 and 12. The method assumes that the coordinate contains a piece. 
@@ -87,6 +134,7 @@ public class Data implements DataInterface
 			return false;
 	}
 	
+<<<<<<< HEAD
 	public boolean isPathClear(Coordinate origin, Coordinate destination)
 	{
 		int origin = encode(origin);
@@ -115,6 +163,22 @@ public class Data implements DataInterface
 			//not a valid move
 		}
 	}
+=======
+	
+	
+// public boolean isPathClear(Coordinate origin, Coordinate destination)
+// 	{
+// 		if (origin.getX() == destination.getX())
+// 		{
+// 			// that means the path is up/down
+// 			// to be implemented.
+// 		}
+// 		else if (origin.getY() == destination.getY())
+// 		{
+// 			// that means the path is left/right
+// 		}
+// 	}
+>>>>>>> 486a4633b219a03a8ca1aa70440031367b9e25bf
 	
 
 	
