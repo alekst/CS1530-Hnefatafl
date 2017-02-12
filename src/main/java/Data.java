@@ -58,7 +58,6 @@ public class Data implements DataInterface
 	public int getIndex(Coordinate data)
 	{
 		int value = encode(data);
-		System.out.println(Arrays.toString(boardData));
 		int index = Arrays.asList(boardData).indexOf(value);
 		return index;	
 	}
@@ -136,21 +135,35 @@ public class Data implements DataInterface
 			return false;
 	}
 	
+	/**
+	* Returns true if the destination is up/down or left/right. Otherwise, returns false. 
+	* @param data-coordinate of an origin location and a destination location
+	* @return true if the move is up/down or left/right
+	* @return false if the move is not horizontal or vertical
+	*/
+	public boolean isValid(Coordinate origin, Coordinate destination)
+	{	
+		//TODO: implement rules of the game for a move that encounters another piece on the way. 
+		if (origin.getX() == destination.getX())
+		{
+			// that means the path is up/down
+			return true;
+			
+		}
+		else if (origin.getY() == destination.getY())
+		{
+			// that means the path is left/right
+			return true;
+		}
+		else
+		{
+			//not a valid move
+			return false;
+		}
+	}
+
 	
-	
-// public boolean isPathClear(Coordinate origin, Coordinate destination)
-// 	{
-// 		if (origin.getX() == destination.getX())
-// 		{
-// 			// that means the path is up/down
-// 			// to be implemented.
-// 		}
-// 		else if (origin.getY() == destination.getY())
-// 		{
-// 			// that means the path is left/right
-// 		}
-// 	}
-	
+
 	
 	
 	
