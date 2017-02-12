@@ -20,6 +20,8 @@ public class Board extends JPanel
 	private static final int numWhites = 12;
 	private static final int numBlacks = 24;
 	
+	private int whose_move = 0; // If 0 then white's move, if 1 then black's move
+	
 	private Coordinate first_clicked = new Coordinate(-1,-1);
 	private Coordinate second_clicked = new Coordinate(-1,-1);
 	
@@ -191,6 +193,7 @@ public class Board extends JPanel
 			else
 			{
 				second_clicked = coor;
+				System.out.println("second clicked = :" + second_clicked);
 				if(pieces.isValid(first_clicked, second_clicked))
 				{
 					removePiece(first_clicked);
@@ -204,8 +207,9 @@ public class Board extends JPanel
 					}
 					pieces.updateLocation(second_clicked, first_clicked);
 					first_clicked = new Coordinate(-1, -1);
-					second_clicked = new Coordinate(-1, -1);
+					whose_move = (whose_move + 1) % 2;
 				}
+				second_clicked = new Coordinate(-1, -1);
 				
 			}
 		}
