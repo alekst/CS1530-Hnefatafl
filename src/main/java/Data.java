@@ -82,8 +82,8 @@ public class Data implements DataInterface
 	*/ 
 	public Coordinate[] getBoardStatus()
 	{
-		Coordinate[] board = new Coordinate[36];
-		for (int i = 0; i < 36; i++)
+		Coordinate[] board = new Coordinate[37];
+		for (int i = 0; i < 37; i++)
 		{
 			Coordinate c = getCoordinate(i);
 			board[i] = c;
@@ -159,6 +159,17 @@ public class Data implements DataInterface
 			//not a valid move
 			return false;
 		}
+	}
+	
+	/**
+	* Returns true if the coordinate contain the King piece. Otherwise, returns false. 
+	* @param data-coordinate of a location
+	* @return true if the location contain the king
+	* @return false if it does not
+	*/
+	public boolean isKing(Coordinate coord)
+	{	
+		return getIndex(coord) == 0;
 	}
 
 	
