@@ -20,7 +20,7 @@ public class Board extends JPanel
 	private static final int numWhites = 12;
 	private static final int numBlacks = 24;
 	
-	private int whose_move = 0; // If 0 then white's move, if 1 then black's move
+	private int whose_move = 1; // If 0 then white's move, if 1 then black's move
 	
 	private Coordinate first_clicked = new Coordinate(-1,-1);
 	private Coordinate second_clicked = new Coordinate(-1,-1);
@@ -52,7 +52,7 @@ public class Board extends JPanel
 		boardConstrain.add(board);	
 	}
 	
-
+	
 	
 	private void createSquares()
 	{
@@ -113,6 +113,7 @@ public class Board extends JPanel
 		}
 		pieces.initialize();
 		printAllPieces();
+		switchTurn(whose_move);
 	}	
 	
 	public int printBlack(Coordinate coor)
@@ -176,6 +177,53 @@ public class Board extends JPanel
 		return 0;
 	} 
 	
+	public int switchTurn(int move)
+	{	
+		Coordinate[] coor_array = new Coordinate[36];
+		coor_array = pieces.getBoardStatus();
+		if ((move + 1) % 2 == 0)	// disable white
+		{
+			disable(coor_array[kingIndex]);
+			
+			for(int i = 0 ; i < numWhites ; i++)
+			{
+				disable(coor_array[whiteIndex + i]);
+			}
+			for(int i = 0 ; i < numBlacks ; i++)
+			{
+				enable(coor_array[blackIndex + i]);
+			}
+		} else //(move + 1) % 2 == 1, disable black
+		{
+			for(int i = 0 ; i < numBlacks ; i++)
+			{
+				disable(coor_array[blackIndex + i]);
+			}
+			
+			enable(coor_array[kingIndex]);
+			
+			for(int i = 0 ; i < numWhites ; i++)
+			{
+				enable(coor_array[whiteIndex + i]);
+			}
+		}
+		return 0;
+	}
+	
+	public int enable(Coordinate coor)
+	{
+		JButton square = boardSquares[coor.getX()][coor.getY()];
+		square.setEnabled(true);
+		return 0;
+	}
+	
+	public int disable(Coordinate coor)
+	{
+		JButton square = boardSquares[coor.getX()][coor.getY()];
+		square.setEnabled(false);
+		return 0;
+	}
+	
 	ActionListener actionListener = new ActionListener()
 	{
 		public void actionPerformed(ActionEvent actionEvent)
@@ -210,7 +258,7 @@ public class Board extends JPanel
 					whose_move = (whose_move + 1) % 2;
 				}
 				second_clicked = new Coordinate(-1, -1);
-				
+				switchTurn(whose_move);
 			}
 		}
 	};
