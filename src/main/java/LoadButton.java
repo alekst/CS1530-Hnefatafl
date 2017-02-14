@@ -13,6 +13,7 @@ public class LoadButton extends JButton
 		super("Load");
 		_m = m;
 		addActionListener(new LoadButtonListener());
+		this.setEnabled(false);
 	}
 
 	class LoadButtonListener implements ActionListener 

@@ -13,6 +13,7 @@ public class ConcedeButton extends JButton
     super("Concede");
 	  _m = m;
 	  addActionListener(new ConcedeButtonListener());
+    this.setEnabled(false);
   }
 
   class ConcedeButtonListener implements ActionListener 
