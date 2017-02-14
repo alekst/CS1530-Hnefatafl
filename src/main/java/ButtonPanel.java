@@ -18,7 +18,7 @@ public class ButtonPanel extends JPanel
   * Constructor - add all of the buttons to
   * the ButtonPanel.
   */
-	  public ButtonPanel(Board m) 
+	  public ButtonPanel(Board m, MainFrame f) 
 	{
 
 		// Send a reference to the Main Panel
@@ -26,7 +26,7 @@ public class ButtonPanel extends JPanel
 
 	_save = new SaveButton(m);
 	_load = new LoadButton(m);
-	_newGame = new NewGameButton(m);
+	_newGame = new NewGameButton(m, f);
 	_concede = new ConcedeButton(m);
 	setLayout(new FlowLayout());
 

@@ -7,11 +7,13 @@ public class NewGameButton extends JButton
 {
 	
 	private Board _m;
+	private MainFrame _f;
 	
-	public NewGameButton(Board m) 
+	public NewGameButton(Board m, MainFrame f) 
 	{
 		super("New Game");
 		_m = m;
+		_f = f;
 		addActionListener(new NewGameButtonListener());
 	}
 
@@ -19,7 +21,8 @@ public class NewGameButton extends JButton
 	{
 		public void actionPerformed(ActionEvent e) 
 		{
-
+			_f.resetFrame();
+			new MainFrame();
 		}
 	}
 }
