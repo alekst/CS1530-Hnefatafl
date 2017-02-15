@@ -4,8 +4,8 @@ import javax.swing.*;
 
 public class MainFrame 
 {
-	private final int HEIGHT = 1000;
-	private final int WIDTH = 1200;
+	private final int HEIGHT = 800;
+	private final int WIDTH = 1000;
 
 	private JFrame _frame = new JFrame("Hnefatafl ");
 
@@ -23,12 +23,17 @@ public class MainFrame
 		 
 		board = new Board();// adds cells to the main frame
 
-		_buttonPanel = new ButtonPanel(board);
+		_buttonPanel = new ButtonPanel(board, this);
 		
-		_frame.add(board.getBoard(), BorderLayout.NORTH); 
+		_frame.add(board.getBoard(), BorderLayout.CENTER);
 		_frame.add(_buttonPanel, BorderLayout.SOUTH);
 		
 	
 		_frame.setVisible(true);	
+	}
+	
+	public void resetFrame()
+	{
+		this._frame.dispose();
 	}
 }

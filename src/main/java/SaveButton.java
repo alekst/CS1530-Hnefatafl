@@ -16,6 +16,7 @@ public class SaveButton extends JButton
 		super("Save");
 		_m = m;
 		addActionListener(new SaveButtonListener());
+		this.setEnabled(false);
 	}
 
 	class SaveButtonListener implements ActionListener 
