@@ -6,6 +6,8 @@ As a player, I want the ability to move my pieces by first clicking on such piec
 
 As a player, I want the ability to move to valid locations, so that I can play the game properly 4
 
+As a player, I want the king's throne and the four corner squares to be visually distinct, so that I know which squares may be occupied only by the king. 
+
 As a player, I want the ability to play with 2 players, so you can play with other people  2
 
 As a player, I want the ability to create a new game, so that I can play a new game 4
