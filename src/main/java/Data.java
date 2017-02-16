@@ -141,19 +141,63 @@ public class Data implements DataInterface
 	* @return true if the move is up/down or left/right
 	* @return false if the move is not horizontal or vertical
 	*/
-	public boolean isValid(Coordinate origin, Coordinate destination)
+	public boolean isValid(Coordinate origin, Coordinate destination) 
 	{	
-		//TODO: implement rules of the game for a move that encounters another piece on the way. 
+		//TODO: implement rules of the game for a move that encounters another piece on the way.  need to figure out issue with negatives
 		if (origin.getX() == destination.getX())
 		{
 			// that means the path is up/down
-			return true;
-			
+			int start_y=origin.getY()+1; //start looking at squares one away from start square
+			int end_y=destination.getY();
+			int x=destination.getX(); //this y coord will not change throughout this method
+			if(origin.getY()-destination.getY()<1) //to handle up down movement
+			{
+				System.out.println("negatives");
+				for(int y=start_y; y<end_y; y++)
+				{
+					Coordinate temp_obj=new Coordinate(x,y); //temp obj used to see if a piece is in movement path
+					if(isMember(temp_obj))
+						return false; //piece in movement path
+				}
+			}
+			else //to handle down up movement
+			{	
+				for(int y=start_y; y>end_y; y--)
+				{
+					Coordinate temp_obj=new Coordinate(x,y); //temp obj used to see if a piece is in movement path
+					if(isMember(temp_obj))
+						return false;//piece in movement path
+				}
+			}
+			return true; //no pieces in movement path
 		}
 		else if (origin.getY() == destination.getY())
 		{
 			// that means the path is left/right
-			return true;
+			//create temp coord obj and give it x,y pairs between start spot and end spot (exclusive), if any of the temp coord objs is found in array, then invalid move
+			//use isMember(temp coor obj)
+			int start_x=origin.getX()+1; //start looking at squares one away from start square
+			int end_x=destination.getX();
+			int y=destination.getY(); //this y coord will not change throughout this method
+			if(origin.getX()-destination.getX()<1) //to handle left right movement
+			{
+				for(int x=start_x; x<end_x; x++)
+				{
+					Coordinate temp_obj=new Coordinate(x,y);//temp obj used to see if a piece is in movement path
+					if(isMember(temp_obj))
+						return false;//piece in movement path
+				}
+			}
+			else //to handle right left movement
+			{
+				for(int x=start_x; x>end_x; x--)
+				{
+					Coordinate temp_obj=new Coordinate(x,y);//temp obj used to see if a piece is in movement path
+					if(isMember(temp_obj))
+						return false;//piece in movement path
+				}
+			}
+			return true; //no pieces in movement path
 		}
 		else
 		{
