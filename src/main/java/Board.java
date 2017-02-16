@@ -230,24 +230,27 @@ public class Board extends JPanel
 		{
 			JButton b = (JButton)actionEvent.getSource();
 			Coordinate coor = getButtonCoordinate(b);
-			if(first_clicked.getX() == -1 && first_clicked.getY() == -1)
+			if((first_clicked.getX() == -1 && first_clicked.getY() == -1) && (pieces.getIndex(coor) != -1))
 			{
 				first_clicked = coor;
 			}
 			else if(first_clicked.getX() == coor.getX() && first_clicked.getY() == coor.getY())
 			{
-				// Do nothing
+				// Unselect it
 			}
-			else
+			else if(pieces.getIndex(coor) == -1)
 			{
 				second_clicked = coor;
-				System.out.println("second clicked = :" + second_clicked);
 				if(pieces.isValid(first_clicked, second_clicked))
 				{
 					removePiece(first_clicked);
 					if(pieces.isWhite(first_clicked))
 					{
 						printWhite(second_clicked);
+					}
+					else if(pieces.isKing(first_clicked))
+					{
+						printKing(second_clicked);
 					}
 					else
 					{
@@ -259,6 +262,10 @@ public class Board extends JPanel
 				}
 				second_clicked = new Coordinate(-1, -1);
 				switchTurn(whose_move);
+			}
+			else
+			{
+				// Do nothing...can't go to spot thats already occupied
 			}
 		}
 	};
