@@ -135,6 +135,17 @@ public class Data implements DataInterface
 			return false;
 	}
 	
+	private boolean inSameSpot(Coordinate origin, Coordinate destination) 
+	{
+		if(isMember(origin) && isMember(destination)) //both coordinates are occupied
+		{
+			System.out.println("Both are occupied");
+			return true;
+		}
+		else 
+			return false;
+	}
+
 	/**
 	* Returns true if the destination is up/down or left/right. Otherwise, returns false. 
 	* @param data-coordinate of an origin location and a destination location
@@ -144,9 +155,8 @@ public class Data implements DataInterface
 	public boolean isValid(Coordinate origin, Coordinate destination) 
 	{	
 		//TODO: implement rules of the game for a move that encounters another piece on the way.  need to figure out issue with negatives
-		if(isMember(origin) && isMember(destination)) //both coordinates are occupied
+		if(inSameSpot(origin, destination)) //both coordinates are occupied
 		{
-			System.out.println("Both are occupied");
 			return false;
 		}
 		else if (origin.getX() == destination.getX())
@@ -155,22 +165,29 @@ public class Data implements DataInterface
 			int start_y=origin.getY()+1; //start looking at squares one away from start square
 			int end_y=destination.getY();
 			int x=destination.getX(); //this y coord will not change throughout this method
-			if(origin.getY()-destination.getY()<1) //to handle up-> down movement
+			if(origin.getY()-destination.getY()<=1) //to handle up-> down movement
 			{
 				for(int y=start_y; y<end_y; y++)
 				{
 					Coordinate temp_obj=new Coordinate(x,y); //temp obj used to see if a piece is in movement path
 					if(isMember(temp_obj))
+					{
+						System.out.println("up/down "+temp_obj.getX()+ " "+temp_obj.getY());
 						return false; //piece in movement path
+					}
 				}
 			}
 			else //to handle down-> up movement
 			{	
+				start_y=origin.getY()-1;
 				for(int y=start_y; y>end_y; y--)
 				{
 					Coordinate temp_obj=new Coordinate(x,y); //temp obj used to see if a piece is in movement path
 					if(isMember(temp_obj))
+					{
+						System.out.println("down/up "+temp_obj.getX()+ " "+temp_obj.getY());
 						return false;//piece in movement path
+					}
 				}
 			}
 			return true; //no pieces in movement path
@@ -183,22 +200,29 @@ public class Data implements DataInterface
 			int start_x=origin.getX()+1; //start looking at squares one away from start square
 			int end_x=destination.getX();
 			int y=destination.getY(); //this y coord will not change throughout this method
-			if(origin.getX()-destination.getX()<1) //to handle left-> right movement
+			if(origin.getX()-destination.getX()<=1) //to handle left-> right movement
 			{
 				for(int x=start_x; x<end_x; x++)
 				{
 					Coordinate temp_obj=new Coordinate(x,y);//temp obj used to see if a piece is in movement path
 					if(isMember(temp_obj))
+					{
+						System.out.println("left/right "+temp_obj.getX()+ " "+temp_obj.getY());
 						return false;//piece in movement path
+					}
 				}
 			}
 			else //to handle right-> left movement
 			{
+				start_x=origin.getX()-1;
 				for(int x=start_x; x>end_x; x--)
 				{
 					Coordinate temp_obj=new Coordinate(x,y);//temp obj used to see if a piece is in movement path
 					if(isMember(temp_obj))
+					{
+						System.out.println("right/left "+temp_obj.getX()+ " "+temp_obj.getY());
 						return false;//piece in movement path
+					}
 				}
 			}
 			return true; //no pieces in movement path
