@@ -144,15 +144,19 @@ public class Data implements DataInterface
 	public boolean isValid(Coordinate origin, Coordinate destination) 
 	{	
 		//TODO: implement rules of the game for a move that encounters another piece on the way.  need to figure out issue with negatives
-		if (origin.getX() == destination.getX())
+		if(isMember(origin) && isMember(destination)) //both coordinates are occupied
+		{
+			System.out.println("Both are occupied");
+			return false;
+		}
+		else if (origin.getX() == destination.getX())
 		{
 			// that means the path is up/down
 			int start_y=origin.getY()+1; //start looking at squares one away from start square
 			int end_y=destination.getY();
 			int x=destination.getX(); //this y coord will not change throughout this method
-			if(origin.getY()-destination.getY()<1) //to handle up down movement
+			if(origin.getY()-destination.getY()<1) //to handle up-> down movement
 			{
-				System.out.println("negatives");
 				for(int y=start_y; y<end_y; y++)
 				{
 					Coordinate temp_obj=new Coordinate(x,y); //temp obj used to see if a piece is in movement path
@@ -160,7 +164,7 @@ public class Data implements DataInterface
 						return false; //piece in movement path
 				}
 			}
-			else //to handle down up movement
+			else //to handle down-> up movement
 			{	
 				for(int y=start_y; y>end_y; y--)
 				{
@@ -179,7 +183,7 @@ public class Data implements DataInterface
 			int start_x=origin.getX()+1; //start looking at squares one away from start square
 			int end_x=destination.getX();
 			int y=destination.getY(); //this y coord will not change throughout this method
-			if(origin.getX()-destination.getX()<1) //to handle left right movement
+			if(origin.getX()-destination.getX()<1) //to handle left-> right movement
 			{
 				for(int x=start_x; x<end_x; x++)
 				{
@@ -188,7 +192,7 @@ public class Data implements DataInterface
 						return false;//piece in movement path
 				}
 			}
-			else //to handle right left movement
+			else //to handle right-> left movement
 			{
 				for(int x=start_x; x>end_x; x--)
 				{
