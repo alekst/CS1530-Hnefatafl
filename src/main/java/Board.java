@@ -65,8 +65,12 @@ public class Board extends JPanel
 				
 				JButton square = new JButton();
 				square.addActionListener(actionListener);
-				// todo: allow user to change board colors? 
-				if (( j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0))
+				// todo: allow user to change board colors?
+				if (( j == 0 && i == 0 ) || ( j == 10 && i == 10 ) || ( j == 0 && i == 10 ) || ( j == 10 && i == 0 ) || ( j == 5 && i == 5 ))
+				{
+					square.setBackground(Color.yellow);
+				}
+				else if (( j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0))
 				{
 					square.setBackground(Color.lightGray);
 				}
