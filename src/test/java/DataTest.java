@@ -122,13 +122,13 @@ public class DataTest
 	{
 		// arrange
 		Data d = new Data();
-		d. initialize();
+		d.initialize();
 		 
 		// act
 		Coordinate[] board = d.getBoardStatus();
 		
 		// assert
-		assertEquals(board.length, 36);
+		assertEquals(board.length, 37);
 		
 	}
 	
