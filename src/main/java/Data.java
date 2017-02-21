@@ -6,6 +6,7 @@ public class Data implements DataInterface
 {
  
 	public Integer[] boardData; // Should be public so that the Board object can actually access the coordinates
+	public Integer[] specialSquares; 
 	
 	public Data()
 	{
@@ -22,7 +23,9 @@ public class Data implements DataInterface
     {
 	    Integer[] initialData = {61, 59, 60, 62, 63, 49, 50, 51, 39, 71, 72, 73, 83, 4, 5, 6, 7, 8, 17, 34, 44, 45, 55, 56, 57, 65, 66, 67, 77, 78, 88, 105, 114, 115, 116, 117, 118
 	    };
+		Integer[] special = {1, 11, 61, 111, 121};
         boardData = initialData.clone();
+		specialSquares = special.clone();
     }
 	/**
 	* Encodes the Coordinate object for storage
@@ -104,6 +107,17 @@ public class Data implements DataInterface
 	}
 	
 	/**
+	* Returns true if the value is in the array. Otherwise, it returns false. 
+	* @param value in the array
+	* @return true if the coordinates are in the array
+	* @return false if the coordinats are not in the array
+	*/
+	private boolean isMember(int value)
+	{
+		return Arrays.asList(boardData).contains(value);	
+	} 
+	
+	/**
 	* Resets the array to its initial state
 	*/
 	public void reset()
@@ -129,6 +143,22 @@ public class Data implements DataInterface
 	{
 		// returns true if the piece is white. white means its index is between 0 and 12. The method assumes that the coordinate contains a piece. 
 		int index = getIndex(data);
+		if (index < 13 && index > 0)
+			return true;
+		else 
+			return false;
+	}
+	
+	/**
+	* Returns true if the piece in the given value is white. Otherwise, returns false
+	* @param value
+	* @return true if the piece is white
+	* @return false if the piece is not white
+	*/
+	private boolean isWhite(int value)
+	{
+		// returns true if the piece is white. white means its index is between 0 and 12. The method assumes that the coordinate contains a piece. 
+		int index = Arrays.asList(boardData).indexOf(value);
 		if (index < 13 && index > 0)
 			return true;
 		else 
@@ -172,6 +202,60 @@ public class Data implements DataInterface
 	{	
 		return getIndex(coord) == 0;
 	}
+
+	
+	/**
+	* Returns true if the king is surrounded by black pieces in four directions. 
+	* @param data-coordinate of a king's location
+	* @return true if the king is surrounded by black pieces
+	* @return false if the king is not
+	*/
+	public boolean isSurrounded(Coordinate coord)
+	{
+		
+		int value = encode(coord);
+		Integer[] neighbors = getNeighbors(value); // contains values to check against
+		ArrayList<Integer> checked = new ArrayList<Integer>();
+		for(int i = 0; i < neighbors.length; i++)
+		{
+			if (isMember(neighbors[i]) && (!isWhite(neighbors[i]))) // condition 1: the square must contain a black piece
+			{
+				checked.add(neighbors[i]);
+			}
+			else if (isSpecialSquare(neighbors[i])) // or condition 2: the king must be next to a special square. 
+			{
+				checked.add(neighbors[i]);
+			}
+			else if (neighbors[i] > 121)
+			{
+				checked.add(neighbors[i]);
+			}
+		}
+		if (checked.size() >= 4) // black pieces/ special squares are more than 4, 
+		{ 
+			return true; // which means the king is surrounded. 
+		}
+		return false;	
+	}
+	
+	/**
+	* Returns an array of integers of squares to check if they are taken
+	* @param an encoded value of the Coordinate object
+	* @return an array of Integers containing values of neighboring squares. 
+	* @return false if the king is not
+	*/
+	private Integer[] getNeighbors(int value)
+	{
+		Integer[] arr = {value + 11, value - 11, value + 1, value - 1};
+		return arr;
+	}	
+	
+	private boolean isSpecialSquare(int value)
+	{
+		return Arrays.asList(specialSquares).contains(value);
+	}
+	
+	
 
 	
 
