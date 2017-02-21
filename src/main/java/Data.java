@@ -212,7 +212,6 @@ public class Data implements DataInterface
 	*/
 	public boolean isSurrounded(Coordinate coord)
 	{
-		
 		int value = encode(coord);
 		Integer[] neighbors = getNeighbors(value); // contains values to check against
 		ArrayList<Integer> checked = new ArrayList<Integer>();
