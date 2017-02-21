@@ -221,11 +221,7 @@ public class Data implements DataInterface
 			{
 				checked.add(neighbors[i]);
 			}
-			else if (isSpecialSquare(neighbors[i])) // or condition 2: the king must be next to a special square. 
-			{
-				checked.add(neighbors[i]);
-			}
-			else if (neighbors[i] > 121)
+			else if (neighbors[i] == 61) // or condition 2: if the throne (61) is a neighbor
 			{
 				checked.add(neighbors[i]);
 			}
