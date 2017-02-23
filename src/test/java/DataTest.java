@@ -138,6 +138,7 @@ public class DataTest
 		Coordinate c = new Coordinate(5, 5);
 		Coordinate b = new Coordinate(1, 5);
 		Data d = new Data();
+		d.initialize();
 		
 		assertTrue(d.isValid(c, b));	
 	}
@@ -148,9 +149,100 @@ public class DataTest
 		Coordinate c = new Coordinate(5, 5);
 		Coordinate b = new Coordinate(10, 4);
 		Data d = new Data();
+		d.initialize();
 		
 		assertFalse(d.isValid(c, b));	
 	}
+
+	@Test 
+	public void testIfUpDownMoveIsValid()
+	{
+        Data d=new Data();
+        d.initialize();
+        Coordinate x=new Coordinate(1,5);
+        Coordinate y=new Coordinate(1,10);
+        boolean value=d.isValid(x,y);
+        assertTrue(value);
+	}
+
+	@Test
+	public void testIfUpDownMoveIsInvalid()
+	{
+		Data d=new Data();
+		d.initialize();
+		Coordinate x=new Coordinate(6,4);
+		Coordinate y=new Coordinate(6,7);
+		boolean value=d.isValid(x,y);
+		assertFalse(value);
+	}
+
+	@Test
+	public void testIfDownUpMoveIsValid()
+	{
+		Data d=new Data();
+		d.initialize();
+		Coordinate x=new Coordinate(3,10);
+		Coordinate y=new Coordinate(3,6);
+		boolean value=d.isValid(x,y);
+		assertTrue(value);
+	}
+
+	@Test 
+	public void testIfDownUpMoveIsInvalid()
+	{
+		Data d=new Data();
+		d.initialize();
+		Coordinate x=new Coordinate(5,7);
+		Coordinate y=new Coordinate(5,2);
+		boolean value=d.isValid(x,y);
+		assertFalse(value);
+	}
+
+	@Test
+	public void testIfLeftRightMoveIsValid()
+	{
+		Data d=new Data();
+		d.initialize();
+		Coordinate x=new Coordinate(0,3);
+		Coordinate y=new Coordinate(4,3);
+		boolean value=d.isValid(x,y);
+		assertTrue(value);
+	}
+
+	@Test
+	public void testIfLeftRightMoveIsInvalid()
+	{
+		Data d=new Data();
+		d.initialize();
+		Coordinate x=new Coordinate(3,5);
+		Coordinate y=new Coordinate(8,5);
+		boolean value=d.isValid(x,y);
+		assertFalse(value);
+	}
+
+	@Test
+	public void testIfRighLeftMoveIsValid()
+	{
+		Data d=new Data();
+		d.initialize();
+		Coordinate x=new Coordinate(10,7);
+		Coordinate y=new Coordinate(6,7);
+		boolean value=d.isValid(x,y);
+		assertTrue(value);
+	}
+
+	@Test
+	public void testIfRighLeftMoveIsInvalid()
+	{
+		Data d=new Data();
+		d.initialize();
+		Coordinate x=new Coordinate(7,5);
+		Coordinate y=new Coordinate(2,5);
+		boolean value=d.isValid(x,y);
+		assertFalse(value);
+	}
+
+
 	
 }
 

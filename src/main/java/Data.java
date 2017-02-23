@@ -136,24 +136,153 @@ public class Data implements DataInterface
 	}
 	
 	/**
-	* Returns true if the destination is up/down or left/right. Otherwise, returns false. 
-	* @param data-coordinate of an origin location and a destination location
-	* @return true if the move is up/down or left/right
-	* @return false if the move is not horizontal or vertical
+	* @param origin-Coordinate of origin location
+	* @param destination-Coordinate of destination location
+	* @return true-if origin and destination location are both occupied
+	* @return false-if both are not occupied
 	*/
-	public boolean isValid(Coordinate origin, Coordinate destination)
-	{	
-		//TODO: implement rules of the game for a move that encounters another piece on the way. 
-		if (origin.getX() == destination.getX())
+	private boolean inSameSpot(Coordinate origin, Coordinate destination) 
+	{
+		if(isMember(origin) && isMember(destination)) //both coordinates are occupied
 		{
-			// that means the path is up/down
+			System.out.println("Both are occupied");
 			return true;
-			
 		}
-		else if (origin.getY() == destination.getY())
+		else 
+			return false;
+	}
+
+	/**
+	* Determines if there are pieces in the path of an Up to Down move
+	* @param start_y-the y coordinate of the original location
+	* @param end_y-the y coordinate of the end location
+	* @param x-the x value of both coordinates, since it's a vertical move the x will remain the same in the origin and destination
+	* @return false-if there are no pieces in the path
+	* @return true-if there is NOT a piece in its path
+	*/
+	private boolean validUpDownMove(int start_y, int end_y, int x)
+	{
+		//create temp coord obj and give it x,y pairs between start spot and end spot (exclusive), if any of the temp coord objs is found in array, then invalid move
+		for(int y=start_y; y<end_y; y++)
 		{
-			// that means the path is left/right
-			return true;
+			Coordinate temp_obj=new Coordinate(x,y); //temp obj used to see if a piece is in movement path
+			if(isMember(temp_obj))
+			{
+				return false; //piece in movement path
+			}
+		}
+		return true;
+	}
+
+	/**
+	* Determines if there are pieces in the path of a Down to UP move
+	* @param start_y-the y coordinate of the original location
+	* @param end_y-the y coordinate of the end location
+	* @param x-the x value of both coordinates, since it's a vertical move the x will remain the same in the origin and destination
+	* @return false-if there are no pieces in the path
+	* @return true-if there is NOT a piece in its path
+	*/
+	private boolean validDowUpMove(int start_y, int end_y, int x)
+	{
+		//create temp coord obj and give it x,y pairs between start spot and end spot (exclusive), if any of the temp coord objs is found in array, then invalid move
+		for(int y=start_y; y>end_y; y--)
+		{
+			Coordinate temp_obj=new Coordinate(x,y); //temp obj used to see if a piece is in movement path
+			if(isMember(temp_obj))
+			{
+				return false;//piece in movement path
+			}
+		}
+		return true;
+	}
+
+	/**
+	* Determines if there are pieces in the path of a Left to Right move
+	* @param start_x-the x coordiante of the original location
+	* @param end_x-the x cooridnate of the end location
+	* @param y- the y value of both coordinates, since it's a horizontal move the y will remain the same in the origin and destination 
+	* @return false-if there are no pieces in the path
+	* @return true-if there is NOT a piece in its path
+	*/
+	private boolean validLeftRightMove(int start_x, int end_x, int y)
+	{
+		//create temp coord obj and give it x,y pairs between start spot and end spot (exclusive), if any of the temp coord objs is found in array, then invalid move
+		for(int x=start_x; x<end_x; x++)
+		{
+			Coordinate temp_obj=new Coordinate(x,y);//temp obj used to see if a piece is in movement path
+			if(isMember(temp_obj))
+			{
+				return false;//piece in movement path
+			}
+		}
+		return true;
+	}
+
+	/**
+	* Determines if there are pieces in the path of a Right to Left move
+	* @param start_x-the x coordiante of the original location
+	* @param end_x-the x cooridnate of the end location
+	* @param y- the y value of both coordinates, since it's a horizontal move the y will remain the same in the origin and destination 
+	* @return false-if there are no pieces in the path
+	* @return true-if there is NOT a piece in its path
+	*/
+	private boolean validRightLeftMove(int start_x, int end_x, int y)
+	{
+		//create temp coord obj and give it x,y pairs between start spot and end spot (exclusive), if any of the temp coord objs is found in array, then invalid move
+		for(int x=start_x; x>end_x; x--)
+		{
+			Coordinate temp_obj=new Coordinate(x,y);//temp obj used to see if a piece is in movement path
+			if(isMember(temp_obj))
+			{
+				return false;//piece in movement path
+			}
+		}
+		return true;
+	}
+
+	/**
+	* Determines if a move is valid or not
+	* @param origin-coordinate of the origin location
+	* @param destination-coordinate of the destination location
+	* @return true if the move valid
+	* @return false if the move is invalid
+	*/
+	public boolean isValid(Coordinate origin, Coordinate destination) 
+	{	
+		System.out.println(origin.getX()+ " "+origin.getY() + " ____ "+ destination.getX()+ " "+ destination.getY());
+		if(inSameSpot(origin, destination)) //both coordinates are occupied
+		{
+			return false;
+		}
+		else if (origin.getX() == destination.getX()) //vertical move
+		{
+			int start_y=origin.getY()+1; //start looking at squares one up from start square
+			int end_y=destination.getY();
+			int x=destination.getX(); //this y coord will not change throughout this method
+			if(origin.getY()-destination.getY()<=1) //to handle up-> down movement
+			{
+				return validUpDownMove(start_y, end_y, x);
+			}
+			else //to handle down-> up movement
+			{	
+				start_y=origin.getY()-1; //start looking at square one dwon from the start square
+				return validDowUpMove(start_y, end_y, x);
+			}
+		}
+		else if (origin.getY() == destination.getY()) //horizontal move
+		{
+			int start_x=origin.getX()+1; //start looking at squares one away from start square
+			int end_x=destination.getX();
+			int y=destination.getY(); //this y coord will not change throughout this method
+			if(origin.getX()-destination.getX()<=1) //to handle left-> right movement
+			{
+				return validLeftRightMove(start_x, end_x, y);
+			}
+			else //to handle right-> left movement
+			{
+				start_x=origin.getX()-1;
+				return validRightLeftMove(start_x, end_x, y);
+			}
 		}
 		else
 		{
