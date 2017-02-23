@@ -202,6 +202,22 @@ public class Data implements DataInterface
 	{	
 		return getIndex(coord) == 0;
 	}
+	
+	/**
+	* Returns true if the King is on a special square. Otherwise, returns false. 
+	* @param data-coordinate of a location
+	* @return true if the location is a special one
+	* @return false if it does not
+	*/
+	public boolean hasEscaped(Coordinate coord)
+	{
+		int value = encode(coord);
+		if (value != 61) // if the square isn't the throne
+		{
+			return Arrays.asList(specialSquares).contains(value);
+		}
+		return false;	
+	} 
 
 	
 	/**

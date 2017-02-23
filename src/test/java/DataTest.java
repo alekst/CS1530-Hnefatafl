@@ -183,6 +183,32 @@ public class DataTest
 		assertFalse(d.isSurrounded(king));	
 	}
 	
+	@Test
+	public void testIfKingHasEscaped()
+	{
+		// arrange
+		Data d = new Data();
+		d.initialize();
+		
+		Coordinate king = new Coordinate(10, 10);
+		
+		// assert
+		assertTrue(d.hasEscaped(king));
+	}
+	
+	@Test
+	public void testIfKingHasNotEscaped()
+	{
+		// arrange
+		Data d = new Data();
+		d.initialize();
+		
+		Coordinate king = new Coordinate(2, 10);
+		
+		//assert
+		assertFalse(d.hasEscaped(king));
+	}
+	
 }
 
 
