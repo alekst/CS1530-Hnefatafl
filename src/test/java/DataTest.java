@@ -1,6 +1,8 @@
 import java.lang.*;
+import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.util.stream.*;
 
 public class DataTest
 {
@@ -243,6 +245,61 @@ public class DataTest
 	}
 
 
+	
+	@Test
+	public void testKingShouldBeCornered()
+	{
+		// arrange 
+		
+		Data d = new Data();
+		d.initialize();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(93, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 82, 92, 94, 104));
+		d.boardData = list.toArray(d.boardData);
+		Coordinate king = new Coordinate(4, 8);
+		
+		// assert
+		assertTrue(d.isSurrounded(king));	
+		
+	}
+	
+	@Test 
+	public void testKingShouldNotBeCornered()
+	{
+		// arrange 
+		
+		Data d = new Data();
+		d.initialize();
+		Coordinate king = new Coordinate(5, 5);
+		
+		// assert
+		assertFalse(d.isSurrounded(king));	
+	}
+	
+	@Test
+	public void testIfKingHasEscaped()
+	{
+		// arrange
+		Data d = new Data();
+		d.initialize();
+		
+		Coordinate king = new Coordinate(10, 10);
+		
+		// assert
+		assertTrue(d.hasEscaped(king));
+	}
+	
+	@Test
+	public void testIfKingHasNotEscaped()
+	{
+		// arrange
+		Data d = new Data();
+		d.initialize();
+		
+		Coordinate king = new Coordinate(2, 10);
+		
+		//assert
+		assertFalse(d.hasEscaped(king));
+	}
 	
 }
 
