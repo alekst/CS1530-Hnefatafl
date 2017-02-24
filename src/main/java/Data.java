@@ -150,6 +150,22 @@ public class Data implements DataInterface
 	}
 	
 	/**
+	* Returns true if the piece in the given value is white. Otherwise, returns false
+	* @param data-coordinate of a location
+	* @return true if the piece is white
+	* @return false if the piece is not white
+	*/
+	public boolean isWhite(int value)
+	{
+		// returns true if the piece is white. white means its index is between 0 and 12. The method assumes that the coordinate contains a piece. 
+		int index = Arrays.asList(boardData).indexOf(value);
+		if (index < 13 && index > 0)
+			return true;
+		else 
+			return false;
+	}
+	
+	/**
 	* @param origin-Coordinate of origin location
 	* @param destination-Coordinate of destination location
 	* @return true-if origin and destination location are both occupied
