@@ -112,7 +112,6 @@ public class Manager
 	*/
 	public void updateLocation(Coordinate newdata, Coordinate olddata)
 	{
-		_data.printBoardData();
 		int newValue = encode(newdata);
 		int index = getIndex(olddata);
 		_data.set(index, newValue);
