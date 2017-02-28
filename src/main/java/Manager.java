@@ -115,7 +115,6 @@ public class Manager
 		_data.printBoardData();
 		int newValue = encode(newdata);
 		int index = getIndex(olddata);
-		System.out.println("newvalue is " + newValue + " index is " + index);
 		_data.set(index, newValue);
 	}
 	
