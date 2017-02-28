@@ -9,11 +9,9 @@ public class MainFrame
 
 	private JFrame _frame = new JFrame("Hnefatafl ");
 
-	private Board board; //actual board game
-
 	private ButtonPanel _buttonPanel; //button panel
 
-	public MainFrame() 
+	public MainFrame(Board board) 
 	{
 		_frame.setSize(WIDTH, HEIGHT);
 		// Close program when window is closed
@@ -21,7 +19,6 @@ public class MainFrame
 		
 		// Add Main Panel and Button Panel
 		 
-		board = new Board();// adds cells to the main frame
 
 		_buttonPanel = new ButtonPanel(board, this);
 		

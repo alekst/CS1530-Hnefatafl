@@ -22,7 +22,7 @@ public class NewGameButton extends JButton
 		public void actionPerformed(ActionEvent e) 
 		{
 			_f.resetFrame();
-			new MainFrame();
+			new Game();
 		}
 	}
 }

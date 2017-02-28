@@ -20,16 +20,26 @@ public class Board extends JPanel
 	private static final int numWhites = 12;
 	private static final int numBlacks = 24;
 	
-	private int whose_move = 1; // If 0 then white's move, if 1 then black's move
 	
 	private Coordinate first_clicked = new Coordinate(-1,-1);
 	private Coordinate second_clicked = new Coordinate(-1,-1);
 	
-	private Data pieces = new Data();
+	//private Data pieces = new Data();
+	private Manager _manager;
+	private Player _player;
+	private Player _other;
 	
 	public Board()
 	{
+		//empty constructor
+	}
+		
+	public Board(Manager manager, Player player, Player other)
+	{
 		super();
+		_manager = manager;
+		_player = player;
+		_other = other;
 		setUpBoard();
 		createSquares();
 		fillSquares();
@@ -65,8 +75,12 @@ public class Board extends JPanel
 				
 				JButton square = new JButton();
 				square.addActionListener(actionListener);
-				// todo: allow user to change board colors? 
-				if (( j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0))
+				// todo: allow user to change board colors?
+				if (( j == 0 && i == 0 ) || ( j == 10 && i == 10 ) || ( j == 0 && i == 10 ) || ( j == 10 && i == 0 ) || ( j == 5 && i == 5 ))
+				{
+					square.setBackground(Color.yellow);
+				}
+				else if (( j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0))
 				{
 					square.setBackground(Color.lightGray);
 				}
@@ -96,7 +110,7 @@ public class Board extends JPanel
 		{
 			board.add(new JLabel(COLS.substring(i, i + 1), SwingConstants.CENTER));
 		}
-		// lets'fill out the rest of the rows 
+		// let's fill out the rest of the rows 
 		for (int i = 0; i < 11; i++)
 		{
 			for (int j = 0; j < 11; j++)
@@ -111,43 +125,35 @@ public class Board extends JPanel
 		
 			}
 		}
-		pieces.initialize();
-		printAllPieces();
-		switchTurn(whose_move);
+		printAll();
+		switchTurn();
 	}	
 	
-	public int printBlack(Coordinate coor)
+	public int printPiece(Coordinate coor, String type)
 	{
+		
 		if(coor.getX() < 0 || coor.getY() < 0)
 		{
 			return 1;
 		}
 		JButton square = boardSquares[coor.getX()][coor.getY()];
-		square.setText(blackPiece);
+		
+		if (type.equals(whiteKing))
+		{
+			square.setText(whiteKing);
+		}
+		else if (type.equals(whitePiece))
+		{
+			square.setText(whitePiece);
+		}
+		else if (type.equals(blackPiece))
+		{
+			square.setText(blackPiece);
+		}	
 		return 0;
 	}
 	
-	public int printWhite(Coordinate coor)
-	{
-		if(coor.getX() < 0 || coor.getY() < 0)
-		{
-			return 1;
-		}
-		JButton square = boardSquares[coor.getX()][coor.getY()];
-		square.setText(whitePiece);
-		return 0;
-	}
 	
-	public int printKing(Coordinate coor)
-	{
-		if(coor.getX() < 0 || coor.getY() < 0)
-		{
-			return 1;
-		}
-		JButton square = boardSquares[coor.getX()][coor.getY()];
-		square.setText(whiteKing);
-		return 0;
-	}
 	
 	public int removePiece(Coordinate coor)
 	{
@@ -160,112 +166,159 @@ public class Board extends JPanel
 		return 0;
 	}
 	
-	public int printAllPieces()
+	public int printAll()
 	{
-		Coordinate[] coor_array = new Coordinate[36];
-		coor_array = pieces.getBoardStatus();
-		
-		printKing(coor_array[kingIndex]);
-		for(int i = 0 ; i < numWhites ; i++)
-		{
-			printWhite(coor_array[whiteIndex + i]);
-		}
-		for(int i = 0 ; i < numBlacks ; i++)
-		{
-			printBlack(coor_array[blackIndex + i]);
-		}
-		return 0;
-	} 
-	
-	public int switchTurn(int move)
-	{	
-		Coordinate[] coor_array = new Coordinate[36];
-		coor_array = pieces.getBoardStatus();
-		if ((move + 1) % 2 == 0)	// disable white
-		{
-			disable(coor_array[kingIndex]);
-			
-			for(int i = 0 ; i < numWhites ; i++)
-			{
-				disable(coor_array[whiteIndex + i]);
-			}
-			for(int i = 0 ; i < numBlacks ; i++)
-			{
-				enable(coor_array[blackIndex + i]);
-			}
-		} else //(move + 1) % 2 == 1, disable black
-		{
-			for(int i = 0 ; i < numBlacks ; i++)
-			{
-				disable(coor_array[blackIndex + i]);
-			}
-			
-			enable(coor_array[kingIndex]);
-			
-			for(int i = 0 ; i < numWhites ; i++)
-			{
-				enable(coor_array[whiteIndex + i]);
-			}
-		}
+		printPieces(_player);
+		printPieces(_other);
 		return 0;
 	}
 	
-	public int enable(Coordinate coor)
+	public int printPieces(Player player)
+	{	
+		Coordinate[] pieces = player.getPieces();
+		for(int i = 0 ; i < pieces.length; i++)
+		{
+			if(player.isWhite())
+			{
+				if (i == 0)
+				{
+					printPiece(pieces[i], whiteKing);
+				}
+				else
+				{
+					printPiece(pieces[i], whitePiece);
+				}	
+			}	
+			else
+			{
+				printPiece(pieces[i], blackPiece);
+			}	
+		}		
+		return 0;
+	} 
+	
+	
+	private int enable(Coordinate coor)
 	{
 		JButton square = boardSquares[coor.getX()][coor.getY()];
 		square.setEnabled(true);
 		return 0;
 	}
 	
-	public int disable(Coordinate coor)
+	private int disable(Coordinate coor)
 	{
 		JButton square = boardSquares[coor.getX()][coor.getY()];
 		square.setEnabled(false);
 		return 0;
 	}
 	
-	ActionListener actionListener = new ActionListener()
+	ActionListener actionListener = new GameListener()
 	{
-		public void actionPerformed(ActionEvent actionEvent)
+		public void doPerformAction(ActionEvent actionEvent)
 		{
+			
 			JButton b = (JButton)actionEvent.getSource();
 			Coordinate coor = getButtonCoordinate(b);
-			if(first_clicked.getX() == -1 && first_clicked.getY() == -1)
+			if((first_clicked.getX() == -1 && first_clicked.getY() == -1) && (_manager.getIndex(coor) != -1))
 			{
 				first_clicked = coor;
 			}
 			else if(first_clicked.getX() == coor.getX() && first_clicked.getY() == coor.getY())
 			{
-				// Do nothing
+				// Unselect it
 			}
-			else
+			else if(_manager.getIndex(coor) == -1)
 			{
 				second_clicked = coor;
-				System.out.println("second clicked = :" + second_clicked);
-				if(pieces.isValid(first_clicked, second_clicked))
+				
+				if(_manager.isValid(first_clicked, second_clicked))
 				{
-					removePiece(first_clicked);
-					if(pieces.isWhite(first_clicked))
+					move(first_clicked, second_clicked);
+					_manager.updateLocation(second_clicked, first_clicked);
+					_player.doneWithTurn();
+					if (_player.hasWon())
 					{
-						printWhite(second_clicked);
+						JOptionPane.showMessageDialog(null, "Congratulations! You have won!");
+					}	
+					else if (_player.hasLost())
+					{
+						JOptionPane.showMessageDialog(null, "Sorry, you've lost!");
 					}
 					else
 					{
-						printBlack(second_clicked);
-					}
-					pieces.updateLocation(second_clicked, first_clicked);
-					first_clicked = new Coordinate(-1, -1);
-					whose_move = (whose_move + 1) % 2;
+						_other.newTurn();
+						resetClicks();
+						switchTurn();
+					}	
+					
 				}
-				second_clicked = new Coordinate(-1, -1);
-				switchTurn(whose_move);
+			}
+			else
+			{
+				// Do nothing...can't go to spot thats already occupied
 			}
 		}
 	};
 	
+	
 	public Coordinate getButtonCoordinate(JButton b)
 	{
 		return new Coordinate((int)(b.getMaximumSize().getWidth()/1000), (int)(b.getMaximumSize().getHeight()/1000));
+	}
+	
+	private void switchTurn()
+	{
+		Player temp = _player;
+		_player = _other;
+		_other = temp;
+		enable(_player);
+		disable(_other);
+		
+	}
+	
+	private void enable(Player player)
+	{
+		Coordinate [] pieces = player.getPieces();
+		
+		for(int i = 0 ; i < pieces.length; i++)
+		{
+				enable(pieces[i]);
+		}
+	}
+	
+	private void disable(Player player)
+	{
+		Coordinate [] pieces = player.getPieces();
+		
+		for(int i = 0 ; i < pieces.length; i++)
+		{
+				disable(pieces[i]);
+		}
+	}
+		
+	
+	private void move(Coordinate oldData, Coordinate newData)
+	{
+		removePiece(oldData);
+		
+		if (_manager.isKing(oldData))
+		{
+			printPiece(newData, whiteKing);
+		}
+		else if(_player.isWhite())
+		{
+			printPiece(newData, whitePiece);
+		}
+		else
+		{
+			printPiece(newData, blackPiece);
+		}
+	}
+	
+	private void resetClicks()
+	{
+		first_clicked = new Coordinate(-1, -1);
+		second_clicked = new Coordinate(-1, -1);
 	}
 }
 
