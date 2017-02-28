@@ -20,7 +20,6 @@ public class Board extends JPanel
 	private static final int numWhites = 12;
 	private static final int numBlacks = 24;
 	
-	private int whose_move = 1; // If 0 then white's move, if 1 then black's move
 	
 	private Coordinate first_clicked = new Coordinate(-1,-1);
 	private Coordinate second_clicked = new Coordinate(-1,-1);
@@ -241,6 +240,10 @@ public class Board extends JPanel
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You have won!");
 					}	
+					else if (_player.hasLost())
+					{
+						JOptionPane.showMessageDialog(null, "Sorry, you've lost!");
+					}
 					else
 					{
 						_other.newTurn();

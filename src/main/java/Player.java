@@ -62,7 +62,17 @@ public class Player
 	public boolean hasWon()
 	{
 		Coordinate king = _manager.getKing();
-		if (_manager.hasKingEscaped(king) && _manager.isKingSurrounded(king))
+		if (_manager.hasKingEscaped(king))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean hasLost()
+	{
+		Coordinate king = _manager.getKing();
+		if (_manager.isKingSurrounded(king) && _white == true)
 		{
 			return true;
 		}
