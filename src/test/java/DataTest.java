@@ -137,8 +137,8 @@ public class DataTest
 	@Test
 	public void testIfCoordinatesAreValid()
 	{
-		Coordinate c = new Coordinate(5, 5);
-		Coordinate b = new Coordinate(1, 5);
+		Coordinate c = new Coordinate(1, 4);
+		Coordinate b = new Coordinate(4, 4);
 		Data d = new Data();
 		d.initialize();
 		
