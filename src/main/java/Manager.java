@@ -248,6 +248,40 @@ public class Manager
 		}
 		return true;
 	}
+	/**
+	* Determines if a piece is trying to move to a special square
+	* @param x-the x coordinate of the destination
+	* @param y-the y coordinate of the destination
+	* @return false-if the destination is not one of the special squares
+	* @return true-if the destination is one of the special squares
+	*/
+	private boolean inSpecialSquare(int x, int y)
+	{
+		if(x==0 && y==0)
+		{
+			return true;
+		}
+		else if(x==10 && y==0)
+		{
+			return true;
+		}
+		else if(x==0 && y==10)
+		{
+			return true;
+		}
+		else if(x==10 && y==10)
+		{
+			return true;
+		}
+		else if(x==5 && y==5)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	
 
 	/**
@@ -261,6 +295,10 @@ public class Manager
 	{	
 		// System.out.println(origin.getX()+ " "+origin.getY() + " ____ "+ destination.getX()+ " "+ destination.getY());
  		if(inSameSpot(origin, destination)) //both coordinates are occupied
+ 		{
+ 			return false;
+ 		}
+ 		if(inSpecialSquare(destination.getX(), destination.getY()))
  		{
  			return false;
  		}

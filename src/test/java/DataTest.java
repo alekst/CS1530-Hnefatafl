@@ -216,6 +216,46 @@ public class DataTest
 		assertFalse(value);
 	}
 
+	@Test
+	public void testTopLeftSpecialSquare()
+	{
+		Manager m = new Manager();
+		Coordinate x=new Coordinate(0,3);
+		Coordinate y=new Coordinate(0,0);
+		boolean value=m.isValid(x,y);
+		assertFalse(value);
+	}
+
+	@Test
+	public void testBottomLeftSpecialSquare()
+	{
+		Manager m = new Manager();
+		Coordinate x=new Coordinate(0,7);
+		Coordinate y=new Coordinate(0,10);
+		boolean value=m.isValid(x,y);
+		assertFalse(value);
+	}
+
+	@Test
+	public void testTopRightSpecialSquare()
+	{
+		Manager m = new Manager();
+		Coordinate x=new Coordinate(10,3);
+		Coordinate y=new Coordinate(10,0);
+		boolean value=m.isValid(x,y);
+		assertFalse(value);
+	}
+
+	@Test
+	public void testBottomRightSpecialSquare()
+	{
+		Manager m = new Manager();
+		Coordinate x=new Coordinate(10,7);
+		Coordinate y=new Coordinate(10,10);
+		boolean value=m.isValid(x,y);
+		assertFalse(value);
+	}
+
 
 	
 	@Test
