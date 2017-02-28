@@ -44,11 +44,6 @@ public class Data
 		return Arrays.asList(boardData).indexOf(value);
 	}
 	
-	public void printBoardData() // for testing
-	{
-		System.out.println(Arrays.toString(boardData));
-	}
-	
 	
 	
 	public void set(int index, int value)
