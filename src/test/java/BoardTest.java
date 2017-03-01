@@ -45,10 +45,9 @@ public class BoardTest
 	@Test
 	public void testPrintPieces()
 	{
-		Board b = new Board();
-		Player p = new Player();
-		Manager m = new Manager();
-		
-		assertEquals(b.printPieces(p), 0);
+		Game g = new Game();
+		Board b = g.queryBoard();
+		assertEquals(b.printPieces(g.queryPlayers()[0]), 0);
+		assertEquals(b.printPieces(g.queryPlayers()[1]), 0);
 	}
 }
