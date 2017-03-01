@@ -32,6 +32,16 @@ public class Game
 		MainFrame _mf = new MainFrame(_board);
 	}
 	
+	public Manager queryManager()
+	{
+		return _manager;
+	}
+	
+	public Board queryBoard()
+	{
+		return _board;
+	}
+	
 	// to save the game
 	public void save()
 	{
