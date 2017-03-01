@@ -32,6 +32,24 @@ public class Game
 		MainFrame _mf = new MainFrame(_board);
 	}
 	
+	public Manager queryManager()
+	{
+		return _manager;
+	}
+	
+	public Board queryBoard()
+	{
+		return _board;
+	}
+	
+	public Player[] queryPlayers()
+	{
+		Player[] players = new Player[2];
+		players[0] = _whites;
+		players[1] = _blacks;
+		return players;
+	}
+	
 	// to save the game
 	public void save()
 	{
