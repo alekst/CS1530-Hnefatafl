@@ -235,21 +235,14 @@ public class Board extends JPanel
 				{
 					move(first_clicked, second_clicked);
 					_manager.updateLocation(second_clicked, first_clicked);
-					_player.doneWithTurn();
 					if (_player.hasWon())
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You have won!");
 					}	
-					else if (_player.hasLost())
-					{
-						JOptionPane.showMessageDialog(null, "Sorry, you've lost!");
-					}
-					else
-					{
-						_other.newTurn();
-						resetClicks();
-						switchTurn();
-					}	
+					_player.doneWithTurn();
+					_other.newTurn();
+					resetClicks();
+					switchTurn();
 					
 				}
 			}
