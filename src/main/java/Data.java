@@ -8,6 +8,10 @@ public class Data
 	public Integer[] boardData; // Should be public so that the Board object can actually access the coordinates
 	public Integer[] specialSquares; 
 	
+	
+	/**
+	* The Data object constructor. Initializes the boardData array along with the specialSquares array. 
+	*/
 	public Data()
 	{
 	    Integer[] initialData = {61, 59, 60, 62, 63, 49, 50, 51, 39, 71, 72, 73, 83, 4, 5, 6, 7, 8, 17, 34, 44, 45, 55, 56, 57, 65, 66, 67, 77, 78, 88, 105, 114, 115, 116, 117, 118
@@ -44,8 +48,12 @@ public class Data
 		return Arrays.asList(boardData).indexOf(value);
 	}
 	
-	
-	
+	/**
+	* Sets a value to the index in the array.  
+	* @param index
+	* @param value
+	*
+	*/
 	public void set(int index, int value)
 	{
 		boardData[index] = value;
@@ -95,9 +103,12 @@ public class Data
 		else 
 			return false;
 	}
-
-
-	
+	/**
+	* Returns true if the king in the given value is on the special corner squares. Otherwise, returns false
+	* @param integer value of a location
+	* @return true if the king is on a special square
+	* @return false if the king is not on a special square
+	*/
 	public boolean isKingOnSpecialSquare(int value)
 	{
 		if (value != 61) // if the square isn't the throne
@@ -106,11 +117,10 @@ public class Data
 		}
 		return false;	
 	}	
-
 	
 	/**
 	* Returns true if the king is surrounded by black pieces in four directions. 
-	* @param data-coordinate of a king's location
+	* @param an encoded value of the Coordinate object
 	* @return true if the king is surrounded by black pieces
 	* @return false if the king is not
 	*/
@@ -140,7 +150,6 @@ public class Data
 	* Returns an array of integers of squares to check if they are taken
 	* @param an encoded value of the Coordinate object
 	* @return an array of Integers containing values of neighboring squares. 
-	* @return false if the king is not
 	*/
 	private Integer[] getNeighbors(int value)
 	{
@@ -148,6 +157,12 @@ public class Data
 		return arr;
 	}	
 	
+	/**
+	* Returns true if the value is in the special squares array. Otherwise returns false. 
+	* @param an encoded value of the Coordinate object
+	* @return true if the value is a special square
+	* @return false if the value is not a special square
+	*/	
 	private boolean isSpecialSquare(int value)
 	{
 		return Arrays.asList(specialSquares).contains(value);
