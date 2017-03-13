@@ -148,7 +148,7 @@ public class Data
 	/**
 	* Returns an array of integers of squares to check if they are taken
 	* @param an encoded value of the Coordinate object
-	* @return an array of Integers containing values of neighboring squares. 
+	* @return an array of Integers containing values of neighboring squares.
 	*/
 	private Integer[] getNeighbors(int value)
 	{
