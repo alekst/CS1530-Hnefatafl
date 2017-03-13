@@ -49,10 +49,9 @@ public class Data
 	}
 	
 	/**
-	* Sets a value to the index in the array.  
+	* Takes a value and an index and sets the value to the index in the boardData array.  
 	* @param index
 	* @param value
-	*
 	*/
 	public void set(int index, int value)
 	{
