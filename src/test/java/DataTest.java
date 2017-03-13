@@ -8,9 +8,11 @@ public class DataTest
 {
 	
 
-	/* These three tests test to see if 
-	* the conversion from a positive integer value 
-	* and the Coordinate object is correct */
+	/* 
+	*	These three tests test to see if 
+	* 	the conversion from a positive integer value 
+	* 	and the Coordinate object is correct 
+	*/
 	@Test
 	public void testDecodingCoordinates55()
 	{
@@ -38,8 +40,10 @@ public class DataTest
 		assertEquals(c.getY(), 0);
 	}
 	
-	/* This test determines if a coodrinate object contains -1, -1 for x and y
-	* if the argument value is negative */
+	/* 
+	*	This test determines if a coodrinate object contains -1, -1 for x and y
+	* 	if the argument value is negative 
+	*/
 	@Test
 	public void testDecodingNegativeNumber()
 	{
@@ -50,8 +54,10 @@ public class DataTest
 	}
 	
 	
-	/* This tests if in the initial board set up, the king is located at the square number 65
-	* i.e. it is in the 6th row and the 6th column */
+	/* 
+	*	This tests if in the initial board set up, the king is located at the square number 65
+	* i.e. it is in the 6th row and the 6th column 
+	*/
 	@Test
 	public void testGettingIndexOfKing()
 	{
@@ -64,7 +70,8 @@ public class DataTest
 		assertEquals(index, 0); // the king lives in the index 0
 	}
 	
-	/* This tests if in the initial board set up, a white piece is in the square 50
+	/* 
+	*	This tests if in the initial board set up, a white piece is in the square 50
 	 */
 	@Test
 	public void testGettingIndexOfAPiece()
@@ -78,8 +85,10 @@ public class DataTest
 		assertTrue(index < 13); // the piece should be white, i.e. its index is below 13
 	}
 	
-	/* This tests if the method getIndex returns -1 when an integer value of the square
-	* is not in the boardData array. */
+	/* 
+	*	This tests if the method getIndex returns -1 when an integer value of the square
+	* 	is not in the boardData array. 
+	*/
 	@Test
 	public void testGettingIndexEmptySquare()
 	{
@@ -93,9 +102,11 @@ public class DataTest
 		assertEquals(index, -1); //-1 means not found
 	}
 	
-	/* 	This tests if the value in the array is set correctly if 
+	/* 	
+	*	This tests if the value in the array is set correctly if 
 	*	the index is not more than the number
-	*	of pieces, i.e. the array size */
+	*	of pieces, i.e. the array size 
+	*/
 	@Test
 	public void testSettingTheValue()
 	{
@@ -106,8 +117,10 @@ public class DataTest
 		assertEquals(d.getIndex(10), 0); //the value of index 0 should be 10
 	}
 	
-	/* 	This tests if the index is more than the number
-	*	an exception is thrown */
+	/* 	
+	* 	This tests if the index is more than the number
+	*	an exception is thrown 
+	*/
 	@Test(expected=IndexOutOfBoundsException.class)
 	public void testSettingTheLargeValue()
 	{
@@ -116,7 +129,8 @@ public class DataTest
 		d.set(100, 10); //the index is 100, way more than the number of pieces
 	}
 	
-	/* 	This will test if, given an index in the array, 
+	/* 	
+	*	This will test if, given an index in the array, 
 	* 	the correct Coordinate object is returned. 
 	*/
 	@Test
@@ -128,7 +142,8 @@ public class DataTest
 		assertEquals(c.getY(), 5);	
 	}
 	
-	/* 	This will test if, given an index in the array,
+	/* 	
+	* 	This will test if, given an index in the array,
 	* 	to the piece that is no longer in the game, 
 	* 	the correct Coordinate object is returned, i.e. null. 
 	*/
@@ -142,8 +157,10 @@ public class DataTest
 		assertNull(c);	
 	}
 	
-	/* 	This tests if the index is more than the number
-	*	an exception is thrown */
+	/* 	
+	*	This tests if the index is more than the number
+	*	an exception is thrown 
+	*/
 	@Test(expected=IndexOutOfBoundsException.class)
 	public void testCoordinatesWithTheLargeIndex()
 	{
@@ -183,7 +200,8 @@ public class DataTest
 		assertFalse(d.isWhite(4)); // 4 is the value of one of the black pieces.  
 	}
 	
-	/* This will test if the King is on a special square
+	/*
+	* 	This will test if the King is on a special square
 	*/
 	@Test
 	public void testIfKingIsOnSpecialSquare()
@@ -195,7 +213,8 @@ public class DataTest
 		assertTrue(d.isKingOnSpecialSquare(121));
 	}
 	
-	/* This will test if the King is not on a special square
+	/* 
+	* 	This will test if the King is not on a special square
 	*/
 	@Test
 	public void testIfKingIsNotOnSpecialSquare()
@@ -206,7 +225,8 @@ public class DataTest
 	}
 	
 	
-	/* This will test if the King is surrounded by four black pieces
+	/* 
+	*	This will test if the King is surrounded by four black pieces
 	*/
 	@Test
 	public void testIfKingHasLost()
@@ -220,7 +240,8 @@ public class DataTest
 		assertTrue(d.kingLost(33));
 	}
 	
-	/* This will test if the King is not surrounded by four black pieces
+	/* 
+	*	This will test if the King is not surrounded by four black pieces
 	*/
 	@Test
 	public void testIfKingHasNotLost()
@@ -234,7 +255,8 @@ public class DataTest
 		assertFalse(d.kingLost(100)); 
 	}
 	
-	/* This will test if the King is surrounded by three black pieces and the throne
+	/* 
+	*	This will test if the King is surrounded by three black pieces and the throne
 	*/
 	@Test
 	public void testIfKingHasLostNearThrone()
