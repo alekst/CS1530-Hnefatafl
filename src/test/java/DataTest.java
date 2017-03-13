@@ -115,7 +115,10 @@ public class DataTest
 	
 	}
 	
-	
+	/**
+	* Tests to see if the destination square is unoccupied and if it is
+	* the move should be valid.
+	*/
 	@Test
 	public void testIfCoordinatesAreValid()
 	{
@@ -126,6 +129,10 @@ public class DataTest
 		assertTrue(m.isValid(c, b));	
 	}
 	
+	/**
+	* Tests to see if the destination square is occupied and if it is
+	* the method should return false
+	*/
 	@Test
 	public void testIfCoordinatesAreInvalid()
 	{
@@ -136,6 +143,9 @@ public class DataTest
 		assertFalse(m.isValid(c, b));	
 	}
 
+	/**
+	* Tests whether an up down move is valid
+	*/
 	@Test 
 	public void testIfUpDownMoveIsValid()
 	{
@@ -145,6 +155,10 @@ public class DataTest
         boolean value=m.isValid(x,y);
         assertTrue(value);
 	}
+
+	/**
+	* Tests whether an up down is invalid
+	*/
 
 	@Test
 	public void testIfUpDownMoveIsInvalid()
@@ -156,6 +170,9 @@ public class DataTest
 		assertFalse(value);
 	}
 
+	/**
+	* Tests whether a down up move is valid
+	*/
 	@Test
 	public void testIfDownUpMoveIsValid()
 	{
@@ -165,6 +182,10 @@ public class DataTest
 		boolean value=m.isValid(x,y);
 		assertTrue(value);
 	}
+
+	/**
+	* Tests whether a down up move is invalid
+	*/
 
 	@Test 
 	public void testIfDownUpMoveIsInvalid()
@@ -176,6 +197,9 @@ public class DataTest
 		assertFalse(value);
 	}
 
+	/**
+	* Tests whether a left right move is valid
+	*/
 	@Test
 	public void testIfLeftRightMoveIsValid()
 	{
@@ -186,6 +210,9 @@ public class DataTest
 		assertTrue(value);
 	}
 
+	/**
+	* Tests whether a left right move is invalid
+	*/
 	@Test
 	public void testIfLeftRightMoveIsInvalid()
 	{
@@ -196,6 +223,9 @@ public class DataTest
 		assertFalse(value);
 	}
 
+	/**
+	* Tests whether a right left move is valid
+	*/
 	@Test
 	public void testIfRighLeftMoveIsValid()
 	{
@@ -206,6 +236,9 @@ public class DataTest
 		assertTrue(value);
 	}
 
+	/**
+	* Tests whether a right left move is invalid
+	*/
 	@Test
 	public void testIfRighLeftMoveIsInvalid()
 	{
@@ -216,6 +249,9 @@ public class DataTest
 		assertFalse(value);
 	}
 
+	/**
+	* tests to ensure non-king pieces cannot enter the top left special square
+	*/
 	@Test
 	public void testTopLeftSpecialSquare()
 	{
@@ -226,6 +262,9 @@ public class DataTest
 		assertFalse(value);
 	}
 
+	/**
+	* tests to ensure non-king pieces cannot enter the bottom left special square
+	*/
 	@Test
 	public void testBottomLeftSpecialSquare()
 	{
@@ -236,6 +275,9 @@ public class DataTest
 		assertFalse(value);
 	}
 
+	/**
+	* tests to ensure non-king pieces cannot enter the top right special square
+	*/
 	@Test
 	public void testTopRightSpecialSquare()
 	{
@@ -246,6 +288,9 @@ public class DataTest
 		assertFalse(value);
 	}
 
+	/**
+	* tests to ensure non-king pieces cannot enter the bottom right special square
+	*/
 	@Test
 	public void testBottomRightSpecialSquare()
 	{
