@@ -23,6 +23,7 @@ public class Board extends JPanel
 	
 	private Coordinate first_clicked = new Coordinate(-1,-1);
 	private Coordinate second_clicked = new Coordinate(-1,-1);
+	private Color selected_color;
 	
 	//private Data pieces = new Data();
 	private Manager _manager;
@@ -222,10 +223,13 @@ public class Board extends JPanel
 			if((first_clicked.getX() == -1 && first_clicked.getY() == -1) && (_manager.getIndex(coor) != -1))
 			{
 				first_clicked = coor;
+				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
+				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
 			}
 			else if(first_clicked.getX() == coor.getX() && first_clicked.getY() == coor.getY())
 			{
 				// Unselect it
+				boardSquares[coor.getX()][coor.getY()].setBackground(selected_color);
 			}
 			else if(_manager.getIndex(coor) == -1)
 			{
@@ -234,6 +238,9 @@ public class Board extends JPanel
 				if(_manager.isValid(first_clicked, second_clicked))
 				{
 					move(first_clicked, second_clicked);
+					
+					boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
+					
 					_manager.updateLocation(second_clicked, first_clicked);
 					if (_player.hasWon())
 					{
@@ -248,7 +255,13 @@ public class Board extends JPanel
 			}
 			else
 			{
-				// Do nothing...can't go to spot thats already occupied
+				// User has clicked occupied space...select this piece as
+				// 		the piece to move
+				boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
+				
+				first_clicked = coor;
+				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
+				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
 			}
 		}
 	};
