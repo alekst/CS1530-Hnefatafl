@@ -29,12 +29,21 @@ public class Data
 	*/
 	public Coordinate decode(int value)
 	{
-		int x = value % 11 - 1;
-		if (x < 0) x = 10;
+		int x, y;
+		if (value < 0)
+		{
+			x = -1;
+			y = -1;
+		}
+		else
+		{
+			x = value % 11 - 1;
+			if (x < 0) x = 10;
 
-		int y = value / 11;
-		if (value % 11 == 0) y = y - 1;
-
+			y = value / 11;
+			if (value % 11 == 0) y = y - 1;
+		}
+		
 		return new Coordinate(x, y);
 	}
 	
@@ -55,7 +64,7 @@ public class Data
 	*/
 	public void set(int index, int value)
 	{
-		boardData[index] = value;
+		boardData[index] = value;	
 	}
 	
 	
@@ -63,13 +72,13 @@ public class Data
 	* Returns the Coordinate object, based on the index (0-36) of the array. If there is no piece in
 	* the game, it will return 0. 
 	* @param index-index value from array
-	* @return 0 if no piece in the game
+	* @return -1 if no piece in the game
 	* @return the decoded value of the index if the piece is in the game
 	*/
 	public Coordinate getCoordinate(int index)
 	{
 		int value = boardData[index];
-		if (value == 0)
+		if (value == -1)
 			return null;
 		else
 			return decode(value);
