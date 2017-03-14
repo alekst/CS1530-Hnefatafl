@@ -314,7 +314,10 @@ public class Manager
  		}
  		if(inSpecialSquare(destination.getX(), destination.getY()))
  		{
- 			return false;
+ 			if(isKing(origin)) //king is allowed to go to center and corner squares
+ 				return true;
+ 			else
+ 				return false;
  		}
  		else if (origin.getX() == destination.getX()) //vertical move
  		{
