@@ -193,6 +193,10 @@ public class ManagerTest
 		assertFalse(value);
 	}
 
+	/**
+	* tests a board set up in which the king should be cornered. 
+	*
+	*/
 	
 	@Test
 	public void testKingShouldBeCornered()
@@ -211,6 +215,10 @@ public class ManagerTest
 		
 	}
 	
+	/**
+	* tests a board set up (it is an initial set up) in which the king should not be cornered. 
+	*
+	*/
 	@Test 
 	public void testKingShouldNotBeCornered()
 	{
@@ -224,6 +232,11 @@ public class ManagerTest
 		assertFalse(m.isKingSurrounded(king));	
 	}
 	
+	/**
+	* tests to see if the king has escaped. 
+	*
+	*/
+	
 	@Test
 	public void testIfKingHasEscaped()
 	{
@@ -231,11 +244,16 @@ public class ManagerTest
 		Manager m = new Manager();
 		
 		
-		Coordinate king = new Coordinate(10, 10);
+		Coordinate king = new Coordinate(10, 10); // a special escape square
 		
 		// assert
 		assertTrue(m.hasKingEscaped(king));
 	}
+	
+	/**
+	* tests to see if the king has not escaped. 
+	*
+	*/
 	
 	@Test
 	public void testIfKingHasNotEscaped()
