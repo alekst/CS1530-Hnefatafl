@@ -6,64 +6,7 @@ import java.util.stream.*;
 
 public class ManagerTest
 {
-	@Test
-	public void testGettingIndexOfKing()
-	{
-		// arrange
-		Manager m = new Manager();
-		Coordinate c = new Coordinate(5, 5); // where the king should be
 
-		// act
-		int index = m.getIndex(c);
-
-		// assert
-		assertEquals(index, 0); // the king lives in the index 0
-	}
-
-	@Test
-	public void testGettingIndexEmptySquare()
-	{
-		// arrange
-		Manager m = new Manager();
-		Coordinate c = new Coordinate(0, 1); // shouldn't be in the array
-
-		// act
-		int index = m.getIndex(c);
-
-		// assert
-		assertEquals(index, -1); //-1 means not found
-	}
-
-	@Test
-	public void testIfNumberIsAMember()
-	{
-		// arrange
-		Manager m = new Manager();
-		Coordinate c = new Coordinate(5, 5); // the king
-	
-		// act
-		boolean b = m.someoneThere(c);
-	
-		// assert
-		assertTrue(b);
-	
-	}
-
-	@Test
-	public void testIfNumberIsNotAMember()
-	{
-		// arrange
-		Manager m = new Manager();
-		Coordinate c = new Coordinate(0, 0); // the first square is empty
-	
-		// act
-		boolean b = m.someoneThere(c);
-	
-		// assert
-		assertFalse(b);
-	
-	}
-	
 	/**
 	* Tests to see if the destination square is unoccupied and if it is
 	* the move should be valid.
@@ -250,6 +193,10 @@ public class ManagerTest
 		assertFalse(value);
 	}
 
+	/**
+	* tests a board set up in which the king should be cornered. 
+	*
+	*/
 	
 	@Test
 	public void testKingShouldBeCornered()
@@ -268,6 +215,10 @@ public class ManagerTest
 		
 	}
 	
+	/**
+	* tests a board set up (it is an initial set up) in which the king should not be cornered. 
+	*
+	*/
 	@Test 
 	public void testKingShouldNotBeCornered()
 	{
@@ -281,6 +232,11 @@ public class ManagerTest
 		assertFalse(m.isKingSurrounded(king));	
 	}
 	
+	/**
+	* tests to see if the king has escaped. 
+	*
+	*/
+	
 	@Test
 	public void testIfKingHasEscaped()
 	{
@@ -288,11 +244,16 @@ public class ManagerTest
 		Manager m = new Manager();
 		
 		
-		Coordinate king = new Coordinate(10, 10);
+		Coordinate king = new Coordinate(10, 10); // a special escape square
 		
 		// assert
 		assertTrue(m.hasKingEscaped(king));
 	}
+	
+	/**
+	* tests to see if the king has not escaped. 
+	*
+	*/
 	
 	@Test
 	public void testIfKingHasNotEscaped()
