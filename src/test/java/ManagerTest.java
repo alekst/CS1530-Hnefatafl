@@ -6,64 +6,7 @@ import java.util.stream.*;
 
 public class ManagerTest
 {
-	@Test
-	public void testGettingIndexOfKing()
-	{
-		// arrange
-		Manager m = new Manager();
-		Coordinate c = new Coordinate(5, 5); // where the king should be
 
-		// act
-		int index = m.getIndex(c);
-
-		// assert
-		assertEquals(index, 0); // the king lives in the index 0
-	}
-
-	@Test
-	public void testGettingIndexEmptySquare()
-	{
-		// arrange
-		Manager m = new Manager();
-		Coordinate c = new Coordinate(0, 1); // shouldn't be in the array
-
-		// act
-		int index = m.getIndex(c);
-
-		// assert
-		assertEquals(index, -1); //-1 means not found
-	}
-
-	@Test
-	public void testIfNumberIsAMember()
-	{
-		// arrange
-		Manager m = new Manager();
-		Coordinate c = new Coordinate(5, 5); // the king
-	
-		// act
-		boolean b = m.someoneThere(c);
-	
-		// assert
-		assertTrue(b);
-	
-	}
-
-	@Test
-	public void testIfNumberIsNotAMember()
-	{
-		// arrange
-		Manager m = new Manager();
-		Coordinate c = new Coordinate(0, 0); // the first square is empty
-	
-		// act
-		boolean b = m.someoneThere(c);
-	
-		// assert
-		assertFalse(b);
-	
-	}
-	
 	/**
 	* Tests to see if the destination square is unoccupied and if it is
 	* the move should be valid.
