@@ -88,7 +88,7 @@ public class Data
 	* Returns true if the coordinates are in the array. Otherwise, it returns false. 
 	* @param data-coordinate of a location
 	* @return true if the coordinates are in the array
-	* @return false if the coordinats are not in the array
+	* @return false if the coordinates are not in the array
 	*/	
 	public boolean isMember (int value)
 	{
