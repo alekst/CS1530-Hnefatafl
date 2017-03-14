@@ -1,16 +1,22 @@
-As a player, I want the program to open an window, so that I can play a game   8 (NOT DONE)
+As a player, I want the program to open an window, so that I can play a game   8 (DONE)
 
-As a player, I want to display a game board, so that I can see the current status of the game 8 (NOT DONE)
+As a player, I want to display a game board, so that I can see the current status of the game 8 (DONE)
 
 As a player, I want the ability to move my pieces by first clicking on such pieces then clicking on a destination for such piece, so that I can visualize how I am interacting with the game  8
 
 As a player, I want the ability to move to valid locations, so that I can play the game properly 4
 
-As a player, I want the king's throne and the four corner squares to be visually distinct, so that I know which squares may be occupied only by the king. 
+As a player, I want the ability to do simple captures of my opponent's pieces, so that I can progress the game. 8
 
-As a player, I want the ability to play with 2 players, so you can play with other people  2
+As a defender, I want the ability to move my king to the corner squares, so that I can end the game. 2
 
-As a player, I want the ability to create a new game, so that I can play a new game 4
+As an attacker, I want the ability to surround the king from four sides, so that I can capture it. 2
+
+As a player, I want the king's throne and the four corner squares to be visually distinct, so that I know which squares may be occupied only by the king. 1
+
+As a player, I want the ability to play with 2 players, so you can play with other people  2 (DONE)
+
+As a player, I want the ability to create a new game, so that I can play a new game 4 (DONE)
 
 As a player, I want the ability to save my current game, so that I can resume playing later 4
 

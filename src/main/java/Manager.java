@@ -14,13 +14,17 @@ public class Manager
 	private static final int numBlacks = 24;
 	private static final int totalPieces = 37;
 	
-	
+	/**
+	* initialize a data object
+	*/
 	public Manager()
 	{
 		_data = new Data();
 	}
 	
-	// This setter is used by tests only. 
+	/**
+	* This setter is used by tests only. 
+	*/
 	public void setData (Data data)
 	{
 		_data = data;
@@ -50,12 +54,17 @@ public class Manager
 		return index;	
 	}
 	
+	/**
+	* @retrun the coordinates of the king
+	*/
 	public Coordinate getKing()
 	{
 		return _data.getCoordinate(0);
 	}
 	
-	
+	/**
+	* @return whites-returns an array containing the coordiantes of all the whtie pieces
+	*/
 	public Coordinate[] getWhites()
 	{
 		Coordinate[] whites = new Coordinate[numWhites];
@@ -65,7 +74,9 @@ public class Manager
 		}
 		return whites;
 	}
-	
+	/**
+	* @return blacks-returns an array containing the coordiantes of all the black pieces
+	*/
 	public Coordinate[] getBlacks()
 	{
 		Coordinate[]blacks = new Coordinate[numBlacks];
@@ -92,6 +103,11 @@ public class Manager
 		return _board;
 	}
 	
+	/**
+	* @param coord-The coordinate object of a locatio
+	* @return true-if the coordinate contains a white piece
+	* @return false-if the coordinate does not contain a white piece
+	*/
 	public boolean isWhite(Coordinate coord)
 	{
 		int value = encode(coord);
@@ -298,7 +314,10 @@ public class Manager
  		}
  		if(inSpecialSquare(destination.getX(), destination.getY()))
  		{
- 			return false;
+ 			if(isKing(origin)) //king is allowed to go to center and corner squares
+ 				return true;
+ 			else
+ 				return false;
  		}
  		else if (origin.getX() == destination.getX()) //vertical move
  		{
