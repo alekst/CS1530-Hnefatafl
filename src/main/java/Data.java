@@ -8,6 +8,10 @@ public class Data
 	public Integer[] boardData; // Should be public so that the Board object can actually access the coordinates
 	public Integer[] specialSquares; 
 	
+	
+	/**
+	* The Data object constructor. Initializes the boardData array along with the specialSquares array. 
+	*/
 	public Data()
 	{
 	    Integer[] initialData = {61, 59, 60, 62, 63, 49, 50, 51, 39, 71, 72, 73, 83, 4, 5, 6, 7, 8, 17, 34, 44, 45, 55, 56, 57, 65, 66, 67, 77, 78, 88, 105, 114, 115, 116, 117, 118
@@ -25,12 +29,21 @@ public class Data
 	*/
 	public Coordinate decode(int value)
 	{
-		int x = value % 11 - 1;
-		if (x < 0) x = 10;
+		int x, y;
+		if (value < 0)
+		{
+			x = -1;
+			y = -1;
+		}
+		else
+		{
+			x = value % 11 - 1;
+			if (x < 0) x = 10;
 
-		int y = value / 11;
-		if (value % 11 == 0) y = y - 1;
-
+			y = value / 11;
+			if (value % 11 == 0) y = y - 1;
+		}
+		
 		return new Coordinate(x, y);
 	}
 	
@@ -44,11 +57,14 @@ public class Data
 		return Arrays.asList(boardData).indexOf(value);
 	}
 	
-	
-	
+	/**
+	* Takes a value and an index and sets the value to the index in the boardData array.  
+	* @param index
+	* @param value
+	*/
 	public void set(int index, int value)
 	{
-		boardData[index] = value;
+		boardData[index] = value;	
 	}
 	
 	
@@ -56,13 +72,13 @@ public class Data
 	* Returns the Coordinate object, based on the index (0-36) of the array. If there is no piece in
 	* the game, it will return 0. 
 	* @param index-index value from array
-	* @return 0 if no piece in the game
+	* @return -1 if no piece in the game
 	* @return the decoded value of the index if the piece is in the game
 	*/
 	public Coordinate getCoordinate(int index)
 	{
 		int value = boardData[index];
-		if (value == 0)
+		if (value == -1)
 			return null;
 		else
 			return decode(value);
@@ -72,7 +88,7 @@ public class Data
 	* Returns true if the coordinates are in the array. Otherwise, it returns false. 
 	* @param data-coordinate of a location
 	* @return true if the coordinates are in the array
-	* @return false if the coordinats are not in the array
+	* @return false if the coordinates are not in the array
 	*/	
 	public boolean isMember (int value)
 	{
@@ -95,9 +111,12 @@ public class Data
 		else 
 			return false;
 	}
-
-
-	
+	/**
+	* Returns true if the king in the given value is on the special corner squares. Otherwise, returns false
+	* @param integer value of a location
+	* @return true if the king is on a special square
+	* @return false if the king is not on a special square
+	*/
 	public boolean isKingOnSpecialSquare(int value)
 	{
 		if (value != 61) // if the square isn't the throne
@@ -106,11 +125,10 @@ public class Data
 		}
 		return false;	
 	}	
-
 	
 	/**
 	* Returns true if the king is surrounded by black pieces in four directions. 
-	* @param data-coordinate of a king's location
+	* @param an encoded value of the Coordinate object
 	* @return true if the king is surrounded by black pieces
 	* @return false if the king is not
 	*/
@@ -139,8 +157,7 @@ public class Data
 	/**
 	* Returns an array of integers of squares to check if they are taken
 	* @param an encoded value of the Coordinate object
-	* @return an array of Integers containing values of neighboring squares. 
-	* @return false if the king is not
+	* @return an array of Integers containing values of neighboring squares.
 	*/
 	private Integer[] getNeighbors(int value)
 	{
@@ -148,6 +165,12 @@ public class Data
 		return arr;
 	}	
 	
+	/**
+	* Returns true if the value is in the special squares array. Otherwise returns false. 
+	* @param an encoded value of the Coordinate object
+	* @return true if the value is a special square
+	* @return false if the value is not a special square
+	*/	
 	private boolean isSpecialSquare(int value)
 	{
 		return Arrays.asList(specialSquares).contains(value);
