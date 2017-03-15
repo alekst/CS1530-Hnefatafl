@@ -285,7 +285,9 @@ public class Board extends JPanel
 		
 		for(int i = 0 ; i < pieces.length; i++)
 		{
+			
 				disable(pieces[i]);
+		
 		}
 	}
 		
@@ -293,7 +295,7 @@ public class Board extends JPanel
 	private void move(Coordinate oldData, Coordinate newData)
 	{
 		removePiece(oldData);
-		
+			
 		if (_manager.isKing(oldData))
 		{
 			printPiece(newData, whiteKing);
