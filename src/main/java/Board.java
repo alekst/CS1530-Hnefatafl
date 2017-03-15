@@ -249,6 +249,10 @@ public class Board extends JPanel
 		*/
 	private int enable(Coordinate coor)
 	{
+		if(coor.getX() < 0 || coor.getY() < 0)
+		{
+			return 1;
+		}
 		JButton square = boardSquares[coor.getX()][coor.getY()];
 		square.setEnabled(true);
 		return 0;
@@ -261,6 +265,10 @@ public class Board extends JPanel
 		*/
 	private int disable(Coordinate coor)
 	{
+		if(coor.getX() < 0 || coor.getY() < 0)
+		{
+			return 1;
+		}
 		JButton square = boardSquares[coor.getX()][coor.getY()];
 		square.setEnabled(false);
 		return 0;
