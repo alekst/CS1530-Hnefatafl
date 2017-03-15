@@ -8,6 +8,10 @@ public class LoadButton extends JButton
 
 	private Board _m;
 	
+	/**
+	* Constructor...Button is currently set to disabled
+	* @param m-Board that this button exists in
+	*/
 	public LoadButton(Board m) 
 	{
 		super("Load");
@@ -18,6 +22,10 @@ public class LoadButton extends JButton
 
 	class LoadButtonListener implements ActionListener 
 	{
+		/**
+		* Loads an existing game
+		* @param e-The action event
+		*/
 		public void actionPerformed(ActionEvent e) 
 		{
 			
