@@ -11,6 +11,10 @@ public class SaveButton extends JButton
 
 	private Board _m;
 
+	/**
+	* Constructor...Button is currently set to disabled
+	* @param m-Board that this button exists in
+	*/
 	public SaveButton(Board m) 
 	{
 		super("Save");
@@ -21,7 +25,10 @@ public class SaveButton extends JButton
 
 	class SaveButtonListener implements ActionListener 
 	{
-		
+		/**
+		* Loads an existing game
+		* @param e-The action event
+		*/
 		public void actionPerformed(ActionEvent e) 
 		{
 
