@@ -6,6 +6,7 @@ import java.util.stream.*;
 
 public class CoordinateTest
 {
+	// Setup a Coordinate object and retrieve the x coordinate
 	@Test
 	public void testGetX()
 	{
@@ -15,6 +16,7 @@ public class CoordinateTest
 		assertEquals(c.getX(), 5);
 	}
 	
+	// Setup a Coordinate object and retrieve the y coordinate
 	@Test
 	public void testGetY()
 	{
