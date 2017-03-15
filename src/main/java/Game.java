@@ -8,12 +8,17 @@ public class Game
 	private Player _blacks;
 	private Manager _manager;
 	
+	/**
+	* Constructor
+	*/
 	public Game()
 	{
 		init();	
 	}
 	
-	// * initializes the game state
+	/**
+	* Initializes the game state
+	*/
 	private void init()
 	{
 		
@@ -32,16 +37,27 @@ public class Game
 		MainFrame _mf = new MainFrame(_board);
 	}
 	
+	/**
+	* @return the game's Manager object
+	*/
 	public Manager queryManager()
 	{
 		return _manager;
 	}
 	
+	/**
+	* @return the game's Board Object
+	*/
 	public Board queryBoard()
 	{
 		return _board;
 	}
 	
+	/**
+	* @return the two players in the game in form of an array of players
+	* 	index 0 is the white player
+	* 	index 1 is the black player
+	*/
 	public Player[] queryPlayers()
 	{
 		Player[] players = new Player[2];
@@ -50,13 +66,17 @@ public class Game
 		return players;
 	}
 	
-	// to save the game
+	/**
+	* Currently unused...will be used to save game
+	*/
 	public void save()
 	{
 		throw new UnsupportedOperationException();
 	}
 	
-	// to load the game
+	/**
+	* Currently unused...will be used to load game
+	*/
 	public void load()
 	{
 		throw new UnsupportedOperationException();
