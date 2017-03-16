@@ -312,6 +312,9 @@ public class Board extends JPanel
 					
 					_manager.updateLocation(second_clicked, first_clicked);
 					//add capture here
+					System.out.println(second_clicked);
+					_manager.isPieceSurrounded(second_clicked); //this is my function call
+					//System.out.println(_player.isWhite());
 					if (_player.hasWon())
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You have won!");
@@ -320,7 +323,6 @@ public class Board extends JPanel
 					_other.newTurn();
 					resetClicks();
 					switchTurn();
-					
 				}
 			}
 			else

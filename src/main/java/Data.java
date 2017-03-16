@@ -175,6 +175,44 @@ public class Data
 	{
 		return Arrays.asList(specialSquares).contains(value);
 	}
+
+	public boolean pieceLost(int value)
+	{
+		Integer[] neighbors = getNeighbors(value); 	//gets neighbors of the coordinate
+
+		System.out.println(isWhite(value)); //will be used to determine which pieces are friendly or foe
+		//!isWhite(value) will determine which pieces are foes
+		//will need to use isMember method to see if the pieces are actually there
+
+		System.out.println(value);  //the value for which we will check neighbors
+		/*
+		for(int x=0; x<neighbors.length;x++)
+		{
+			System.out.println(neighbors[x]);
+		}
+		*/
+		for(int x=0; x<neighbors.length;x++)
+		{
+			if(isWhite(value))
+			{
+				if((!isWhite(neighbors[x]) && isMember(neighbors[x])))
+				{
+					//get direction of enemy neighbors
+					System.out.println(neighbors[x]);
+				}
+			}
+			else 
+			{	
+				if((isWhite(neighbors[x]))&&isMember(neighbors[x]))
+				{
+					//get direction of enemy neighbors
+					System.out.println(neighbors[x]);
+				}
+			}
+			
+		}
+		return true;
+	}
 	
 	
 	

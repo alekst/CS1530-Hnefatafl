@@ -384,5 +384,12 @@ public class Manager
 	}
 
 	//do logic of capture here
+	public boolean isPieceSurrounded(Coordinate coord)
+	{
+		int value=encode(coord);
+		_data.pieceLost(value);
+		//will probs needed to return an array of pieces to remove
+		return true;
+	}
 	
 }
