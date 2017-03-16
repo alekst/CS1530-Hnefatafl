@@ -311,6 +311,7 @@ public class Board extends JPanel
 					boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
 					
 					_manager.updateLocation(second_clicked, first_clicked);
+					//add capture here
 					if (_player.hasWon())
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You have won!");

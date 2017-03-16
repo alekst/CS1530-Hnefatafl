@@ -382,5 +382,7 @@ public class Manager
 		int value = encode(coord);
 		return _data.kingLost(value);
 	}
+
+	//do logic of capture here
 	
 }

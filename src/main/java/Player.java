@@ -129,5 +129,7 @@ public class Player
 		}
 		return false;
 	}
+
+	//add capture method here
 	
 }
