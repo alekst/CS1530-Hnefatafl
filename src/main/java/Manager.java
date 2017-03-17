@@ -384,11 +384,19 @@ public class Manager
 	}
 
 	//do logic of capture here
-	public boolean isPieceSurrounded(Coordinate coord)
+	public ArrayList<Coordinate> isPieceSurrounded(Coordinate coord)
 	{
 		int value=encode(coord);
-		_data.pieceLost(value);
+		ArrayList<Coordinate>piecesToRemove=_data.pieceLost(value);
+		
 		//will probs needed to return an array of pieces to remove
+		return piecesToRemove;
+	}
+
+	public boolean removePiece(Coordinate coord)
+	{
+		System.out.println(getIndex(coord));
+		_data.set(getIndex(coord),-1);
 		return true;
 	}
 	

@@ -175,11 +175,13 @@ public class Data
 	{
 		return Arrays.asList(specialSquares).contains(value);
 	}
+
 	//going to return an array of pieces captured
-	public boolean pieceLost(int value)
+	public ArrayList<Coordinate> pieceLost(int value)
 	{
 		Integer[] neighbors = getNeighbors(value); 	//gets neighbors of the coordinate
 		ArrayList<Integer> enemyNeighbors = new ArrayList<Integer>();
+		ArrayList<Integer>piecesToRemove=new ArrayList<Integer>();
 		System.out.println("start here "+value + "*****");  //the value for which we will check neighbors
 		for(int x=0; x<neighbors.length;x++) //directions -11 is up, +11 is down, +1 is right, -1 is left
 		{									// get neighbors returns +11, -11, +1, -1
@@ -222,7 +224,8 @@ public class Data
 						System.out.println("teammate to the north :"+teammate);
 						if(teammate)
 						{
-							System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 					else if (direction==11) //down
@@ -232,7 +235,8 @@ public class Data
 						System.out.println("teammate to the south :"+teammate);
 						if(teammate)
 						{
-							System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 					else if(direction==1) //right
@@ -242,7 +246,8 @@ public class Data
 						System.out.println("teammate to the west :"+teammate);
 						if(teammate)
 						{
-							System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 					else if(direction==-1)//left
@@ -252,7 +257,8 @@ public class Data
 						System.out.println("teammate to the east :"+teammate);
 						if(teammate)
 						{
-							System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 				}
@@ -273,7 +279,8 @@ public class Data
 						System.out.println("teammate to the north :"+teammate);
 						if(teammate)
 						{
-							System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 					else if (direction==11) //down
@@ -283,7 +290,8 @@ public class Data
 						System.out.println("teammate to the south :"+teammate);
 						if(teammate)
 						{
-							System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 					else if(direction==1) //right
@@ -293,7 +301,8 @@ public class Data
 						System.out.println("teammate to the west :"+teammate);
 						if(teammate)
 						{
-							System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 					else if(direction==-1)//left
@@ -303,12 +312,21 @@ public class Data
 						System.out.println("teammate to the east :"+teammate);
 						if(teammate)
 						{
-							System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 				}
 			}
 		}
-		return true;
+		//display remove array
+		ArrayList<Coordinate>coordsToRemove=new ArrayList<Coordinate>();
+		for(int i=0; i<piecesToRemove.size();i++)
+		{
+			Coordinate temp=decode(piecesToRemove.get(i));
+			coordsToRemove.add(temp);
+			System.out.println("remove piece @ "+piecesToRemove.get(i));
+		}
+		return coordsToRemove;
 	}
 }
