@@ -3,6 +3,8 @@ public class Player
 	private Manager _manager;
 	private boolean _white;
 	private boolean _turn;
+	private String _name;
+	private GameTimer _timer;
 	
 	/**
 	* Constructor
@@ -19,6 +21,23 @@ public class Player
 	public Player(Manager manager)
 	{
 		_manager = manager;
+	}
+	
+	/**
+	* Setter to set the Player name
+	*/
+		
+	public void setName(String name)
+	{
+		_name = name;
+	}
+	
+	/**
+	* Getter to show the Player name
+	*/ 
+	public String getName()
+	{
+		return _name;
 	}
 	
 	/**

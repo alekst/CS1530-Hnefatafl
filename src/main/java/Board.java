@@ -420,6 +420,16 @@ public class Board extends JPanel
 		first_clicked = new Coordinate(-1, -1);
 		second_clicked = new Coordinate(-1, -1);
 	}
+	
+	/**
+	* Get current players
+	*/
+	public Player[] getPlayers()
+	{
+		Player[] players = new Player[2];
+		players[0] = _player;
+		players[1] = _other;
+	}
 }
 
 

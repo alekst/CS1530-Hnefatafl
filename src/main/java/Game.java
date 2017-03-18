@@ -27,10 +27,12 @@ public class Game
 		// player 1
 		_whites = new Player(_manager);
 		_whites.setWhite();
+		_whites.setName("White"); // TODO: Allow user to set his/her own name
 		
 		// player 2
 		_blacks = new Player(_manager);
 		_blacks.setBlack();
+		_blacks.setName("Blacks");
 		
 		_board = new Board(_manager, _whites, _blacks);
 		

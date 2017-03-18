@@ -10,6 +10,8 @@ public class MainFrame
 	private JFrame _frame = new JFrame("Hnefatafl ");
 
 	private ButtonPanel _buttonPanel; //button panel
+	
+	private GameInfoPanel _gameInfo; //game info
 
 	public MainFrame(Board board) 
 	{
@@ -22,8 +24,11 @@ public class MainFrame
 
 		_buttonPanel = new ButtonPanel(board, this);
 		
+		_gameInfo = new GameInfoPanel(board);
+		
 		_frame.add(board.getBoard(), BorderLayout.CENTER);
 		_frame.add(_buttonPanel, BorderLayout.SOUTH);
+		_frame.add(_gameInfo, BorderLayout.EAST);
 		
 	
 		_frame.setVisible(true);	
