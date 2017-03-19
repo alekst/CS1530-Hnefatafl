@@ -175,8 +175,158 @@ public class Data
 	{
 		return Arrays.asList(specialSquares).contains(value);
 	}
-	
-	
-	
-	
+
+	//going to return an array of pieces captured
+	public ArrayList<Coordinate> pieceLost(int value)
+	{
+		Integer[] neighbors = getNeighbors(value); 	//gets neighbors of the coordinate
+		ArrayList<Integer> enemyNeighbors = new ArrayList<Integer>();
+		ArrayList<Integer>piecesToRemove=new ArrayList<Integer>();
+		System.out.println("start here "+value + "*****");  //the value for which we will check neighbors
+		for(int x=0; x<neighbors.length;x++) //directions -11 is up, +11 is down, +1 is right, -1 is left
+		{									// get neighbors returns +11, -11, +1, -1
+			if(isWhite(value))
+			{
+				if((!isWhite(neighbors[x]) && isMember(neighbors[x])))
+				{
+					enemyNeighbors.add(neighbors[x]); //add enemy neighbor to array of enemies
+				}
+			}
+			else //turn is black
+			{	
+				if((isWhite(neighbors[x]))&&isMember(neighbors[x]))
+				{
+					enemyNeighbors.add(neighbors[x]);
+				}
+			}
+		}
+		if(enemyNeighbors.size()==0) //no  enemy neighbors
+		{
+			System.out.println("no enemyNeighbors");
+		}
+		else //time to check to see if piece will be captured
+		{
+			//will need to loop through array of enemies and check the direction of where they are relation to value
+			//once directior is determined, see if there is a friendly piece 2 spaces away in that direction
+			if(isWhite(value))//white turn
+			{	
+				for(int i=0; i<enemyNeighbors.size();i++)
+				{
+					System.out.println("enemy @ "+enemyNeighbors.get(i).intValue());
+					int direction=0;
+					int temp_value=value; //to check for friendly pieces
+					direction=enemyNeighbors.get(i).intValue()-value;
+					System.out.println("enemy direction :"+direction);
+					if(direction==-11) //up
+					{
+						temp_value=temp_value-22; //check 2 spaces away
+						boolean teammate=isMember(temp_value)&&isWhite(temp_value);
+						System.out.println("teammate to the north :"+teammate);
+						if(teammate)
+						{
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
+						}
+					}
+					else if (direction==11) //down
+					{
+						temp_value=temp_value+22; //check 2 spaces away
+						boolean teammate=isMember(temp_value)&&isWhite(temp_value);
+						System.out.println("teammate to the south :"+teammate);
+						if(teammate)
+						{
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
+						}
+					}
+					else if(direction==1) //right
+					{
+						temp_value=temp_value+2; //check 2 spaces away
+						boolean teammate=isMember(temp_value)&&isWhite(temp_value);
+						System.out.println("teammate to the west :"+teammate);
+						if(teammate)
+						{
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
+						}
+					}
+					else if(direction==-1)//left
+					{	
+						temp_value=temp_value-2; //check 2 spaces away
+						boolean teammate=isMember(temp_value)&&isWhite(temp_value);
+						System.out.println("teammate to the east :"+teammate);
+						if(teammate)
+						{
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
+						}
+					}
+				}
+			}
+			else if(!isWhite(value))//black turn
+			{
+				for(int i=0; i<enemyNeighbors.size();i++)
+				{
+					System.out.println("enemy @ "+enemyNeighbors.get(i).intValue());
+					int direction=0;
+					int temp_value=value; //to check for friendly pieces
+					direction=enemyNeighbors.get(i).intValue()-value;
+					System.out.println("enemy direction :"+direction);
+					if(direction==-11) //up
+					{
+						temp_value=temp_value-22; //check 2 spaces away
+						boolean teammate=(isMember(temp_value)&&!isWhite(temp_value));
+						System.out.println("teammate to the north :"+teammate);
+						if(teammate)
+						{
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
+						}
+					}
+					else if (direction==11) //down
+					{
+						temp_value=temp_value+22; //check 2 spaces away
+						boolean teammate=(isMember(temp_value)&&!isWhite(temp_value));
+						System.out.println("teammate to the south :"+teammate);
+						if(teammate)
+						{
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
+						}
+					}
+					else if(direction==1) //right
+					{
+						temp_value=temp_value+2; //check 2 spaces away
+						boolean teammate=(isMember(temp_value)&&!isWhite(temp_value));
+						System.out.println("teammate to the west :"+teammate);
+						if(teammate)
+						{
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
+						}
+					}
+					else if(direction==-1)//left
+					{	
+						temp_value=temp_value-2; //check 2 spaces away
+						boolean teammate=(isMember(temp_value)&&!isWhite(temp_value));
+						System.out.println("teammate to the east :"+teammate);
+						if(teammate)
+						{
+							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
+							piecesToRemove.add(enemyNeighbors.get(i));
+						}
+					}
+				}
+			}
+		}
+		//display remove array
+		ArrayList<Coordinate>coordsToRemove=new ArrayList<Coordinate>();
+		for(int i=0; i<piecesToRemove.size();i++)
+		{
+			Coordinate temp=decode(piecesToRemove.get(i));
+			coordsToRemove.add(temp);
+			System.out.println("remove piece @ "+piecesToRemove.get(i));
+		}
+		return coordsToRemove;
+	}
 }

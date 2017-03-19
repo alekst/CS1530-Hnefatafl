@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import java.util.*;
 
 
 public class Board extends JPanel
@@ -248,8 +249,10 @@ public class Board extends JPanel
 		*	@param coor: Coordinate object designating the location where the piece should be enabled
 		* @return int, 0 on successful completion
 		*/
-	private int enable(Coordinate coor)
-	{
+	private int enable(Coordinate coor) 
+	{ 
+		if(coor==null)
+			return 0;
 		if(coor.getX() < 0 || coor.getY() < 0)
 		{
 			return 1;
@@ -266,6 +269,8 @@ public class Board extends JPanel
 		*/
 	private int disable(Coordinate coor)
 	{
+		if(coor==null)
+			return 0;
 		if(coor.getX() < 0 || coor.getY() < 0)
 		{
 			return 1;
@@ -311,15 +316,25 @@ public class Board extends JPanel
 					boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
 					
 					_manager.updateLocation(second_clicked, first_clicked);
+					//add capture here
+					ArrayList<Coordinate>piecesToRemove=_manager.isPieceSurrounded(second_clicked); //this is my function call
+					for(int i=0; i<piecesToRemove.size(); i++)
+					{
+						enable(piecesToRemove.get(i)); //enable the spot where the piece used to reside
+						removePiece(piecesToRemove.get(i));
+						
+						_manager.removePiece(piecesToRemove.get(i));
+					}
+					
 					if (_player.hasWon())
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You have won!");
+						//disable whole board
 					}	
 					_player.doneWithTurn();
 					_other.newTurn();
 					resetClicks();
 					switchTurn();
-					
 				}
 			}
 			else
@@ -356,7 +371,6 @@ public class Board extends JPanel
 		_other = temp;
 		enable(_player);
 		disable(_other);
-		
 	}
 	
 	/**

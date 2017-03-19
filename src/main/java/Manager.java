@@ -382,6 +382,23 @@ public class Manager
 		int value = encode(coord);
 		return _data.kingLost(value);
 	}
+
+	//do logic of capture here
+	public ArrayList<Coordinate> isPieceSurrounded(Coordinate coord)
+	{
+		int value=encode(coord);
+		ArrayList<Coordinate>piecesToRemove=_data.pieceLost(value);
+		
+		//will probs needed to return an array of pieces to remove
+		return piecesToRemove;
+	}
+
+	public boolean removePiece(Coordinate coord)
+	{
+		System.out.println(getIndex(coord));
+		_data.set(getIndex(coord),-1);
+		return true;
+	}
 	
 	
 	
