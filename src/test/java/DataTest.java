@@ -53,7 +53,6 @@ public class DataTest
 		assertEquals(c.getY(), -1);
 	}
 	
-	
 	/* 
 	*	This tests if in the initial board set up, the king is located at the square number 65
 	* i.e. it is in the 6th row and the 6th column 

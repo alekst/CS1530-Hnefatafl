@@ -383,4 +383,6 @@ public class Manager
 		return _data.kingLost(value);
 	}
 	
+	
+	
 }

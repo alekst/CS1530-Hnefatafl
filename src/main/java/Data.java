@@ -171,7 +171,7 @@ public class Data
 	* @return true if the value is a special square
 	* @return false if the value is not a special square
 	*/	
-	private boolean isSpecialSquare(int value)
+	public boolean isSpecialSquare(int value)
 	{
 		return Arrays.asList(specialSquares).contains(value);
 	}
