@@ -108,6 +108,8 @@ public class Data
 		int index = Arrays.asList(boardData).indexOf(value);
 		if (index < 13 && index > 0)
 			return true;
+		else if(index==0)
+			return true;
 		else 
 			return false;
 	}
@@ -124,7 +126,21 @@ public class Data
 			return Arrays.asList(specialSquares).contains(value);
 		}
 		return false;	
-	}	
+	}
+
+	/**
+	* returns true if the value is a special square
+	* @param integer value of a location
+	* @return true if the value is a special square
+	* @return false if value is not a special square
+	*/
+	public boolean specialSquare(int value)	
+	{
+		if(value==11 || value==1 || value==111 || value==121)
+			return true;
+		else
+			return false;
+	}
 	
 	/**
 	* Returns true if the king is surrounded by black pieces in four directions. 
@@ -208,7 +224,7 @@ public class Data
 		{
 			//will need to loop through array of enemies and check the direction of where they are relation to value
 			//once directior is determined, see if there is a friendly piece 2 spaces away in that direction
-			if(isWhite(value))//white turn
+			if(isWhite(value))//white turn, utilize special square captures here
 			{	
 				for(int i=0; i<enemyNeighbors.size();i++)
 				{
@@ -221,8 +237,9 @@ public class Data
 					{
 						temp_value=temp_value-22; //check 2 spaces away
 						boolean teammate=isMember(temp_value)&&isWhite(temp_value);
+						//check for special square, check four squares
 						System.out.println("teammate to the north :"+teammate);
-						if(teammate)
+						if(teammate || specialSquare(temp_value))
 						{
 							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
 							piecesToRemove.add(enemyNeighbors.get(i));
@@ -233,7 +250,7 @@ public class Data
 						temp_value=temp_value+22; //check 2 spaces away
 						boolean teammate=isMember(temp_value)&&isWhite(temp_value);
 						System.out.println("teammate to the south :"+teammate);
-						if(teammate)
+						if(teammate|| specialSquare(temp_value))
 						{
 							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
 							piecesToRemove.add(enemyNeighbors.get(i));
@@ -244,7 +261,7 @@ public class Data
 						temp_value=temp_value+2; //check 2 spaces away
 						boolean teammate=isMember(temp_value)&&isWhite(temp_value);
 						System.out.println("teammate to the west :"+teammate);
-						if(teammate)
+						if(teammate|| specialSquare(temp_value))
 						{
 							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
 							piecesToRemove.add(enemyNeighbors.get(i));
@@ -255,7 +272,7 @@ public class Data
 						temp_value=temp_value-2; //check 2 spaces away
 						boolean teammate=isMember(temp_value)&&isWhite(temp_value);
 						System.out.println("teammate to the east :"+teammate);
-						if(teammate)
+						if(teammate|| specialSquare(temp_value))
 						{
 							//System.out.println("remove piece @ "+enemyNeighbors.get(i).intValue());
 							piecesToRemove.add(enemyNeighbors.get(i));
