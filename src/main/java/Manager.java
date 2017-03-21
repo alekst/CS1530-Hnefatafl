@@ -388,7 +388,7 @@ public class Manager
 	{
 		int value=encode(coord);
 		ArrayList<Coordinate>piecesToRemove=_data.pieceLost(value);
-		
+		piecesToRemove.addAll(_data.shieldWallCapture(value));
 		//will probs needed to return an array of pieces to remove
 		return piecesToRemove;
 	}

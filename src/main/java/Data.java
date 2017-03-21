@@ -329,4 +329,131 @@ public class Data
 		}
 		return coordsToRemove;
 	}
+	
+	/**
+	* Returns true if there is a shield wall capture
+	* @param Coord-Coordinate of last piece moved
+	* @return true if the moved piece ends with a shield-wall 
+	* @return false if no capture has taken place
+	*/
+	public ArrayList<Coordinate> shieldWallCapture(int value)
+	{
+		// Check if piece landed on a wall and 
+		// have a unique case for each wall
+		ArrayList<Coordinate> return_list = new ArrayList<Coordinate>();
+		Coordinate coord = getCoordinate(value);
+		int offset = 1;
+		if((coord.getX() - 1 < 1) && (coord.getY() - 1 >= 1)) // west wall
+		{
+			while(isMember(value - 11 * offset) && (isWhite(value - 11 * offset) != isWhite(value))
+				&& isMember(value - 11 * offset + 1) && (isWhite(value - 11 * offset + 1) == isWhite(value)))
+				{
+					return_list.add(getCoordinate(value - 11 * offset));
+					if((isMember(value - 11 * (offset + 1)) && (isWhite(value - 11 * (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value + 11 * (offset + 1)))
+					{
+						return return_list;
+					}
+					offset++;
+				}
+			offset = 1;
+			while(isMember(value + 11 * offset) && (isWhite(value + 11 * offset) != isWhite(value))
+				&& isMember(value + 11 * offset + 1) && (isWhite(value + 11 * offset + 1) == isWhite(value)))
+				{
+					return_list.add(getCoordinate(value + 11 * offset));
+					if((isMember(value + 11 * (offset + 1)) && (isWhite(value + 11 * (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value + 11 * (offset + 1)))
+					{
+						return return_list;
+					}
+					offset++;
+				}
+		}	
+		else if((coord.getX() + 1 > 11) && (coord.getY() + 1 <= 11)) // east wall
+		{
+			
+			while(isMember(value - 11 * offset) && (isWhite(value - 11 * offset) != isWhite(value))
+				&& isMember(value - 11 * offset - 1) && (isWhite(value - 11 * offset - 1) == isWhite(value)))
+				{
+					return_list.add(getCoordinate(value - 11 * offset));
+					if((isMember(value - 11 * (offset + 1)) && (isWhite(value - 11 * (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value + 11 * (offset + 1)))
+					{
+						return return_list;
+					}
+					offset++;
+				}
+			offset = 1;
+			while(isMember(value + 11 * offset) && (isWhite(value + 11 * offset) != isWhite(value))
+				&& isMember(value + 11 * offset - 1) && (isWhite(value + 11 * offset - 1) == isWhite(value)))
+				{
+					return_list.add(getCoordinate(value + 11 * offset));
+					if((isMember(value + 11 * (offset + 1)) && (isWhite(value + 11 * (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value + 11 * (offset + 1)))
+					{
+						return return_list;
+					}
+					offset++;
+				}
+		}
+		else if((coord.getX() - 1 >= 1) && (coord.getY() + 1 > 11)) // south wall
+		{
+			while(isMember(value - offset) && (isWhite(value - offset) != isWhite(value))
+				&& isMember(value - offset - 11) && (isWhite(value - offset - 11) == isWhite(value)))
+				{
+					return_list.add(getCoordinate(value - offset));
+					if((isMember(value - (offset + 1)) && (isWhite(value - (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value + (offset + 1)))
+					{
+						return return_list;
+					}
+					offset++;
+				}
+			offset = 1;
+			while(isMember(value + offset) && (isWhite(value + offset) != isWhite(value))
+				&& isMember(value + offset - 11) && (isWhite(value + offset - 11) == isWhite(value)))
+				{
+					return_list.add(getCoordinate(value + offset));
+					if((isMember(value + (offset + 1)) && (isWhite(value + (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value + (offset + 1)))
+					{
+						return return_list;
+					}
+					offset++;
+				}
+		}
+		else if((coord.getX() + 1 <= 11) && (coord.getY() - 1 < 1)) // north wall
+		{
+			while(isMember(value - offset) && (isWhite(value - offset) != isWhite(value))
+				&& isMember(value - offset + 11) && (isWhite(value - offset + 11) == isWhite(value)))
+				{
+					return_list.add(getCoordinate(value - offset));
+					if((isMember(value - (offset + 1)) && (isWhite(value - (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value + (offset + 1)))
+					{
+						return return_list;
+					}
+					offset++;
+				}
+			offset = 1;
+			while(isMember(value + offset) && (isWhite(value + offset) != isWhite(value))
+				&& isMember(value + offset + 11) && (isWhite(value + offset + 11) == isWhite(value)))
+				{
+					return_list.add(getCoordinate(value + offset));
+					if((isMember(value + (offset + 1)) && (isWhite(value + (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value + (offset + 1)))
+					{
+						return return_list;
+					}
+					offset++;
+				}
+		}
+		else
+		{
+			// Not on an edge or is a corner so there is no shield 
+			// wall capture
+			return return_list;
+		}
+		return return_list;
+	}
 }
