@@ -31,6 +31,8 @@ public class Board extends JPanel
 	private Player _player;
 	private Player _other;
 	
+	private GameInfoPanel _game; // TODO: will be eventually moved to settings
+	
 	/**
 	 *	Empty constructor for game initialization purposes. Overridden by constructor below when instantiated.
 	 */
@@ -45,12 +47,13 @@ public class Board extends JPanel
 	 *	@param player: Player currently moving (pieces enabled)
 	 *	@param other: Player currently idle (pieces disabled)
 	 */
-	public Board(Manager manager, Player player, Player other)
+	public Board(Manager manager, GameInfoPanel game, Player player, Player other)
 	{
 		super();
 		_manager = manager;
 		_player = player;
 		_other = other;
+		_game = game;
 		setUpBoard();
 		createSquares();
 		fillSquares();
@@ -356,7 +359,7 @@ public class Board extends JPanel
 		_other = temp;
 		enable(_player);
 		disable(_other);
-		
+		_game.repaint();
 	}
 	
 	/**

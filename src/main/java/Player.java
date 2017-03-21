@@ -49,6 +49,14 @@ public class Player
     {
         _countdown = time;
     }
+    /**
+     * Decriment the coundown for the player
+     *
+     */
+    public void decrimentTimer()
+    {
+        _countdown--;
+    }
 
    /**
     * Getter to show the Player time remaining in seconds
