@@ -176,7 +176,21 @@ public class Data
 		return Arrays.asList(specialSquares).contains(value);
 	}
 	
-	
-	
+	/**
+	* "Prints" the current board status by returning a comma deliniated string for use in saving to a file 
+	*/
+	public String print()
+	{
+    String csv_out = new String();
+    for (int i=0; i < boardData.length; i++)
+    {
+      csv_out = csv_out + Integer.toString(boardData[i]);
+      if (i != (boardData.length - 1))
+      {
+        csv_out = csv_out + ',';
+      }
+    }
+    return csv_out;
+  }
 	
 }

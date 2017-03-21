@@ -1,4 +1,6 @@
 import java.lang.*;
+import java.io.*;
+import java.nio.*;
 
 public class Game
 {
@@ -34,7 +36,7 @@ public class Game
 		
 		_board = new Board(_manager, _whites, _blacks);
 		
-		MainFrame _mf = new MainFrame(_board);
+		MainFrame _mf = new MainFrame(this);
 	}
 	
 	/**
@@ -67,11 +69,32 @@ public class Game
 	}
 	
 	/**
-	* Currently unused...will be used to save game
+	* Opens a new file "saved_games/saved_hnefetafl.txt" and writes the current board array to a csv file
+	* Throws IO exception on error in file opening or writing
 	*/
-	public void save()
+	public void save() throws java.io.IOException
 	{
-		throw new UnsupportedOperationException();
+		FileOutputStream out = null;
+		try {
+			File dir = new File("saved_games");
+			dir.mkdirs();
+			File f = new File(dir, "saved_hnefatafl.csv");
+			f.createNewFile();
+      out = new FileOutputStream("saved_hnefatafl.csv");
+        
+			String b = new String();
+			b = _board.printBoard();
+			byte[] boardBytes = b.getBytes("UTF-8");
+      out.write(boardBytes);
+		} catch(IOException e) {
+  		e.printStackTrace();
+		} finally {
+			if (out != null)
+			{
+				out.flush();
+				out.close();
+			}
+		}
 	}
 	
 	/**

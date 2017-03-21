@@ -6,29 +6,32 @@ import java.util.*;
 public class LoadButton extends JButton 
 {
 
-	private Board _m;
+	private Game _m;
 	
 	/**
-	* Constructor...Button is currently set to disabled
-	* @param m-Board that this button exists in
+	* Constructor creates general button in button panel labeled "Load"
+	* @param m-Game that this button exists in
 	*/
-	public LoadButton(Board m) 
+	public LoadButton(Game m) 
 	{
 		super("Load");
 		_m = m;
 		addActionListener(new LoadButtonListener());
-		this.setEnabled(false);
 	}
 
 	class LoadButtonListener implements ActionListener 
 	{
 		/**
-		* Loads an existing game
+		* Loads an existing game from the designated csv file onto the game board
 		* @param e-The action event
 		*/
-		public void actionPerformed(ActionEvent e) 
+		public void actionPerformed(ActionEvent e)
 		{
-			
+			try {
+				_m.load();
+			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(null, "Error: There was a problem saving this game.");
+			}
 		}
 	}
 }

@@ -11,7 +11,7 @@ public class MainFrame
 
 	private ButtonPanel _buttonPanel; //button panel
 
-	public MainFrame(Board board) 
+	public MainFrame(Game game) 
 	{
 		_frame.setSize(WIDTH, HEIGHT);
 		// Close program when window is closed
@@ -20,9 +20,9 @@ public class MainFrame
 		// Add Main Panel and Button Panel
 		 
 
-		_buttonPanel = new ButtonPanel(board, this);
+		_buttonPanel = new ButtonPanel(game, this);
 		
-		_frame.add(board.getBoard(), BorderLayout.CENTER);
+		_frame.add(game.queryBoard().getBoard(), BorderLayout.CENTER);
 		_frame.add(_buttonPanel, BorderLayout.SOUTH);
 		
 	
