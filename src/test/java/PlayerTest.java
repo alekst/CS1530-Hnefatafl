@@ -35,6 +35,18 @@ public class PlayerTest
         p.setTimer(time);
         assertEquals(p.getTimer(), time);
     }
+
+    // Checks if the timer has been decrimented.
+    @Test
+    public void testCountdown()
+    {
+        Player p = new Player();
+        int time = 456;
+        p.setTimer(time);
+        p.decrimentTimer(); // call one time
+        p.decrimentTimer(); // call two times
+        assertEquals(p.getTimer(), time - 2);
+    }
 	
 	// checks if myTurn accurately detects players not on their turns
 	@Test

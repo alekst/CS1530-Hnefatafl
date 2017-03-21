@@ -13,7 +13,7 @@ public class MainFrame
 	
 	private GameInfoPanel _gameInfo; //game info
 
-	public MainFrame(Board board) 
+  public MainFrame(Board board, GameInfoPanel gameInfo) 
 	{
 		_frame.setSize(WIDTH, HEIGHT);
 		// Close program when window is closed
@@ -23,12 +23,10 @@ public class MainFrame
 		 
 
 		_buttonPanel = new ButtonPanel(board, this);
-		
-		_gameInfo = new GameInfoPanel(board);
-		
+			
 		_frame.add(board.getBoard(), BorderLayout.CENTER);
 		_frame.add(_buttonPanel, BorderLayout.SOUTH);
-		_frame.add(_gameInfo, BorderLayout.EAST);
+		_frame.add(gameInfo, BorderLayout.EAST);
 		
 	
 		_frame.setVisible(true);	

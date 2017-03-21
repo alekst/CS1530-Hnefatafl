@@ -27,16 +27,19 @@ public class Game
 		// player 1
 		_whites = new Player(_manager);
 		_whites.setWhite();
-		_whites.setName("White"); // TODO: Allow user to set his/her own name
+		_whites.setName("Whites"); // TODO: Allow user to set his/her own name
+    	_whites.setTimer(300); // 300 seconds is 5 minutes TODO: allow player set the general time limit
 		
 		// player 2
 		_blacks = new Player(_manager);
 		_blacks.setBlack();
 		_blacks.setName("Blacks");
+    	_blacks.setTimer(300); 
 		
-		_board = new Board(_manager, _whites, _blacks);
-		
-		MainFrame _mf = new MainFrame(_board);
+		GameInfoPanel _gi = new GameInfoPanel(_whites, _blacks);
+		_board = new Board(_manager, _gi, _whites, _blacks);
+    	
+		MainFrame _mf = new MainFrame(_board, _gi);
 	}
 	
 	/**
