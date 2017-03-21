@@ -382,14 +382,14 @@ public class Manager
 		return _data.kingLost(value);
 	}
 
-	//do logic of capture here
+	
 	/**
 	* determines which pieces are captured
 	* @param coord the coordinate of the piece that was just moved
 	* @return an arraylist of coordinates to remove
 	*/
 	public ArrayList<Coordinate> isPieceSurrounded(Coordinate coord)
-	{
+	{//NEED TO TEST, will probs be tested via testing data.pieceLost()
 		int value=encode(coord);
 		ArrayList<Coordinate>piecesToRemove=_data.pieceLost(value);
 		
@@ -402,7 +402,7 @@ public class Manager
 	* @param coord-The piece to remove
 	*/
 	public boolean removePiece(Coordinate coord) 
-	{//add return false case
+	{//add return false case, NEED TO TEST
 		System.out.println(getIndex(coord));
 		_data.set(getIndex(coord),-1);
 		return true;

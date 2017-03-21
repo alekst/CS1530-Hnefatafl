@@ -263,9 +263,9 @@ public class DataTest
 	{
 		Data d = new Data();
 		d.set(9, 10); // move 9th white piece to the 10th square
-		d.set(10, 9); // more 10th white piece to the 9th square
-		d.set(11, 12); // more 11th white piece to the 12th square
-		d.set(12, 14); // more 12th white piece to the 14th square
+		d.set(10, 9); // move 10th white piece to the 9th square
+		d.set(11, 12); // move 11th white piece to the 12th square
+		d.set(12, 14); // move 12th white piece to the 14th square
 		d.set(14, 71); // set a black piece to square 71
 		d.set(15, 73); // set a black piece to square 73
 		d.set(16, 83); //set a black piece to square 83, i.e. one below the king
@@ -275,29 +275,235 @@ public class DataTest
 	}
 	//will need to do lots and lots of sets to handle edge cases
 
-	//left righ sanwich caputre for white
+	//left right sanwich caputre for white
+	@Test
+	public void leftRightWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(24,58);
+		d.set(9,68);
+		d.set(9,57);
+		ArrayList<Coordinate> test_arr=d.pieceLost(57);
+		assertTrue(2==test_arr.get(0).getX() && 5==test_arr.get(0).getY()); //should test to see which coord is in the array rather than the size
+	}
+
 	//up down sandwich catpure for white
+	@Test
+	public void upDownWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(21,48);
+		d.set(8,37);
+		ArrayList<Coordinate> test_arr=d.pieceLost(37);
+		assertTrue(3==test_arr.get(0).getX() && 4==test_arr.get(0).getY());
+	}
+
+
 	// top left square horiz capture for white
-	//top left square vert cap for white                        all these tests shoudl return true, do tests for king instead of standard issue white piece too!
+	@Test
+	public void topLeftHorizWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(24,2);
+		d.set(1,3);
+		ArrayList<Coordinate> test_arr=d.pieceLost(3);
+		assertTrue(1==test_arr.get(0).getX() && 0==test_arr.get(0).getY());
+	}
+
+	//top left square vert cap for white                       
+	public void topLeftVertWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(19,12);
+		d.set(1,23);
+		ArrayList<Coordinate> test_arr=d.pieceLost(23);
+		assertTrue(1==test_arr.get(0).getX() && 1==test_arr.get(0).getY());
+
+	}
+
 	//bottom left square horiz cap for white
+	
+	@Test
+	public void bottomLeftHorizWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(32,112);
+		d.set(1,113);
+		ArrayList<Coordinate> test_arr=d.pieceLost(113);
+		assertTrue(1==test_arr.get(0).getX() && 10==test_arr.get(0).getY());
+
+	}
+
 	//bottom left square vert cap for white
+	@Test
+	public void bottomLeftVertWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(31,100);
+		d.set(1,89);
+		ArrayList<Coordinate> test_arr=d.pieceLost(89);
+		assertTrue(0==test_arr.get(0).getX() && 9==test_arr.get(0).getY());
+
+	}
+
 	//top right square horiz cap for white
+	@Test
+	public void topRightHorizWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(17,10);
+		d.set(4,9);
+		ArrayList<Coordinate> test_arr=d.pieceLost(9);
+		assertTrue(9==test_arr.get(0).getX() && 0==test_arr.get(0).getY());
+
+	}
+
 	//top right square vert cap for white
+	@Test
+	public void topRightVertWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(20,22);
+		d.set(8,33);
+		ArrayList<Coordinate> test_arr=d.pieceLost(33);
+		assertTrue(10==test_arr.get(0).getX() && 1==test_arr.get(0).getY());
+
+	}
 	//bottom right square horiz cap for white
+	@Test
+	public void bottomRightHorizWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(36,120);
+		d.set(4,119);
+		ArrayList<Coordinate> test_arr=d.pieceLost(119);
+		assertTrue(9==test_arr.get(0).getX() && 10==test_arr.get(0).getY());
+
+	}
+	
 	//bottom right square vert cap for white
+	@Test
+	public void bottomRightVertWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(30,110);
+		d.set(12,99);
+		ArrayList<Coordinate> test_arr=d.pieceLost(99);
+		assertTrue(10==test_arr.get(0).getX() && 9==test_arr.get(0).getY());
 
-	//left righ sanwich caputre for black, returns true
-	//up down sandwich catpure for black, returns true
+	}
+
+	//up down sanwich caputre for black, returns true
+	@Test
+	public void upDownBlackCapture()
+	{
+		Data d=new Data();
+		d.set(21,48);
+		d.set(27,70);
+		ArrayList<Coordinate> test_arr=d.pieceLost(70);
+		assertTrue(3==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+
+	}
+	//left right sandwich catpure for black, returns true
+	@Test
+	public void leftRighBlackCapture()
+	{
+		Data d=new Data();
+		d.set(19,38);
+		d.set(20,40);
+		ArrayList<Coordinate> test_arr=d.pieceLost(40);
+		assertTrue(5==test_arr.get(0).getX() && 3==test_arr.get(0).getY());
+
+	}
 
 
-	// top left square horiz capture for black
-	//top left square vert cap for black                        all these tests shoudl return false
-	//bottom left square horiz cap for black
-	//bottom left square vert cap for black
-	//top right square horiz cap for black
+	// top right square horiz capture for black, nothing should be capped
+	@Test
+	public void topRightHorizBlackCapture()
+	{
+		Data d=new Data();
+		d.set(8,10);
+		d.set(17,9);
+		ArrayList<Coordinate> test_arr=d.pieceLost(9);
+		assertEquals(test_arr.size(),0);
+
+	}
+
 	//top right square vert cap for black
+	@Test
+	public void topRightVertBlackCapture()
+	{
+		Data d=new Data();
+		d.set(8,22);
+		d.set(20,33);
+		ArrayList<Coordinate> test_arr=d.pieceLost(33);
+		assertEquals(test_arr.size(),0);
+
+	}
+	//top left square vert cap for black
+	@Test
+	public void topLeftVertBlackCapture()
+	{
+		Data d=new Data();
+		d.set(8,12);
+		d.set(19,23);
+		ArrayList<Coordinate> test_arr=d.pieceLost(23);
+		assertEquals(test_arr.size(),0);
+	}                        
+	
+	//top left square horiz cap for black
+	@Test
+	public void topLeftHorizBlackCapture()
+	{
+		Data d=new Data();
+		d.set(1,2);
+		d.set(13,3);
+		ArrayList<Coordinate> test_arr=d.pieceLost(3);
+		assertEquals(test_arr.size(),0);
+
+	}
+	
+	//bottom left square horiz cap for black
+	@Test 
+	public void bottomleftHorizBlackCapture()
+	{
+		Data d=new Data();
+		d.set(9,112);
+		d.set(32,113);
+		ArrayList<Coordinate> test_arr=d.pieceLost(113);
+		assertEquals(test_arr.size(),0);
+	}
+
+	//bottomleft square vert cap for black
+	@Test
+	public void bottomLeftVertBlackCapture()
+	{
+		Data d=new Data();
+		d.set(12,100);
+		d.set(29,89);
+		ArrayList<Coordinate> test_arr=d.pieceLost(89);
+		assertEquals(test_arr.size(),0);
+	}
 	//bottom right square horiz cap for black
+	@Test
+	public void bottomRightHorizBlackCapture()
+	{
+		Data d=new Data();
+		d.set(11,120);
+		d.set(36,119);
+		ArrayList<Coordinate> test_arr=d.pieceLost(119);
+		assertEquals(test_arr.size(),0);
+	}
 	//bottom right square vert cap for black
+	@Test
+	public void bottomRightVertBlackCapture()
+	{
+		Data d=new Data();
+		d.set(12,110);
+		d.set(30,99);
+		ArrayList<Coordinate> test_arr=d.pieceLost(99);
+		assertEquals(test_arr.size(),0);
+	}
 
 	//throne captures for black and white, when king is in throne and when king is not in throne
 
@@ -326,10 +532,11 @@ public class DataTest
 	//white piece to up, sandwiched by black
 	//white piece to down, sanwiched by black
 
-	//cases for multiple piece captures for both black and white and king
+	//cases for multiple piece captures for both black and white and king (2 and 3 piece caps) (2 piece ex:  XO-OX, x goes where dash is )
 	//also need to test removal from backend
 	//need to ensure that when a piece moves to a sandwich position, i.e. between two enemy pieces it is not removed
 
+	//do tests for when no pieces are captured
 
 	
 }
