@@ -349,16 +349,20 @@ public class Data
 		// Check if piece landed on a wall and 
 		// have a unique case for each wall
 		ArrayList<Coordinate> return_list = new ArrayList<Coordinate>();
-		Coordinate coord = getCoordinate(value);
+		Coordinate coord = decode(value);
 		int offset = 1;
+		for(int i = 0 ; i < specialSquares.length ; i++)
+		{
+			System.out.println(specialSquares[i]);
+		}
 		if((coord.getX() - 1 < 1) && (coord.getY() - 1 >= 1)) // west wall
 		{
 			while(isMember(value - 11 * offset) && (isWhite(value - 11 * offset) != isWhite(value))
 				&& isMember(value - 11 * offset + 1) && (isWhite(value - 11 * offset + 1) == isWhite(value)))
 				{
-					return_list.add(getCoordinate(value - 11 * offset));
-					if((isMember(value - 11 * (offset + 1)) && (isWhite(value - 11 * (offset + 1)) == (isWhite(value))))
-						|| isSpecialSquare(value + 11 * (offset + 1)))
+					return_list.add(decode(value - 11 * offset));
+					if(((isMember(value - 11 * (offset + 1)) && (isWhite(value - 11 * (offset + 1)) == (isWhite(value)))) || (isSpecialSquare(value - 11 * (offset + 1))))
+						|| isSpecialSquare(value - 11 * (offset + 1)))
 					{
 						return return_list;
 					}
@@ -368,9 +372,9 @@ public class Data
 			while(isMember(value + 11 * offset) && (isWhite(value + 11 * offset) != isWhite(value))
 				&& isMember(value + 11 * offset + 1) && (isWhite(value + 11 * offset + 1) == isWhite(value)))
 				{
-					return_list.add(getCoordinate(value + 11 * offset));
+					return_list.add(decode(value + 11 * offset));
 					if((isMember(value + 11 * (offset + 1)) && (isWhite(value + 11 * (offset + 1)) == (isWhite(value))))
-						|| isSpecialSquare(value + 11 * (offset + 1)))
+						|| (isSpecialSquare(value + 11 * (offset + 1))))
 					{
 						return return_list;
 					}
@@ -383,9 +387,9 @@ public class Data
 			while(isMember(value - 11 * offset) && (isWhite(value - 11 * offset) != isWhite(value))
 				&& isMember(value - 11 * offset - 1) && (isWhite(value - 11 * offset - 1) == isWhite(value)))
 				{
-					return_list.add(getCoordinate(value - 11 * offset));
+					return_list.add(decode(value - 11 * offset));
 					if((isMember(value - 11 * (offset + 1)) && (isWhite(value - 11 * (offset + 1)) == (isWhite(value))))
-						|| isSpecialSquare(value + 11 * (offset + 1)))
+						|| isSpecialSquare(value - 11 * (offset + 1)))
 					{
 						return return_list;
 					}
@@ -395,7 +399,7 @@ public class Data
 			while(isMember(value + 11 * offset) && (isWhite(value + 11 * offset) != isWhite(value))
 				&& isMember(value + 11 * offset - 1) && (isWhite(value + 11 * offset - 1) == isWhite(value)))
 				{
-					return_list.add(getCoordinate(value + 11 * offset));
+					return_list.add(decode(value + 11 * offset));
 					if((isMember(value + 11 * (offset + 1)) && (isWhite(value + 11 * (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value + 11 * (offset + 1)))
 					{
@@ -409,9 +413,9 @@ public class Data
 			while(isMember(value - offset) && (isWhite(value - offset) != isWhite(value))
 				&& isMember(value - offset - 11) && (isWhite(value - offset - 11) == isWhite(value)))
 				{
-					return_list.add(getCoordinate(value - offset));
+					return_list.add(decode(value - offset));
 					if((isMember(value - (offset + 1)) && (isWhite(value - (offset + 1)) == (isWhite(value))))
-						|| isSpecialSquare(value + (offset + 1)))
+						|| isSpecialSquare(value - (offset + 1)))
 					{
 						return return_list;
 					}
@@ -421,7 +425,7 @@ public class Data
 			while(isMember(value + offset) && (isWhite(value + offset) != isWhite(value))
 				&& isMember(value + offset - 11) && (isWhite(value + offset - 11) == isWhite(value)))
 				{
-					return_list.add(getCoordinate(value + offset));
+					return_list.add(decode(value + offset));
 					if((isMember(value + (offset + 1)) && (isWhite(value + (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value + (offset + 1)))
 					{
@@ -435,9 +439,9 @@ public class Data
 			while(isMember(value - offset) && (isWhite(value - offset) != isWhite(value))
 				&& isMember(value - offset + 11) && (isWhite(value - offset + 11) == isWhite(value)))
 				{
-					return_list.add(getCoordinate(value - offset));
+					return_list.add(decode(value - offset));
 					if((isMember(value - (offset + 1)) && (isWhite(value - (offset + 1)) == (isWhite(value))))
-						|| isSpecialSquare(value + (offset + 1)))
+						|| isSpecialSquare(value - (offset + 1)))
 					{
 						return return_list;
 					}
@@ -447,7 +451,7 @@ public class Data
 			while(isMember(value + offset) && (isWhite(value + offset) != isWhite(value))
 				&& isMember(value + offset + 11) && (isWhite(value + offset + 11) == isWhite(value)))
 				{
-					return_list.add(getCoordinate(value + offset));
+					return_list.add(decode(value + offset));
 					if((isMember(value + (offset + 1)) && (isWhite(value + (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value + (offset + 1)))
 					{
