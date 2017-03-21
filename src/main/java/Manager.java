@@ -393,6 +393,10 @@ public class Manager
 		return piecesToRemove;
 	}
 
+	/**
+	* removes a piece from the board utilizing the data.java
+	* @param coord-The piece to remove
+	*/
 	public boolean removePiece(Coordinate coord)
 	{
 		System.out.println(getIndex(coord));
