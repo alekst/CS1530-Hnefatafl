@@ -316,14 +316,14 @@ public class Board extends JPanel
 					boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
 					
 					_manager.updateLocation(second_clicked, first_clicked);
-					//add capture here
-					ArrayList<Coordinate>piecesToRemove=_manager.isPieceSurrounded(second_clicked); //this is my function call
-					for(int i=0; i<piecesToRemove.size(); i++)
+					
+					ArrayList<Coordinate>piecesToRemove=_manager.isPieceSurrounded(second_clicked); //sees if a piece(s) is captured
+					for(int i=0; i<piecesToRemove.size(); i++) //removes pieces from board
 					{
 						enable(piecesToRemove.get(i)); //enable the spot where the piece used to reside
-						removePiece(piecesToRemove.get(i));
+						removePiece(piecesToRemove.get(i)); //remove it from the front end
 						
-						_manager.removePiece(piecesToRemove.get(i));
+						_manager.removePiece(piecesToRemove.get(i)); //remove it from the backedn
 					}
 					
 					if (_player.hasWon())
