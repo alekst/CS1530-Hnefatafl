@@ -25,6 +25,16 @@ public class PlayerTest
 		p.setBlack();
 		assertEquals(p.isWhite(), false);
 	}
+
+  // Checks if the timer is set and gotten correctly
+  @Test
+  public void testTimer()
+    {
+        Player p = new Player();
+        int time = 200;
+        p.setTimer(time);
+        assertEquals(p.getTimer(), time);
+    }
 	
 	// checks if myTurn accurately detects players not on their turns
 	@Test

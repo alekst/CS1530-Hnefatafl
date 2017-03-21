@@ -429,6 +429,7 @@ public class Board extends JPanel
 		Player[] players = new Player[2];
 		players[0] = _player;
 		players[1] = _other;
+    return players;
 	}
 }
 

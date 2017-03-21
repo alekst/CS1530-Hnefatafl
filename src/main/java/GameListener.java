@@ -18,6 +18,7 @@ public abstract class GameListener implements ActionListener
         GameListener.active = active;
     }
 
+
     protected abstract void doPerformAction(ActionEvent e);
 
     @Override

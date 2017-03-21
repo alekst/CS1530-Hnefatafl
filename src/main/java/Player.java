@@ -4,7 +4,7 @@ public class Player
 	private boolean _white;
 	private boolean _turn;
 	private String _name;
-	private GameTimer _timer;
+	private int _countdown;
 	
 	/**
 	* Constructor
@@ -39,17 +39,35 @@ public class Player
 	{
 		return _name;
 	}
-	
-	/**
-	* Player is set to be the white player
-	*/
-	public void setWhite()
-	{
-		_white = true;
-		_turn = false;
-		
-	}
-	
+
+  /**
+   * Setter to set the Player time as a countdown in seconds
+   *
+   */
+
+    public void setTimer(int time)
+    {
+        _countdown = time;
+    }
+
+   /**
+    * Getter to show the Player time remaining in seconds
+    *
+    */
+    public int getTimer()
+    {
+        return _countdown;
+    }
+
+    /**
+     * Player is set to be the white player
+     */
+    public void setWhite()
+    {
+        _white = true;
+        _turn = false;
+    }
+
 	/**
 	* Player is set to be the black player
 	*/
