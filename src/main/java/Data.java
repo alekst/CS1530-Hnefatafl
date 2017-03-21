@@ -129,12 +129,12 @@ public class Data
 	}
 
 	/**
-	* returns true if the value is a special square
+	* returns true if the value is a special square, special square is any of the 4 corners or the throne
 	* @param integer value of a location
 	* @return true if the value is a special square
 	* @return false if value is not a special square
 	*/
-	public boolean specialSquare(int value)	
+	private boolean specialSquare(int value)	
 	{
 		if(value==11 || value==1 || value==111 || value==121 ||value==61)
 			return true;
@@ -193,6 +193,11 @@ public class Data
 	}
 
 	//going to return an array of pieces captured
+	/**
+	* Determines which pieces are captured during a move
+	* @param value-the value of the location of piece
+	* @return an arraylist of coordinates to remove
+	*/
 	public ArrayList<Coordinate> pieceLost(int value) 
 	{ 
 		Integer[] neighbors = getNeighbors(value); 	//gets neighbors of the coordinate

@@ -166,7 +166,6 @@ public class Manager
 	{
 		if(someoneThere(origin) && someoneThere(destination)) //both coordinates are occupied
 		{
-			System.out.println("Both are occupied");
 			return true;
 		}
 		else
@@ -384,6 +383,11 @@ public class Manager
 	}
 
 	//do logic of capture here
+	/**
+	* determines which pieces are captured
+	* @param coord the coordinate of the piece that was just moved
+	* @return an arraylist of coordinates to remove
+	*/
 	public ArrayList<Coordinate> isPieceSurrounded(Coordinate coord)
 	{
 		int value=encode(coord);
@@ -397,8 +401,8 @@ public class Manager
 	* removes a piece from the board utilizing the data.java
 	* @param coord-The piece to remove
 	*/
-	public boolean removePiece(Coordinate coord)
-	{
+	public boolean removePiece(Coordinate coord) 
+	{//add return false case
 		System.out.println(getIndex(coord));
 		_data.set(getIndex(coord),-1);
 		return true;

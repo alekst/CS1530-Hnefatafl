@@ -273,6 +273,64 @@ public class DataTest
 		
 		assertTrue(d.kingLost(72)); // a square below the throne is 72
 	}
+	//will need to do lots and lots of sets to handle edge cases
+
+	//left righ sanwich caputre for white
+	//up down sandwich catpure for white
+	// top left square horiz capture for white
+	//top left square vert cap for white                        all these tests shoudl return true, do tests for king instead of standard issue white piece too!
+	//bottom left square horiz cap for white
+	//bottom left square vert cap for white
+	//top right square horiz cap for white
+	//top right square vert cap for white
+	//bottom right square horiz cap for white
+	//bottom right square vert cap for white
+
+	//left righ sanwich caputre for black, returns true
+	//up down sandwich catpure for black, returns true
+
+
+	// top left square horiz capture for black
+	//top left square vert cap for black                        all these tests shoudl return false
+	//bottom left square horiz cap for black
+	//bottom left square vert cap for black
+	//top right square horiz cap for black
+	//top right square vert cap for black
+	//bottom right square horiz cap for black
+	//bottom right square vert cap for black
+
+	//throne captures for black and white, when king is in throne and when king is not in throne
+
+	//king is on throne for these
+	//black piece to right, sanwiched by white
+	//black piece to left, sanwiched by white         //all should return true
+	//black piece to up, sandwiched by white
+	//black piece to down, sanwiched by white
+
+	//king is NOT on throne for these
+	//black piece to right, sanwiched by white
+	//black piece to left, sanwiched by white         //all should return true
+	//black piece to up, sandwiched by white
+	//black piece to down, sanwiched by white
+
+
+	//king is on throne for these
+	//white piece to right, sanwiched by black
+	//white piece to left, sanwiched by black         //all should return true
+	//white piece to up, sandwiched by black
+	//white piece to down, sanwiched by black
+
+	//king is NOT on throne for these
+	//white piece to right, sanwiched by black
+	//white piece to left, sanwiched by black         //all should return true
+	//white piece to up, sandwiched by black
+	//white piece to down, sanwiched by black
+
+	//cases for multiple piece captures for both black and white and king
+	//also need to test removal from backend
+	//need to ensure that when a piece moves to a sandwich position, i.e. between two enemy pieces it is not removed
+
+
 	
 }
 
