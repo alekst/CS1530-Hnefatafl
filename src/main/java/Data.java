@@ -200,21 +200,19 @@ public class Data
 		}
 	}
 
-
-	//going to return an array of pieces captured
+	//get enemy neigbors method
 	/**
-	* Determines which pieces are captured during a move
-	* @param value-the value of the location of piece
-	* @return an arraylist of coordinates to remove
+	* Gets the neighboring enemy pieces of a location
+	* @param value- an encoded value of the Coordinate object
+	* @return an arrayList of nieghboring Integers containing locations of enemy pieces
 	*/
-	public ArrayList<Coordinate> pieceLost(int value)  
-	{  //NEED TO TEST, TRY USING isSpecialSquare(), instead of specialSquare()
+	private ArrayList<Integer> getEnemyNeighbors(int value)
+	{//test
 		Integer[] neighbors = getNeighbors(value); 	//gets neighbors of the coordinate
 		ArrayList<Integer> enemyNeighbors = new ArrayList<Integer>(); //array of enemy neighbors
-		ArrayList<Integer>piecesToRemove=new ArrayList<Integer>(); //array of pieces to remove
-		for(int x=0; x<neighbors.length;x++) //directions -11 is up, +11 is down, +1 is right, -1 is left
-		{									// loop through array of neighbors and see which ones are enemies
-			if(isWhite(value))
+		for(int x=0; x<neighbors.length;x++) 
+		{
+			if(isWhite(value)) //turn is white
 			{
 				if((!isWhite(neighbors[x]) && isMember(neighbors[x]))) //if piece is black and on the board
 				{
@@ -229,13 +227,27 @@ public class Data
 				}
 			}
 		}
+		return enemyNeighbors;
+
+
+	}
+	//going to return an array of pieces captured
+	/**
+	* Determines which pieces are captured during a move
+	* @param value-the value of the location of piece
+	* @return an arraylist of coordinates to remove
+	*/
+	public ArrayList<Coordinate> pieceLost(int value)  
+	{ 
+		ArrayList<Integer> enemyNeighbors =getEnemyNeighbors(value); //array of enemy neighbors
+		ArrayList<Coordinate>coordsToRemove=new ArrayList<Coordinate>(); //array of coordinates to remove
 		if(enemyNeighbors.size()==0) //no  enemy neighbors
 		{
 			//do nothing
 		}
 		else //time to check to see if piece will be captured
 		{
-			//will need to loop through array of enemies and check the direction of where they are relation to value
+			//will need to loop through array of enemies and check the direction of where they are in relation to value
 			//once direction is determined, see if there is a friendly piece 2 spaces away in that direction	
 			for(int i=0; i<enemyNeighbors.size();i++) 
 			{
@@ -245,41 +257,31 @@ public class Data
 				{	
 					if(isPieceRemoved(value-22,isWhite(value)))
 					{
-						piecesToRemove.add(enemyNeighbors.get(i));
+						coordsToRemove.add(decode(enemyNeighbors.get(i)));
 					}
 				}
 				else if (direction==11) //down
 				{	
 					if(isPieceRemoved(value+22,isWhite(value)))
 					{
-						piecesToRemove.add(enemyNeighbors.get(i));
+						coordsToRemove.add(decode(enemyNeighbors.get(i)));
 					}
 				}
 				else if(direction==1) //right
 				{
 					if(isPieceRemoved(value+2,isWhite(value)))
 					{
-						piecesToRemove.add(enemyNeighbors.get(i));
+						coordsToRemove.add(decode(enemyNeighbors.get(i)));
 					}
 				}
 				else if(direction==-1)//left
 				{	
 					if(isPieceRemoved(value-2,isWhite(value)))
 					{
-						piecesToRemove.add(enemyNeighbors.get(i));
+						coordsToRemove.add(decode(enemyNeighbors.get(i)));
 					}
 				}
 			}
-		}
-		//display remove array
-		ArrayList<Coordinate>coordsToRemove=new ArrayList<Coordinate>(); //array of coordinates to remove
-		for(int i=0; i<piecesToRemove.size();i++)
-		{
-			Coordinate temp=decode(piecesToRemove.get(i));
-			coordsToRemove.add(temp);
-			System.out.println("remove piece @ "+temp.getX() +temp.getY());
-			Coordinate temp2=new Coordinate(temp.getX(), temp.getY());
-			System.out.println("* "+temp2.getX()+" "+temp2.getY());
 		}
 		return coordsToRemove;
 	}

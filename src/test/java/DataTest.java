@@ -273,7 +273,7 @@ public class DataTest
 		
 		assertTrue(d.kingLost(72)); // a square below the throne is 72
 	}
-	//my tests start here
+	//my tests start here, 41 tests
 	/**
 	* Test is white method to ensure king is a white piece
 	*/
@@ -781,7 +781,7 @@ public class DataTest
 
 	}
 
-	//3 piece white capture, redo
+	//3 piece white capture
 	@Test
 	public void threePieceWhiteCapture()
 	{
@@ -839,11 +839,11 @@ public class DataTest
 	//DO NOT NEED TO DO KING TESTS FOR CAPTURES BECAUSE KING IS DETERMINED AS WHITE PIECE IN iswhite(), THIS TEST HAS ALREADY BEEN DONE
 	
 	//also need to test removal from backend
+
 	//need to ensure that when a piece moves to a sandwich position, i.e. between two enemy pieces it is not removed
 
 	//do tests for when no pieces are captured
 
-	//test for special squares method, i added the
 
 	
 }
