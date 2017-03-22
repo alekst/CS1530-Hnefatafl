@@ -509,28 +509,249 @@ public class DataTest
 
 	//king is on throne for these
 	//black piece to right, sanwiched by white
+	@Test
+	public void kingOnThroneBlackPieceRightWhiteCapture()
+	{
+		Data d=new Data();
+		//moving pieces out so capture can occur
+		d.set(24,68);
+		d.set(7,29);
+		d.set(36,119);
+		d.set(11,106);
+		d.set(20,33);
+		d.set(4,85);
+		d.set(35,118);
+		d.set(3,95);
+		d.set(25,62);
+		d.set(4,63);
+		ArrayList<Coordinate> test_arr=d.pieceLost(63);
+		assertTrue(6==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+
+	}
 	//black piece to left, sanwiched by white         //all should return true
+	@Test
+	public void kingOnThroneBlackPieceLeftWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(29,100);
+		d.set(1,103);
+		d.set(27,89);
+		d.set(5,46);
+		d.set(24,58);
+		d.set(2,16);
+		d.set(24,60);
+		d.set(5,27);
+		d.set(32,112);
+		d.set(5,49);
+		ArrayList<Coordinate> test_arr=d.pieceLost(49);
+		assertTrue(4==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+	}
+
 	//black piece to up, sandwiched by white
+	@Test
+	public void kingOnThroneBlackPieceUpWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(8,35);
+		d.set(6,39);
+		d.set(24,79);
+		d.set(6,40);
+		d.set(18,50);
+		d.set(6,39);
+		ArrayList<Coordinate> test_arr=d.pieceLost(39);
+		assertTrue(5==test_arr.get(0).getX() && 4==test_arr.get(0).getY());
+	}
+
 	//black piece to down, sanwiched by white
+	@Test
+	public void kingOnThroneBlackPieceDownWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(12,86);
+		d.set(9,82);
+		d.set(11,75);
+		d.set(10,70);
+		d.set(34,72);
+		d.set(9,83);
+		ArrayList<Coordinate> test_arr=d.pieceLost(83);
+		assertTrue(5==test_arr.get(0).getX() && 6==test_arr.get(0).getY());
+	}
 
 	//king is NOT on throne for these
 	//black piece to right, sanwiched by white
-	//black piece to left, sanwiched by white         //all should return true
-	//black piece to up, sandwiched by white
-	//black piece to down, sanwiched by white
+	@Test
+	public void kingNotOnThroneBlackPieceRightWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(4,52);
+		d.set(4,53);
+		d.set(11,84);
+		d.set(3,29);
+		d.set(0,65);
+		d.set(35,85);
+		d.set(4,64);
+		d.set(35,63);
+		d.set(35,62);
+		d.set(4,63);
+		ArrayList<Coordinate> test_arr=d.pieceLost(63);
+		assertTrue(6==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
 
+	}
+
+	//black piece to left, sanwiched by white         //all should return true
+	@Test 
+	public void kingNotOnThroneBlackPieceLeftWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(1,15);
+		d.set(5,16);
+		d.set(9,104);
+		d.set(2,49);
+		d.set(0,91);
+		d.set(24,60);
+		d.set(2,59);
+		ArrayList<Coordinate> test_arr=d.pieceLost(59);
+		assertTrue(4==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+
+	}
+	//black piece to up, sandwiched by white
+	@Test
+	public void kingNotOnThroneBlackPieceUpWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(8,43);
+		d.set(7,54);
+		d.set(5,27);
+		d.set(6,53);
+		d.set(0,42);
+		d.set(18,50);
+		d.set(5,39);
+		ArrayList<Coordinate> test_arr=d.pieceLost(39);
+		assertTrue(5==test_arr.get(0).getX() && 4==test_arr.get(0).getY());
+	}
+	//black piece to down, sanwiched by white
+	@Test
+	public void kingNotOnThroneBlackPieceDownWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(11,76);
+		d.set(9,68);
+		d.set(10,69);
+		d.set(0,75);
+		d.set(12,84);
+		d.set(31,72);
+		d.set(12,83);
+		ArrayList<Coordinate> test_arr=d.pieceLost(83);
+		assertTrue(5==test_arr.get(0).getX() && 6==test_arr.get(0).getY());
+	}
 
 	//king is on throne for these
 	//white piece to right, sanwiched by black
+	@Test
+	public void kingOnThroneWhitePieceRightBlackCapture()
+	{
+		Data d=new Data();
+		d.set(4,30);
+		d.set(25,63);
+		ArrayList<Coordinate> test_arr=d.pieceLost(63);
+		assertTrue(6==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+	}
+
 	//white piece to left, sanwiched by black         //all should return true
+	@Test
+	public void kingOnThroneWhitePieceLeftBlackCapture()
+	{
+		Data d=new Data();
+		d.set(1,26);
+		d.set(24,59);
+		ArrayList<Coordinate> test_arr=d.pieceLost(59);
+		assertTrue(4==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+	}
 	//white piece to up, sandwiched by black
+	@Test
+	public void kingOnThroneWhitePieceUpBlackCapture()
+	{
+		Data d=new Data();
+		d.set(8,35);
+		d.set(18,39);
+		ArrayList<Coordinate> test_arr=d.pieceLost(39);
+		assertTrue(5==test_arr.get(0).getX() && 4==test_arr.get(0).getY());
+	}
+	
 	//white piece to down, sanwiched by black
+	@Test
+	public void kingOnThroneWhitePieceDownBlackCapture()
+	{
+		Data d=new Data();
+		d.set(12,87);
+		d.set(31,83);
+		ArrayList<Coordinate> test_arr=d.pieceLost(83);
+		assertTrue(5==test_arr.get(0).getX() && 6==test_arr.get(0).getY());
+	}
 
 	//king is NOT on throne for these
 	//white piece to right, sanwiched by black
+	@Test
+	public void kingNotOnThroneWhitePieceRightBlackCapture()
+	{
+		Data d=new Data();
+		d.set(11,106);
+		d.set(4,96);
+		d.set(3,64);
+		d.set(0,85);
+		d.set(7,53);
+		d.set(16,62);
+		d.set(3,63);
+		ArrayList<Coordinate> test_arr=d.pieceLost(63);
+		assertTrue(6==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+	}
+
 	//white piece to left, sanwiched by black         //all should return true
+	@Test
+	public void kingNotOnThroneWhitePieceLeftBlackCapture()
+	{
+		Data d=new Data();
+		d.set(1,15);
+		d.set(5,27);
+		d.set(2,80);
+		d.set(0,37);
+		d.set(24,60);
+		d.set(2,59);
+		ArrayList<Coordinate> test_arr=d.pieceLost(59);
+		assertTrue(4==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+	}
+
 	//white piece to up, sandwiched by black
+	@Test
+	public void kingNotOnThroneWhitePieceUpBlackCapture()
+	{
+		Data d=new Data();
+		d.set(8,36);
+		d.set(6,28);
+		d.set(0,43);
+		d.set(18,19);
+		d.set(5,50);
+		d.set(13,39);
+		ArrayList<Coordinate> test_arr=d.pieceLost(39);
+		assertTrue(5==test_arr.get(0).getX() && 4==test_arr.get(0).getY());
+	}
+
 	//white piece to down, sanwiched by black
+	@Test
+	public void kingNoOnThroneWhitePieceDownBlackCapture()
+	{
+		Data d=new Data();
+		d.set(12,79);
+		d.set(11,76);
+		d.set(9,70);
+		d.set(10,85);
+		d.set(0,91);
+		d.set(24,58);
+		d.set(10,72);
+		d.set(31,83);
+		ArrayList<Coordinate> test_arr=d.pieceLost(83);
+		assertTrue(5==test_arr.get(0).getX() && 6==test_arr.get(0).getY());
+	}
 
 	//cases for multiple piece captures for both black and white and king (2 and 3 piece caps) (2 piece ex:  XO-OX, x goes where dash is )
 	//also need to test removal from backend
