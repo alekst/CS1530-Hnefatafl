@@ -31,28 +31,30 @@ public class Game
 		_whites = new Player(_manager);
 		_whites.setWhite();
 		
+		// TODO: set changeable values into a Settings object. 
 		// player info panel
 		_whiteInfo = new PlayerInfoPanel("Whites", 300); // 300 seconds
-
 		
+		// add the info panel to the player
 		_whites.addInfo(_whiteInfo);
 		
 		// player 2
 		_blacks = new Player(_manager);
 		_blacks.setBlack();
 		
-		// player info
+		// player info panel
 		_blackInfo = new PlayerInfoPanel("Blacks", 300);
+		// add player info to the player
 		_blacks.addInfo(_blackInfo);
 
-		
-		
+		//create the board
 		_board = new Board(_manager, _whites, _blacks);
-		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo);
 		
+		//create the Game Info Panel
+		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo);
+		// create the main frame
 		MainFrame _mf = new MainFrame(_board, _gi);
 	}
-	
 	
 	/**
 	* @return the game's Manager object

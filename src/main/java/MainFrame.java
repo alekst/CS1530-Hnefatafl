@@ -20,12 +20,15 @@ public class MainFrame
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// Add Main Panel and Button Panel
-		 
-
 		_buttonPanel = new ButtonPanel(board, this);
-			
+		
+		//add the board	to the main frame
 		_frame.add(board.getBoard(), BorderLayout.CENTER);
+		
+		// add the button panel to the main frame
 		_frame.add(_buttonPanel, BorderLayout.SOUTH);
+		
+		// add the game info panel to the main frame
 		_frame.add(gameInfo, BorderLayout.EAST);
 		
 	
