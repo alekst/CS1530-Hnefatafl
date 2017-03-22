@@ -182,14 +182,25 @@ public class Data
 	/**
 	* determines if a piece should be removed
 	* @param temp_value-the location of where a teammate should be for a capture
-	* @return true if a piece should be capture
+	* @param turn-whose turn it is, true=white, false=black
+	* @return true if a piece should be captured
 	* @return false if a piece should not be captured
 	*/
-	private boolean isPieceRemoved(int temp_value)
-	{ 
-		boolean teammate=isMember(temp_value)&&isWhite(temp_value);
-		return teammate||isSpecialSquare(temp_value);
+	private boolean isPieceRemoved(int temp_value, boolean turn)
+	{ //tested indirectly via pieceLost()
+		if(turn)
+		{
+			boolean teammate=isMember(temp_value)&&isWhite(temp_value);
+			return teammate||isSpecialSquare(temp_value);
+		}
+		else
+		{
+			boolean teammate=isMember(temp_value)&&!isWhite(temp_value);
+			return teammate||temp_value==61;
+		}
 	}
+
+
 	//going to return an array of pieces captured
 	/**
 	* Determines which pieces are captured during a move
@@ -225,55 +236,38 @@ public class Data
 		else //time to check to see if piece will be captured
 		{
 			//will need to loop through array of enemies and check the direction of where they are relation to value
-			//once directior is determined, see if there is a friendly piece 2 spaces away in that direction
+			//once direction is determined, see if there is a friendly piece 2 spaces away in that direction
 			if(isWhite(value))//white turn, utilize special square captures here
 			{	
 				for(int i=0; i<enemyNeighbors.size();i++) 
 				{
-					//System.out.println("enemy @ "+enemyNeighbors.get(i).intValue());
 					int direction=0;
-					int temp_value=value; //to check for friendly pieces
 					direction=enemyNeighbors.get(i).intValue()-value; //direction of enemy piece
-					//System.out.println("enemy direction :"+direction);
 					if(direction==-11) //up
-					{
-						temp_value=temp_value-22; //check 2 spaces away
-						boolean teammate=isMember(temp_value)&&isWhite(temp_value);
-						
-						//System.out.println("teammate to the north :"+teammate);
-						
-						//if(isPieceRemoved(temp_value))
-						if(teammate || isSpecialSquare(temp_value)) 
+					{	
+						if(isPieceRemoved(value-22,true))
 						{
 							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 					else if (direction==11) //down
 					{
-						temp_value=temp_value+22; //check 2 spaces away
-						boolean teammate=isMember(temp_value)&&isWhite(temp_value);
-						//System.out.println("teammate to the south :"+teammate);
-						if(teammate|| isSpecialSquare(temp_value))
+						
+						if(isPieceRemoved(value+22,true))
 						{
 							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 					else if(direction==1) //right
 					{
-						temp_value=temp_value+2; //check 2 spaces away
-						boolean teammate=isMember(temp_value)&&isWhite(temp_value);
-						//System.out.println("teammate to the west :"+teammate);
-						if(teammate|| isSpecialSquare(temp_value))
+						if(isPieceRemoved(value+2,true))
 						{
 							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 					else if(direction==-1)//left
 					{	
-						temp_value=temp_value-2; //check 2 spaces away
-						boolean teammate=isMember(temp_value)&&isWhite(temp_value);
-						//System.out.println("teammate to the east :"+teammate);
-						if(teammate|| isSpecialSquare(temp_value))
+						if(isPieceRemoved(value-2,true))
 						{
 							piecesToRemove.add(enemyNeighbors.get(i));
 						}
@@ -284,47 +278,32 @@ public class Data
 			{
 				for(int i=0; i<enemyNeighbors.size();i++)
 				{
-					//System.out.println("enemy @ "+enemyNeighbors.get(i).intValue());
 					int direction=0;
-					int temp_value=value; //to check for friendly pieces
 					direction=enemyNeighbors.get(i).intValue()-value; //direction of enemy
-					//System.out.println("enemy direction :"+direction);
 					if(direction==-11) //up
 					{
-						temp_value=temp_value-22; //check 2 spaces away
-						boolean teammate=(isMember(temp_value)&&!isWhite(temp_value));
-						//System.out.println("teammate to the north :"+teammate);
-						if(teammate||temp_value==61)//61 =throne
+						if(isPieceRemoved(value-22,false))
 						{
 							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 					else if (direction==11) //down
 					{
-						temp_value=temp_value+22; //check 2 spaces away
-						boolean teammate=(isMember(temp_value)&&!isWhite(temp_value));
-						//System.out.println("teammate to the south :"+teammate);
-						if(teammate||temp_value==61)//61 =throne
+						if(isPieceRemoved(value+22,false))
 						{
 							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 					else if(direction==1) //right
 					{
-						temp_value=temp_value+2; //check 2 spaces away
-						boolean teammate=(isMember(temp_value)&&!isWhite(temp_value));
-						//System.out.println("teammate to the west :"+teammate);
-						if(teammate||temp_value==61)//61 =throne
+						if(isPieceRemoved(value+2,false))
 						{
 							piecesToRemove.add(enemyNeighbors.get(i));
 						}
 					}
 					else if(direction==-1)//left
-					{	
-						temp_value=temp_value-2; //check 2 spaces away
-						boolean teammate=(isMember(temp_value)&&!isWhite(temp_value));
-						//System.out.println("teammate to the east :"+teammate);
-						if(teammate||temp_value==61) //61 =throne
+					{
+						if(isPieceRemoved(value-2,false))
 						{
 							piecesToRemove.add(enemyNeighbors.get(i));
 						}
