@@ -2,7 +2,7 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class MainFrame 
+public class MainFrame
 {
 	private final int HEIGHT = 800;
 	private final int WIDTH = 1000;

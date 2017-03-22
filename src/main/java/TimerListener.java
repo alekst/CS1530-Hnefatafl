@@ -3,19 +3,19 @@ import javax.swing.JLabel;
 
 public class TimerListener implements ActionListener
 {
-    private Player _player;
-    private JLabel _label;
+    private int countdown = 300;
+	private JLabel label;
 
-    public TimerListener(Player player, JLabel label)
+    public TimerListener(JLabel label)
     {
-        _player = player;
-        _label = label;
+        this.label = label;
+        
     }
+
 
     public void actionPerformed(ActionEvent e)
     {
-        _player.decrimentTimer();
-        String text = Integer.toString(_player.getTimer());
-        _label.setText(text);
+		countdown--;
+        label.setText(countdown + "");
     }
 }

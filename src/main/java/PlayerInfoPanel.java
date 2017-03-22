@@ -1,41 +1,59 @@
-// this class encapsulates the player information panel for the game info panel.
+// this class encapsulates the player information panel for the game info panel. The information in the player info panel contains
+// player's name, and the integer in seconds for timer's initial value. 
 import java.awt.*;
 import javax.swing.*;
 
+
+
 public class PlayerInfoPanel extends JPanel
 {
-
-    private JLabel _name;
-    private JLabel _timer;
-    private Player _player;
-    private TimerListener _listener;
-
-    public PlayerInfoPanel(Player player)
-    {
-        _player = player;
-        int time = _player.getTimer();
-        _timer = new JLabel(Integer.toString(time));
-        _name = new JLabel(_player.getName());
-        _listener = new TimerListener(_player,_timer);
-        setPreferredSize(new Dimension(100, 250));
-        setLayout(new FlowLayout());
-        add(_name);
-        add(_timer);
-        Timer t = new Timer(1000, _listener);
-
-        if(_player.myTurn())
-            {
-                //_listener = new TimerListener(_player, _timer);
-                //Timer t = new Timer(1000, _listener);
-                t.start();
-            }
-        else
-            {
-                t.stop();
-            }
-
-        //Timer t = new Timer(1000, _listener);
-        //t.start();
-
-    }
+	
+	public JLabel timerLabel;
+	public JLabel nameLabel;
+	public TimerListener listener;
+	public Timer timer;
+	
+	public PlayerInfoPanel(String name, int t)
+	{		
+		timerLabel = new JLabel(Integer.toString(t));
+		add(timerLabel);
+		
+		/* The requirements state that the timer should be implemented as a separate thread, but it doesn't specify how
+		* this thread should be implemented. The Java API javax.swing.Timer object operates in a separate thread implicitly. 
+		* All Timer objects share the same thread. 
+		*
+		* From the API docs "Although all Timers perform their waiting using a single, shared thread (created by the first 
+		* Timer object that executes), the action event handlers for Timers execute on another thread -- the event-dispatching 
+		* thread. This means that the action handlers for Timers can safely perform operations on Swing components. However, 
+		* it also means that the handlers must execute quickly to keep the GUI responsive." (https://docs.oracle.com/javase/8/docs/api/javax/swing/Timer.html)
+		*
+		* To add to this point, more from Java tutorials, "In general, we recommend using Swing timers rather than general-purpose 
+		* timers for GUI-related tasks because  Swing timers all share the same, pre-existing timer thread and the GUI-related 
+		* task automatically executes on the event-dispatch thread. " (https://docs.oracle.com/javase/tutorial/uiswing/misc/timer.html)
+		*/
+		
+		listener = new TimerListener(timerLabel);
+		timer = new Timer(1000, listener); // creates actionEvents every second on a separate thread. 
+		
+		nameLabel = new JLabel(name);
+		setPreferredSize(new Dimension(100, 250));
+		setLayout(new FlowLayout());
+		add(nameLabel);
+		add(timerLabel);
+	}
+	
+	/* This method starts a timer on the PlayerInfoPanel */
+	public void startTimer()
+	{
+		timer.start();
+	}
+	
+	/* This method stops a timer on a PlayerInfoPanel */
+	public void stopTimer()
+	{
+		timer.stop();
+	}
+	
+			
+	
 }
