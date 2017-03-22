@@ -57,6 +57,7 @@ public class Board extends JPanel
 		setUpBoard();
 		createSquares();
 		fillSquares();
+		_game = game;
 	}
 	
 	/**
@@ -359,7 +360,6 @@ public class Board extends JPanel
 		_other = temp;
 		enable(_player);
 		disable(_other);
-		_game.repaint();
 	}
 	
 	/**

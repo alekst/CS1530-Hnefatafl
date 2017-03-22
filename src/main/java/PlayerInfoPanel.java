@@ -12,30 +12,30 @@ public class PlayerInfoPanel extends JPanel
 
     public PlayerInfoPanel(Player player)
     {
+		
         _player = player;
         int time = _player.getTimer();
+		//TimerThread t = new TimerThread(time);	
         _timer = new JLabel(Integer.toString(time));
-        _name = new JLabel(_player.getName());
-        _listener = new TimerListener(_player,_timer);
+		_listener = new TimerListener(_player, _timer);
+		
+		
+		System.out.println("timer is " + time);
+        
+		_name = new JLabel(_player.getName());
         setPreferredSize(new Dimension(100, 250));
         setLayout(new FlowLayout());
         add(_name);
         add(_timer);
-        Timer t = new Timer(1000, _listener);
-
-        if(_player.myTurn())
-            {
-                //_listener = new TimerListener(_player, _timer);
-                //Timer t = new Timer(1000, _listener);
-                t.start();
-            }
-        else
-            {
-                t.stop();
-            }
-
-        //Timer t = new Timer(1000, _listener);
-        //t.start();
+		Timer timer = new Timer(1000, _listener);
+		if (_player.myTurn())
+		{
+			timer.start();
+		}
+		else
+		{
+			timer.stop();
+		}
 
     }
 }
