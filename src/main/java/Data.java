@@ -236,77 +236,37 @@ public class Data
 		else //time to check to see if piece will be captured
 		{
 			//will need to loop through array of enemies and check the direction of where they are relation to value
-			//once direction is determined, see if there is a friendly piece 2 spaces away in that direction
-			if(isWhite(value))//white turn, utilize special square captures here
-			{	
-				for(int i=0; i<enemyNeighbors.size();i++) 
-				{
-					int direction=0;
-					direction=enemyNeighbors.get(i).intValue()-value; //direction of enemy piece
-					if(direction==-11) //up
-					{	
-						if(isPieceRemoved(value-22,true))
-						{
-							piecesToRemove.add(enemyNeighbors.get(i));
-						}
-					}
-					else if (direction==11) //down
+			//once direction is determined, see if there is a friendly piece 2 spaces away in that direction	
+			for(int i=0; i<enemyNeighbors.size();i++) 
+			{
+				int direction=0;
+				direction=enemyNeighbors.get(i).intValue()-value; //direction of enemy piece
+				if(direction==-11) //up
+				{	
+					if(isPieceRemoved(value-22,isWhite(value)))
 					{
-						
-						if(isPieceRemoved(value+22,true))
-						{
-							piecesToRemove.add(enemyNeighbors.get(i));
-						}
-					}
-					else if(direction==1) //right
-					{
-						if(isPieceRemoved(value+2,true))
-						{
-							piecesToRemove.add(enemyNeighbors.get(i));
-						}
-					}
-					else if(direction==-1)//left
-					{	
-						if(isPieceRemoved(value-2,true))
-						{
-							piecesToRemove.add(enemyNeighbors.get(i));
-						}
+						piecesToRemove.add(enemyNeighbors.get(i));
 					}
 				}
-			}
-			else if(!isWhite(value))//black turn
-			{
-				for(int i=0; i<enemyNeighbors.size();i++)
+				else if (direction==11) //down
+				{	
+					if(isPieceRemoved(value+22,isWhite(value)))
+					{
+						piecesToRemove.add(enemyNeighbors.get(i));
+					}
+				}
+				else if(direction==1) //right
 				{
-					int direction=0;
-					direction=enemyNeighbors.get(i).intValue()-value; //direction of enemy
-					if(direction==-11) //up
+					if(isPieceRemoved(value+2,isWhite(value)))
 					{
-						if(isPieceRemoved(value-22,false))
-						{
-							piecesToRemove.add(enemyNeighbors.get(i));
-						}
+						piecesToRemove.add(enemyNeighbors.get(i));
 					}
-					else if (direction==11) //down
+				}
+				else if(direction==-1)//left
+				{	
+					if(isPieceRemoved(value-2,isWhite(value)))
 					{
-						if(isPieceRemoved(value+22,false))
-						{
-							piecesToRemove.add(enemyNeighbors.get(i));
-						}
-					}
-					else if(direction==1) //right
-					{
-						if(isPieceRemoved(value+2,false))
-						{
-							piecesToRemove.add(enemyNeighbors.get(i));
-						}
-					}
-					else if(direction==-1)//left
-					{
-						if(isPieceRemoved(value-2,false))
-						{
-							piecesToRemove.add(enemyNeighbors.get(i));
-						}
+						piecesToRemove.add(enemyNeighbors.get(i));
 					}
 				}
 			}
