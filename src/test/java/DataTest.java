@@ -273,6 +273,16 @@ public class DataTest
 		
 		assertTrue(d.kingLost(72)); // a square below the throne is 72
 	}
+	//my tests start here
+	/**
+	* Test is white method to ensure king is a white piece
+	*/
+	@Test
+	public void testIfKingIsWhite()
+	{
+		Data d=new Data();
+		assertTrue(d.isWhite(61));
+	}
 	//will need to do lots and lots of sets to handle edge cases
 
 	//left right sanwich caputre for white
@@ -753,11 +763,87 @@ public class DataTest
 		assertTrue(5==test_arr.get(0).getX() && 6==test_arr.get(0).getY());
 	}
 
-	//cases for multiple piece captures for both black and white and king (2 and 3 piece caps) (2 piece ex:  XO-OX, x goes where dash is )
+	//cases for multiple piece captures for both black and white (2 and 3 piece caps) (2 piece ex:  XO-OX, x goes where dash is )
+
+	//2 piece white capture
+	@Test
+	public void twoPieceWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(36,107);
+		d.set(11,106);
+		d.set(30,109);
+		d.set(12,110);
+		d.set(10,108);
+		ArrayList<Coordinate> test_arr=d.pieceLost(108);
+		assertTrue(9==test_arr.get(0).getX() && 9==test_arr.get(0).getY()
+			&& 7==test_arr.get(1).getX() && 9==test_arr.get(1).getY());
+
+	}
+
+	//3 piece white capture, redo
+	@Test
+	public void threePieceWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(29,80);
+		d.set(9,79);
+		d.set(33,82);
+		d.set(12,94);
+		d.set(32,114);
+		d.set(32,70);
+		d.set(12,92);
+		d.set(10,83);
+		d.set(12,81);
+		ArrayList<Coordinate> test_arr=d.pieceLost(81);
+		assertTrue(3==test_arr.get(0).getX() && 6==test_arr.get(0).getY()
+			&& 4==test_arr.get(1).getX() && 7==test_arr.get(1).getY()
+			&& 2==test_arr.get(2).getX() && 7==test_arr.get(2).getY());
+	}
+
+	//2 piece black capture
+	@Test
+	public void twoPieceBlackCapture()
+	{
+		Data d=new Data();
+		d.set(35,95);
+		d.set(11,74);
+		d.set(30,99);
+		d.set(11,96);
+		d.set(4,98);
+		d.set(36,97);
+		ArrayList<Coordinate> test_arr=d.pieceLost(97);
+		assertTrue(9==test_arr.get(0).getX() && 8==test_arr.get(0).getY()
+			&& 7==test_arr.get(1).getX() && 8==test_arr.get(1).getY());
+
+	}
+
+	//3 piece black capture
+	@Test
+	public void threePieceBlackCapture()
+	{
+		Data d=new Data();
+		d.set(24,90);
+		d.set(9,93);
+		d.set(31,94);
+		d.set(1,91);
+		d.set(27,70);
+		d.set(12,81);
+		d.set(32,92);
+		ArrayList<Coordinate> test_arr=d.pieceLost(92);
+		assertTrue(3==test_arr.get(0).getX() && 7==test_arr.get(0).getY()
+			&& 4==test_arr.get(1).getX() && 8==test_arr.get(1).getY()
+			&& 2==test_arr.get(2).getX() && 8==test_arr.get(2).getY());
+
+	}
+	//DO NOT NEED TO DO KING TESTS FOR CAPTURES BECAUSE KING IS DETERMINED AS WHITE PIECE IN iswhite(), THIS TEST HAS ALREADY BEEN DONE
+	
 	//also need to test removal from backend
 	//need to ensure that when a piece moves to a sandwich position, i.e. between two enemy pieces it is not removed
 
 	//do tests for when no pieces are captured
+
+	//test for special squares method, i added the
 
 	
 }
