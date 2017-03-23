@@ -360,10 +360,10 @@ public class Board extends JPanel
 		_other = temp;
 		enable(_player);
 		disable(_other);
-		//_game.removeAll();
-		_game.switchActivePlayer();
-		_game.validate();
-		_game.repaint();
+		// //_game.removeAll();
+// 		_game.switchActivePlayer();
+// 		_game.validate();
+// 		_game.repaint();
 	}
 	
 	/**
