@@ -306,7 +306,6 @@ public class Manager
 	*/
 	public boolean isValid(Coordinate origin, Coordinate destination) 
 	{	
-		// System.out.println(origin.getX()+ " "+origin.getY() + " ____ "+ destination.getX()+ " "+ destination.getY());
  		if(inSameSpot(origin, destination)) //both coordinates are occupied
  		{
  			return false;
@@ -401,11 +400,10 @@ public class Manager
 	* removes a piece from the board utilizing the data.java
 	* @param coord-The piece to remove
 	*/
-	public boolean removePiece(Coordinate coord) 
-	{//add return false case, NEED TO TEST
-		System.out.println(getIndex(coord));
+	public void removePiece(Coordinate coord) 
+	{//tested via data method it calls 
 		_data.set(getIndex(coord),-1);
-		return true;
+		
 	}
 	
 }

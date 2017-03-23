@@ -64,7 +64,6 @@ public class Data
 	*/
 	public void set(int index, int value)
 	{
-		System.out.println("setting: "+index+" to: "+value);
 		boardData[index] = value;	
 	}
 	
@@ -286,7 +285,6 @@ public class Data
 				}
 			}
 		}
-
 		return coordsToRemove;
 	}
 }

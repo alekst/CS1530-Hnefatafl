@@ -322,7 +322,6 @@ public class Board extends JPanel
 					{
 						enable(piecesToRemove.get(i)); //enable the spot where the piece used to reside
 						removePiece(piecesToRemove.get(i)); //remove it from the front end
-						
 						_manager.removePiece(piecesToRemove.get(i)); //remove it from the backedn
 					}
 					
