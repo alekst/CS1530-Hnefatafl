@@ -207,7 +207,7 @@ public class Data
 	* @return an arrayList of nieghboring Integers containing locations of enemy pieces
 	*/
 	private ArrayList<Integer> getEnemyNeighbors(int value)
-	{//test
+	{//tested indirectly via pieceLost
 		Integer[] neighbors = getNeighbors(value); 	//gets neighbors of the coordinate
 		ArrayList<Integer> enemyNeighbors = new ArrayList<Integer>(); //array of enemy neighbors
 		for(int x=0; x<neighbors.length;x++) 
@@ -228,9 +228,8 @@ public class Data
 			}
 		}
 		return enemyNeighbors;
-
-
 	}
+
 	//going to return an array of pieces captured
 	/**
 	* Determines which pieces are captured during a move
@@ -257,32 +256,37 @@ public class Data
 				{	
 					if(isPieceRemoved(value-22,isWhite(value)))
 					{
-						coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
+							coordsToRemove.add(decode(enemyNeighbors.get(i)));
 					}
 				}
 				else if (direction==11) //down
 				{	
 					if(isPieceRemoved(value+22,isWhite(value)))
 					{
-						coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
+							coordsToRemove.add(decode(enemyNeighbors.get(i)));
 					}
 				}
 				else if(direction==1) //right
 				{
 					if(isPieceRemoved(value+2,isWhite(value)))
 					{
-						coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
+							coordsToRemove.add(decode(enemyNeighbors.get(i)));
 					}
 				}
 				else if(direction==-1)//left
 				{	
 					if(isPieceRemoved(value-2,isWhite(value)))
 					{
-						coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						if(getIndex(enemyNeighbors.get(i))!=0) //king can not be captured via sandwich capture
+							coordsToRemove.add(decode(enemyNeighbors.get(i)));
 					}
 				}
 			}
 		}
+
 		return coordsToRemove;
 	}
 }
