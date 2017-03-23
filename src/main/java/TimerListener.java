@@ -6,11 +6,16 @@ public class TimerListener implements ActionListener
     private Player _player;
     private JLabel _label;
 
-    public TimerListener(Player player, JLabel label)
+    public TimerListener(Player player)
     {
         _player = player;
-        _label = label;
+        
     }
+	
+	public void addLabel(JLabel label)
+	{
+		_label = label;
+	}
 
     public void actionPerformed(ActionEvent e)
     {
