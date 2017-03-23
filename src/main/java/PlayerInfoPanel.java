@@ -10,6 +10,8 @@ public class PlayerInfoPanel extends JPanel
 	public Player player;
 	public JLabel timerLabel;
 	public JLabel name;
+	public TimerListener listener;
+	public Timer timer;
 	
 	public PlayerInfoPanel()
 	{
@@ -21,12 +23,23 @@ public class PlayerInfoPanel extends JPanel
 		player = player;
 		int time = player.getTimer();
 		timerLabel = new JLabel(Integer.toString(time));
+		
+		add(timerLabel);
+		listener = new TimerListener(timerLabel);
+		timer = new Timer(1000, listener);
+		
 		name = new JLabel(player.getName());
 		setPreferredSize(new Dimension(100, 250));
 		setLayout(new FlowLayout());
 		add(name);
 		add(timerLabel);
 	}
+	
+	public void startTimer()
+	{
+		timer.start();
+	}
+	
 			
 	
 }
