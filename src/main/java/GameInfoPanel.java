@@ -18,6 +18,11 @@ public class GameInfoPanel extends JPanel
 
   public GameInfoPanel(Player player, Player other) 
 	{
+		// Since the blacks start we need to switch players. TODO: think of a better way to do this. 
+		Player temp = player;
+		player = other;
+		other = temp;
+		
 		
 		//int time = player.getTimer();
 		//label1 = new JLabel(Integer.toString(time));
@@ -41,7 +46,7 @@ public class GameInfoPanel extends JPanel
 		button.addActionListener(new EndButtonListener(_player.timer, _other.timer));
 		
 		//
-		_player.startTimer();
+		_other.startTimer();
 		//t1.start();
 		
 		setPreferredSize(new Dimension(200, 250));

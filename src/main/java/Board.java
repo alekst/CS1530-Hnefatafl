@@ -353,17 +353,13 @@ public class Board extends JPanel
 		*	Changes current player to "other" and "other" player to now be the current player to move
 		* Calls enable and disable methods for the respective players' pieces 
 		*/
-	private void switchTurn()
+	public void switchTurn()
 	{
 		Player temp = _player;
 		_player = _other;
 		_other = temp;
 		enable(_player);
 		disable(_other);
-		// //_game.removeAll();
-// 		_game.switchActivePlayer();
-// 		_game.validate();
-// 		_game.repaint();
 	}
 	
 	/**

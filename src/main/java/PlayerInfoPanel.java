@@ -7,7 +7,6 @@ import javax.swing.*;
 public class PlayerInfoPanel extends JPanel
 {
 	
-	public Player player;
 	public JLabel timerLabel;
 	public JLabel name;
 	public TimerListener listener;
