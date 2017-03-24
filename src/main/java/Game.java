@@ -1,4 +1,6 @@
 import java.lang.*;
+import java.awt.event.*;
+import java.awt.*;
 
 public class Game
 {
@@ -7,6 +9,7 @@ public class Game
 	private Player _whites;
 	private Player _blacks;
 	private Manager _manager;
+	private PlayerInfoPanel _whiteInfo, _blackInfo;
 	
 	/**
 	* Constructor
@@ -27,20 +30,33 @@ public class Game
 		// player 1
 		_whites = new Player(_manager);
 		_whites.setWhite();
-		_whites.setName("Whites"); // TODO: Allow user to set his/her own name
-    	_whites.setTimer(300); // 300 seconds is 5 minutes TODO: allow player set the general time limit
+		
+		// player info panel
+		_whiteInfo = new PlayerInfoPanel();
+		_whiteInfo.name = "Whites"; // should eventually change into setters and getters
+		_whiteInfo.countdown = 300; // 300 seconds
+		
+		_whites.addInfo(_whiteInfo);
 		
 		// player 2
 		_blacks = new Player(_manager);
 		_blacks.setBlack();
-		_blacks.setName("Blacks");
-    	_blacks.setTimer(300); 
 		
-		GameInfoPanel _gi = new GameInfoPanel(_whites, _blacks);
-		_board = new Board(_manager, _gi, _whites, _blacks);
-    	
+		// player info
+		_blackInfo = new PlayerInfoPanel();
+		_blackInfo.name = "Blacks"; // should be allowed to change eventually
+		_blackInfo.countdown = 300;
+		
+		_blacks.addInfo(_blackInfo);
+
+		
+		
+		_board = new Board(_manager, _whites, _blacks);
+		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo);
+		
 		MainFrame _mf = new MainFrame(_board, _gi);
 	}
+	
 	
 	/**
 	* @return the game's Manager object

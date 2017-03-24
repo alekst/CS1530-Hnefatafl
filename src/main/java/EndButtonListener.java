@@ -9,20 +9,25 @@ public class EndButtonListener implements ActionListener{
 	private JLabel label;
 	private Timer timer, other;
 
-    public EndButtonListener(Timer timer, Timer another){
+
+    public EndButtonListener(Timer timer, Timer other){
 		super();
 		this.timer = timer;
-		this.other = another;
-
+		this.other = other;
     }
 
     public void actionPerformed(ActionEvent e) {
 		System.out.println("I am here");
 		timer.stop();
 		other.start();
+		switchTimers();
+    }
+	
+	private void switchTimers()
+	{
 		Timer temp = timer;
 		timer = other;
 		other = temp;
-    }
+	}
 	
 }

@@ -3,8 +3,7 @@ public class Player
 	private Manager _manager;
 	private boolean _white;
 	private boolean _turn;
-	private String _name;
-	private int _countdown;
+	private PlayerInfoPanel _info;
 	
 	/**
 	* Constructor
@@ -24,49 +23,21 @@ public class Player
 	}
 	
 	/**
-	* Setter to set the Player name
+	* Add the info panel to player. TO BE TESTED.
 	*/
-		
-	public void setName(String name)
+	public void addInfo(PlayerInfoPanel panel)
 	{
-		_name = name;
+		_info = panel;
+	} 
+	
+	/*
+	* Returns the PlayerInfoPanel object
+	*/
+	public PlayerInfoPanel getInfo()
+	{
+		return _info;
 	}
 	
-	/**
-	* Getter to show the Player name
-	*/ 
-	public String getName()
-	{
-		return _name;
-	}
-
-  /**
-   * Setter to set the Player time as a countdown in seconds
-   *
-   */
-
-    public void setTimer(int time)
-    {
-        _countdown = time;
-    }
-    /**
-     * Decriment the coundown for the player
-     *
-     */
-    public void decrimentTimer()
-    {
-        _countdown--;
-    }
-
-   /**
-    * Getter to show the Player time remaining in seconds
-    *
-    */
-    public int getTimer()
-    {
-        return _countdown;
-    }
-
     /**
      * Player is set to be the white player
      */
@@ -174,5 +145,9 @@ public class Player
 		}
 		return false;
 	}
+	
+
+	
+	
 	
 }

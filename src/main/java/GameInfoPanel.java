@@ -6,8 +6,8 @@ import javax.swing.*;
 public class GameInfoPanel extends JPanel 
 {
 	
-    private PlayerInfoPanel _player;
-    private PlayerInfoPanel _other;
+    private PlayerInfoPanel _playerInfo;
+    private PlayerInfoPanel _otherInfo;
 	private JLabel label1, label2;
 	private TimerListener _listener, _listener2;
 	
@@ -16,12 +16,14 @@ public class GameInfoPanel extends JPanel
 *	Create the game info panel for the main frame of the game. 
 */
 
-  public GameInfoPanel(Player player, Player other) 
+  public GameInfoPanel(PlayerInfoPanel playerInfo, PlayerInfoPanel otherInfo) 
 	{
-		// Since the blacks start we need to switch players. TODO: think of a better way to do this. 
-		Player temp = player;
-		player = other;
-		other = temp;
+		// Essentially this whole method is a hack. It passes the Board object because
+		// it needs some of the data in it that should eventually be split into different
+		// objects. This is due to the "unknown unknows" at the design level. 
+		_playerInfo = playerInfo;
+		_otherInfo = otherInfo;
+
 		
 		
 		//int time = player.getTimer();
@@ -39,23 +41,23 @@ public class GameInfoPanel extends JPanel
  	   	//Timer t1 = new Timer(1000, _listener);
 		//Timer t2 = new Timer(1000, _listener2);
 		
-		_player = new PlayerInfoPanel(player);
-		_other = new PlayerInfoPanel(other);
+		// _playerInfo = new PlayerInfoPanel(player);
+		// _otherInfo = new PlayerInfoPanel(other);
 		
 		JButton button = new JButton("End turn");
-		button.addActionListener(new EndButtonListener(_player.timer, _other.timer));
+		button.addActionListener(new EndButtonListener(_playerInfo.timer, _otherInfo.timer)); 
 		
 		//
-		_other.startTimer();
+		_playerInfo.startTimer();
 		//t1.start();
 		
 		setPreferredSize(new Dimension(200, 250));
 		setFont(new Font(null, Font.BOLD, 200));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		add(_player);
+		add(_playerInfo);
 		add(button);
-		add(_other);
+		add(_otherInfo);
 	}
 
 }
