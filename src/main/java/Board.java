@@ -368,10 +368,19 @@ public class Board extends JPanel
 		*/
 	public void switchTurn()
 	{
+		// stop the active player timer
+		PlayerInfoPanel playerInfo = _player.getInfo();
+		playerInfo.stopTimer();
+		// start the passive player timer
+		PlayerInfoPanel otherInfo = _other.getInfo();
+		otherInfo.startTimer();
+		// switch players
 		Player temp = _player;
 		_player = _other;
 		_other = temp;
+		// enable the active player
 		enable(_player);
+		// disable the passive player. 
 		disable(_other);
 	}
 		

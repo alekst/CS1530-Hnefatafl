@@ -32,9 +32,8 @@ public class Game
 		_whites.setWhite();
 		
 		// player info panel
-		_whiteInfo = new PlayerInfoPanel();
-		_whiteInfo.name = "Whites"; // should eventually change into setters and getters
-		_whiteInfo.countdown = 300; // 300 seconds
+		_whiteInfo = new PlayerInfoPanel("Whites", 300); // 300 seconds
+
 		
 		_whites.addInfo(_whiteInfo);
 		
@@ -43,10 +42,7 @@ public class Game
 		_blacks.setBlack();
 		
 		// player info
-		_blackInfo = new PlayerInfoPanel();
-		_blackInfo.name = "Blacks"; // should be allowed to change eventually
-		_blackInfo.countdown = 300;
-		
+		_blackInfo = new PlayerInfoPanel("Blacks", 300);
 		_blacks.addInfo(_blackInfo);
 
 		

@@ -18,11 +18,8 @@ public class GameInfoPanel extends JPanel
 
   public GameInfoPanel(PlayerInfoPanel playerInfo, PlayerInfoPanel otherInfo) 
 	{
-		// Essentially this whole method is a hack. It passes the Board object because
-		// it needs some of the data in it that should eventually be split into different
-		// objects. This is due to the "unknown unknows" at the design level. 
-		_playerInfo = playerInfo;
-		_otherInfo = otherInfo;
+
+	
 
 		
 		
@@ -44,20 +41,20 @@ public class GameInfoPanel extends JPanel
 		// _playerInfo = new PlayerInfoPanel(player);
 		// _otherInfo = new PlayerInfoPanel(other);
 		
-		JButton button = new JButton("End turn");
-		button.addActionListener(new EndButtonListener(_playerInfo.timer, _otherInfo.timer)); 
+		//JButton button = new JButton("End turn");
+		//button.addActionListener(new EndButtonListener(_playerInfo.timer, _otherInfo.timer)); 
 		
 		//
-		_playerInfo.startTimer();
+		//_playerInfo.startTimer();
 		//t1.start();
 		
 		setPreferredSize(new Dimension(200, 250));
 		setFont(new Font(null, Font.BOLD, 200));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
-		add(_playerInfo);
-		add(button);
-		add(_otherInfo);
+		add(playerInfo);
+		//add(button);
+		add(otherInfo);
 	}
 
 }
