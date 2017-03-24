@@ -33,7 +33,7 @@ public class PlayerInfoPanel extends JPanel
 		*/
 		
 		listener = new TimerListener(timerLabel);
-		timer = new Timer(1000, listener);
+		timer = new Timer(1000, listener); // creates actionEvents every second on a separate thread. 
 		
 		nameLabel = new JLabel(name);
 		setPreferredSize(new Dimension(100, 250));
