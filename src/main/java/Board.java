@@ -31,7 +31,6 @@ public class Board extends JPanel
 	private Player _player;
 	private Player _other;
 	
-	private GameInfoPanel _game; // TODO: will be eventually moved to settings
 	
 	/**
 	 *	Empty constructor for game initialization purposes. Overridden by constructor below when instantiated.
@@ -47,7 +46,7 @@ public class Board extends JPanel
 	 *	@param player: Player currently moving (pieces enabled)
 	 *	@param other: Player currently idle (pieces disabled)
 	 */
-	public Board(Manager manager, GameInfoPanel game, Player player, Player other)
+	public Board(Manager manager, Player player, Player other)
 	{
 		super();
 		_manager = manager;
@@ -57,7 +56,6 @@ public class Board extends JPanel
 		setUpBoard();
 		createSquares();
 		fillSquares();
-		_game = game;
 	}
 	
 	/**
@@ -91,6 +89,7 @@ public class Board extends JPanel
 	 */
 	private void createSquares()
 	{
+		
 		// create the board squares
 		Insets buttonMargin = new Insets(0, 0, 0, 0);
 		for (int i = 0; i < boardSquares.length; i++)
@@ -100,6 +99,7 @@ public class Board extends JPanel
 				
 				JButton square = new JButton();
 				square.addActionListener(actionListener);
+				square.addActionListener()
 				// todo: allow user to change board colors?
 				if (( j == 0 && i == 0 ) || ( j == 10 && i == 10 ) || ( j == 0 && i == 10 ) || ( j == 10 && i == 0 ) || ( j == 5 && i == 5 ))
 				{
