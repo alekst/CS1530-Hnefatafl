@@ -43,4 +43,28 @@ public class CoordinateTest
 		Coordinate d = new Coordinate(3, 4);
 		assertFalse(c.equal(d));
 	}
+	
+	// Tests to determine if the Coordinate object contains (-1, -1)
+	@Test
+	public void testMinusOne()
+	{
+		Coordinate c = new Coordinate(-1, -1);
+		assertTrue(c.isMinusOne());
+	}
+	
+	// Tests to determine if the Coordinate object does not contain (-1, -1)
+	@Test
+	public void testNotMinusOneNegative()
+	{
+		Coordinate c = new Coordinate(-3, -4);
+		assertFalse(c.isMinusOne());
+	}
+	
+	// Tests to determine if the Coordinate object does not contain (-1, -1)
+	@Test
+	public void testNotMinusOnePositive()
+	{
+		Coordinate c = new Coordinate(1, 1);
+		assertFalse(c.isMinusOne());
+	}
 }

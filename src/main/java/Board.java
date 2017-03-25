@@ -151,12 +151,12 @@ public class Board extends JPanel
 	}	
 	
 	/**
-		*	Prints appropriate piece image (black, white, king) on location designated by the Coordinate argument
-		*	@param coor: Coordinate object designating the location where the piece should be printed
-		* @param type: String desginating type of piece to print, either whiteKing, whitePiece, or blackPiece
-		* @return int, 1 if coor does not have a valid location on the board
-		*							 0 if the piece is printed
-		*/
+	*	Prints appropriate piece image (black, white, king) on location designated by the Coordinate argument
+	*	@param coor: Coordinate object designating the location where the piece should be printed
+	* @param type: String desginating type of piece to print, either whiteKing, whitePiece, or blackPiece
+	* @return int, 1 if coor does not have a valid location on the board
+	*							 0 if the piece is printed
+	*/
 	public int printPiece(Coordinate coor, String type)
 	{
 		
@@ -182,11 +182,11 @@ public class Board extends JPanel
 	}
 	
 	/**
-		*	Removes appropriate piece image (black, white, king) to a blank space on location designated by the Coordinate argument
-		*	@param coor: Coordinate object designating the location where the piece should be removed
-		* @return int, 1 if coor does not have a valid location on the board
-		*							 0 if the piece is removed
-		*/
+	* Removes appropriate piece image (black, white, king) to a blank space on location designated by the Coordinate argument
+	*	@param coor: Coordinate object designating the location where the piece should be removed
+	* @return int, 1 if coor does not have a valid location on the board
+	*							 0 if the piece is removed
+	*/
 	public int removePiece(Coordinate coor)
 	{
 		if(coor.getX() < 0 || coor.getY() < 0)
@@ -199,9 +199,9 @@ public class Board extends JPanel
 	}
 	
 	/**
-		*	Calls printPieces to print the pieces for each player on the board
-		* @return 0 on successful completion
-		*/
+	*	Calls printPieces to print the pieces for each player on the board
+	* @return 0 on successful completion
+	*/
 	public int printAll()
 	{
 		printPieces(_player);
@@ -210,10 +210,10 @@ public class Board extends JPanel
 	}
 	
 	/**
-		*	Prints the pieces for a particular player
-		*	@param player: Player object indicating for which player to print
-		* @return int, 0 on successful completion
-		*/
+	*	Prints the pieces for a particular player
+	*	@param player: Player object indicating for which player to print
+	*  @return int, 0 on successful completion
+	*/
 	public int printPieces(Player player)
 	{	
 		Coordinate[] pieces = player.getPieces();
@@ -267,20 +267,19 @@ public class Board extends JPanel
 		}
 	}
 	
-		/**
-			*	Action listener for user actions clicking board pieces for moves.
-			* Gets coordiante from click location for first click to change to coordinate related to second click 
-			* Calls manager to access/update data 
-			* Switches player turns on end of move
-			*	@param actionEvent: ActionEvent object passed in from frame 
-			*/
+	/**
+	*	Action listener for user actions clicking board pieces for moves.
+	* Gets coordiante from click location for first click to change to coordinate related to second click 
+	* Calls manager to access/update data 
+	* Switches player turns on end of move
+	*	@param actionEvent: ActionEvent object passed in from frame 
+	*/
 	ActionListener actionListener = new GameListener()
 	{
 		 public void doPerformAction(ActionEvent actionEvent)
  		{			
  			Square b = (Square)actionEvent.getSource();
  			Coordinate coor = b.getCoord();
- 			System.out.println("x is " + coor.getX() + " and y is " + coor.getY());
 			selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
 				
 			if((first_clicked.isMinusOne()) && (_manager.getIndex(coor) != -1))
@@ -366,29 +365,33 @@ public class Board extends JPanel
 		* Changes current player to "other" and "other" player to now be the current player to move
 		* Calls enable and disable methods for the respective players' pieces 
 		*/
-	public void switchTurn()
+	private void switchTurn()
 	{
 		// stop the active player timer
 		PlayerInfoPanel playerInfo = _player.getInfo();
 		playerInfo.stopTimer();
+		
 		// start the passive player timer
 		PlayerInfoPanel otherInfo = _other.getInfo();
 		otherInfo.startTimer();
+		
 		// switch players
 		Player temp = _player;
 		_player = _other;
 		_other = temp;
+		
 		// enable the active player
 		enable(_player);
+		
 		// disable the passive player. 
 		disable(_other);
 	}
 		
 	/**
-		*	"Moves" the piece by deleting piece at old location and printing piece at new location 
-		*	@param oldData: Coordinate object indicating old location of the moving piece
-		* @param newData: Coordinate object indicating new location to where the piece should move
-		*/
+	*	"Moves" the piece by deleting piece at old location and printing piece at new location 
+	*	@param oldData: Coordinate object indicating old location of the moving piece
+	* @param newData: Coordinate object indicating new location to where the piece should move
+	*/
 	private void move(Coordinate oldData, Coordinate newData)
 	{
 		removePiece(oldData);
@@ -408,8 +411,8 @@ public class Board extends JPanel
 	}
 	
 	/**
-		*	Sets clicks to non-board locations to clear clicks 
-		*/
+	*	Sets clicks to non-board locations to clear clicks 
+	*/
 	private void resetClicks()
 	{
 		first_clicked = new Coordinate(-1, -1);

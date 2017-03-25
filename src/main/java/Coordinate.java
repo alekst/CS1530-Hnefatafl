@@ -55,8 +55,9 @@ public class Coordinate
 	}
 	
 	/**
-	* Because Board.java uses a Coordinate object,
-	* 
+	* Checks to see if the Coordinate values are (-1, -1). These are the placeholders used
+	* by the Board class. 
+	* @return true, if both x and y are -1. Otherwise, false
 	*/
 	public boolean isMinusOne()
 	{
@@ -66,9 +67,5 @@ public class Coordinate
 		}
 		return false;
 	}
-	
-
-		 
-		
 	
 }
