@@ -126,6 +126,20 @@ public class PlayerTest
 		
 		assertEquals(p.hasWon(), false);
 	}
+	
+	// Checks if the PlayerInfoPanel has been added
+	@Test
+	public void testPanelAdded()
+	{
+		Manager m = new Manager();
+		Player p = new Player();
+		PlayerInfoPanel panel = new PlayerInfoPanel("dworb", 300);
+		p.addInfo(panel);
+		PlayerInfoPanel actual = p.getInfo();
+		assertEquals(panel, actual);
+	}
+	
+	
 }
 		
 
