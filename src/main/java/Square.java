@@ -14,7 +14,6 @@ public class Square extends JButton
 	public Square(Coordinate coord)
 	{
 		this.coord = coord;
-		//addActionListener(new SquareListener());
 		setPreferredSize(new Dimension(50, 50));
 		// the square needs to be opaque to use the setBackground method. 
 		//https://docs.oracle.com/javase/7/docs/api/javax/swing/JComponent.html#setBackground(java.awt.Color)

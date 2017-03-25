@@ -284,7 +284,6 @@ public class Board extends JPanel
 				
 			if((first_clicked.isMinusOne()) && (_manager.getIndex(coor) != -1))
 			{
-				System.out.println("test");
 				first_clicked = coor;	
 				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
 			}
@@ -419,16 +418,6 @@ public class Board extends JPanel
 		second_clicked = new Coordinate(-1, -1);
 	}
 	
-	/**
-	* Get current players
-	*/
-	public Player[] getPlayers()
-	{
-		Player[] players = new Player[2];
-		players[0] = _player;
-		players[1] = _other;
-    	return players;
-	}
 }
 
 

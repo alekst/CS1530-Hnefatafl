@@ -9,16 +9,16 @@ public class TimerListener implements ActionListener
     private int countdown = 300;
 	private JLabel label;
 
-	/* A basic constructor that takes a JLabel as an argument
-	*
+	/* 
+	* A basic constructor that takes a JLabel as an argument
 	*/   
     public TimerListener(JLabel label)
     {
         this.label = label; 
     }
 	
-	/* This action is performed every time the Timer objects sends an Event (every second)
-	*
+	/* 
+	* This action is performed every time the Timer objects sends an Event (every second)
 	*/
     public void actionPerformed(ActionEvent e)
     {
