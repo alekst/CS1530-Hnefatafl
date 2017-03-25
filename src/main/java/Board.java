@@ -147,7 +147,7 @@ public class Board extends JPanel
 			}
 		}
 		printAll();
-		switchTurn();
+		switchTurn(false); // this switch turn does not count. This is done so that the Black player would go first. 
 	}	
 	
 	/**
@@ -310,7 +310,7 @@ public class Board extends JPanel
 					_player.doneWithTurn();
 					_other.newTurn();
 					resetClicks();
-					switchTurn();
+					switchTurn(true); // this is an actual turn that has been made, so the flag is set to true
 				}
 			}
 			else
@@ -364,12 +364,19 @@ public class Board extends JPanel
 	* Changes current player to "other" and "other" player to now be the current player to move
 	* Calls enable and disable methods for the respective players' pieces 
 	*/
-	private void switchTurn()
+	private void switchTurn(boolean turn)
 	{
-		// stop the active player timer
-		PlayerInfoPanel playerInfo = _player.getInfo();
-		playerInfo.stopTimer();
 		
+		PlayerInfoPanel playerInfo = _player.getInfo();
+
+		// stop the active player timer
+		playerInfo.stopTimer();
+		// if this is the end of an actual turn and not done in preparation for the game
+		if (turn)
+		{
+			// add three seconds to this player's time
+			playerInfo.addTime();
+		}		
 		// start the passive player timer
 		PlayerInfoPanel otherInfo = _other.getInfo();
 		otherInfo.startTimer();

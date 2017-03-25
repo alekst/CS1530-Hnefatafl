@@ -24,12 +24,13 @@ public class PlayerInfoPanel extends JPanel
 	private JLabel nameLabel;
 	private TimerListener listener;
 	private Timer timer;
-	private int minutes, seconds;
+	private int time, minutes, seconds;
 	
 	public PlayerInfoPanel(String name, int t)
 	{	
-		int minutes = t / 60;
-		int seconds = t % 60;	
+		time = t;
+		minutes  = convertMinutes();
+		seconds = convertSeconds();
 		timerLabel = new JLabel(String.format("%d:%02d", minutes, seconds));
 		add(timerLabel);
 		listener = new TimerListener(timerLabel);
@@ -42,16 +43,44 @@ public class PlayerInfoPanel extends JPanel
 		add(timerLabel);
 	}
 	
-	/* This method starts a timer on the PlayerInfoPanel */
+	/* 
+	* This method starts a timer on the PlayerInfoPanel 
+	*/
 	public void startTimer()
 	{
 		timer.start();
 	}
 	
-	/* This method stops a timer on a PlayerInfoPanel */
+	/* 
+	* This method stops a timer on a PlayerInfoPanel 
+	*/
 	public void stopTimer()
 	{
-		timer.stop();
+		time = time - listener.getMoveTime(); // new time value is the old time value minus however long it took to make a move
+		listener.resetMoveTime(); // resets the time it took to make the move for the next turn
+		timer.stop(); // stop the timer
+	}
+	
+	/* 
+	* This method adds three seconds to the clock at the end of the turn
+	*/
+	public void addTime()
+	{
+		listener.addToCountdown(); // adds three seconds for the running display in TimerListener
+		time = time + 3; // plus three seconds to the time
+		minutes = convertMinutes();
+		seconds = convertSeconds();
+		timerLabel.setText(String.format("%d:%02d", minutes, seconds)); // update the label
+	}
+	
+	private int convertMinutes()
+	{
+		return time / 60;
+	}
+	
+	private int convertSeconds()
+	{
+		return time % 60;
 	}
 	
 			
