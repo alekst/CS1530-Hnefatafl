@@ -40,7 +40,6 @@ public class Coordinate
 	* @param toCompare: the Coordinate object to compare to. 
 	* @param second: Second Coordinate object
 	* @return true, if the objects contain equal x and y. Otherwise, returns false. 
-	* TODO: WRITE SOME TESTS
 	*/ 
 	public boolean equal(Coordinate toCompare)
 	{
