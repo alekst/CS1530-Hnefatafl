@@ -1005,9 +1005,223 @@ public class DataTest
 		assertEquals(test_arr.size(),0);
 	}
 
-
-
+	// Tests shield wall captures utilizing special squares
+	// 	on west wall top special square
+	@Test
+	public void upperLeft1SWCSpecial()	
+	{
+		Data d = new Data();
+		d.set(5, 12);
+		d.set(1, 23);
+		d.set(13, 13);
+		d.set(14, 24);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(34);
+		assertTrue(0==test_arr.get(0).getX() && 2==test_arr.get(0).getY()
+			&& 0==test_arr.get(1).getX() && 1==test_arr.get(1).getY());
+	}
 	
+	// Tests shield wall captures utilizing special squares
+	// 	on north wall left special square
+	public void upperLeft2SWCSpecial()	
+	{
+		Data d = new Data();
+		d.set(5, 2);
+		d.set(1, 3);
+		d.set(2, 4);
+		d.set(13, 13);
+		d.set(15, 14);
+		d.set(16, 15);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(5);
+		assertTrue(3==test_arr.get(0).getX() && 0==test_arr.get(0).getY()
+			&& 2==test_arr.get(1).getX() && 0==test_arr.get(1).getY()
+			&& 1==test_arr.get(2).getX() && 0==test_arr.get(2).getY());
+	}
+	
+	// Tests shield wall captures utilizing special squares
+	// 	on east wall top special square
+	public void upperRight1SWCSpecial()	
+	{
+		Data d = new Data();
+		d.set(5, 22);
+		d.set(1, 33);
+		d.set(13, 21);
+		d.set(14, 32);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(44);
+		assertTrue(10==test_arr.get(0).getX() && 2==test_arr.get(0).getY()
+			&& 10==test_arr.get(1).getX() && 1==test_arr.get(1).getY());
+	}
+	
+	// Tests shield wall captures utilizing special squares
+	// 	on north wall right special square
+	public void upperRight2SWCSpecial()	
+	{
+		Data d = new Data();
+		d.set(5, 10);
+		d.set(1, 9);
+		d.set(17, 21);
+		d.set(13, 19);
+		d.set(6, 8);
+		d.set(14, 20);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(7);
+		assertTrue(7==test_arr.get(0).getX() && 0==test_arr.get(0).getY()
+			&& 6==test_arr.get(1).getX() && 0==test_arr.get(1).getY()
+			&& 5==test_arr.get(2).getX() && 0==test_arr.get(2).getY());
+	}
+	
+	// Tests shield wall captures utilizing special squares
+	// 	on west wall bottom special square
+	public void lowerLeft1SWCSpecial()	
+	{
+		Data d = new Data();
+		d.set(5, 100);
+		d.set(1, 89);
+		d.set(29, 79);
+		d.set(8, 78);
+		d.set(23, 90);
+		d.set(21, 101);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(67);
+		assertTrue(0==test_arr.get(0).getX() && 7==test_arr.get(0).getY()
+			&& 0==test_arr.get(1).getX() && 8==test_arr.get(1).getY()
+			&& 0==test_arr.get(2).getX() && 9==test_arr.get(2).getY());
+	}
+	
+	// Tests shield wall captures utilizing special squares
+	// 	on south wall left special square
+	public void lowerLeft2SWCSpecial()
+	{
+		Data d = new Data();
+		d.set(5, 112);
+		d.set(1, 113);
+		d.set(13, 101);
+		d.set(14, 102);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(114);
+		assertTrue(2==test_arr.get(0).getX() && 10==test_arr.get(0).getY()
+			&& 1==test_arr.get(1).getX() && 10==test_arr.get(1).getY());
+	}	
+	
+	// Tests shield wall captures utilizing special squares
+	// 	on east wall bottom special square
+	public void lowerRight1SWCSpecial()
+	{
+		Data d = new Data();
+		d.set(5, 99);
+		d.set(1, 110);
+		d.set(13, 98);
+		d.set(14, 109);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(88);
+		assertTrue(10==test_arr.get(0).getX() && 8==test_arr.get(0).getY()
+			&& 10==test_arr.get(1).getX() && 9==test_arr.get(1).getY());
+	}	
+	
+	// Tests shield wall captures utilizing special squares
+	// 	on south wall right special square
+	public void lowerRight2SWCSpecial()	
+	{
+		Data d = new Data();
+		d.set(5, 99);
+		d.set(1, 110);
+		d.set(13, 98);
+		d.set(14, 109);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(88);
+		assertTrue(10==test_arr.get(0).getX() && 8==test_arr.get(0).getY()
+			&& 10==test_arr.get(1).getX() && 9==test_arr.get(1).getY());
+	}
+	
+	// Tests shield wall captures without special spaces
+	// 	on north wall
+	public void northSWC()	
+	{
+		Data d = new Data();
+		d.set(13, 15);
+		d.set(14, 16);
+		d.set(15, 3);
+		d.set(16, 18);
+		d.set(17, 19);
+		d.set(1, 4);
+		d.set(2, 5);
+		d.set(3, 6);
+		d.set(4, 7);
+		d.set(5, 8);
+		d.set(19, 9);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(9);
+		assertTrue(7==test_arr.get(0).getX() && 0==test_arr.get(0).getY()
+			&& 6==test_arr.get(1).getX() && 0==test_arr.get(1).getY()
+			&& 5==test_arr.get(2).getX() && 0==test_arr.get(2).getY()
+			&& 4==test_arr.get(3).getX() && 0==test_arr.get(3).getY()
+			&& 3==test_arr.get(4).getX() && 0==test_arr.get(4).getY());
+	}
+	
+	// Tests shield wall captures without special spaces
+	// 	on south wall
+	public void southSWC()	
+	{
+		Data d = new Data();
+		d.set(32, 103);
+		d.set(33, 104);
+		d.set(34, 113);
+		d.set(35, 106);
+		d.set(36, 107);
+		d.set(1, 114);
+		d.set(2, 115);
+		d.set(3, 116);
+		d.set(4, 117);
+		d.set(5, 118);
+		d.set(19, 119);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(119);
+		assertTrue(7==test_arr.get(0).getX() && 10==test_arr.get(0).getY()
+			&& 6==test_arr.get(1).getX() && 10==test_arr.get(1).getY()
+			&& 5==test_arr.get(2).getX() && 10==test_arr.get(2).getY()
+			&& 4==test_arr.get(3).getX() && 10==test_arr.get(3).getY()
+			&& 3==test_arr.get(4).getX() && 10==test_arr.get(4).getY());
+	}
+	
+	// Tests shield wall captures without special spaces
+	// 	on east wall
+	public void eastSWC()	
+	{
+		Data d = new Data();
+		d.set(19, 35);
+		d.set(21, 46);
+		d.set(23, 89);
+		d.set(27, 68);
+		d.set(29, 79);
+		d.set(1, 34);
+		d.set(2, 45);
+		d.set(3, 56);
+		d.set(4, 67);
+		d.set(5, 78);
+		d.set(19, 23);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(23);
+		assertTrue(0==test_arr.get(0).getX() && 3==test_arr.get(0).getY()
+			&& 0==test_arr.get(1).getX() && 4==test_arr.get(1).getY()
+			&& 0==test_arr.get(2).getX() && 5==test_arr.get(2).getY()
+			&& 0==test_arr.get(3).getX() && 6==test_arr.get(3).getY()
+			&& 0==test_arr.get(4).getX() && 7==test_arr.get(4).getY());
+	}
+	
+	// Tests shield wall captures without special spaces
+	// 	on west wall
+	public void westSWC()
+	{
+		Data d = new Data();
+		d.set(20, 43);
+		d.set(22, 54);
+		d.set(26, 33);
+		d.set(28, 76);
+		d.set(30, 87);
+		d.set(1, 44);
+		d.set(2, 55);
+		d.set(3, 66);
+		d.set(4, 77);
+		d.set(5, 88);
+		d.set(19, 99);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(99);
+		assertTrue(10==test_arr.get(0).getX() && 3==test_arr.get(0).getY()
+			&& 10==test_arr.get(1).getX() && 4==test_arr.get(1).getY()
+			&& 10==test_arr.get(2).getX() && 5==test_arr.get(2).getY()
+			&& 10==test_arr.get(3).getX() && 6==test_arr.get(3).getY()
+			&& 10==test_arr.get(4).getX() && 7==test_arr.get(4).getY());
+	}
 }
 
 
