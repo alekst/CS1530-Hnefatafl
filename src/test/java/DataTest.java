@@ -262,9 +262,9 @@ public class DataTest
 	{
 		Data d = new Data();
 		d.set(9, 10); // move 9th white piece to the 10th square
-		d.set(10, 9); // more 10th white piece to the 9th square
-		d.set(11, 12); // more 11th white piece to the 12th square
-		d.set(12, 14); // more 12th white piece to the 14th square
+		d.set(10, 9); // move 10th white piece to the 9th square
+		d.set(11, 12); // move 11th white piece to the 12th square
+		d.set(12, 14); // move 12th white piece to the 14th square
 		d.set(14, 71); // set a black piece to square 71
 		d.set(15, 73); // set a black piece to square 73
 		d.set(16, 83); //set a black piece to square 83, i.e. one below the king
@@ -272,6 +272,741 @@ public class DataTest
 		
 		assertTrue(d.kingLost(72)); // a square below the throne is 72
 	}
+
+
+	/**
+	* This test will ensure that the king is not captured by a sandwich capture, capture not should occur
+	*/
+	@Test
+	public void testIfKingIsCapturedBySandwich()
+	{
+		Data d=new Data();
+		d.set(8,31);
+		d.set(6,28);
+		d.set(0,36);
+		d.set(24,35);
+		d.set(14,38);
+		d.set(14,37);
+		ArrayList<Coordinate> test_arr=d.pieceLost(37);
+		assertEquals(test_arr.size(),0);
+	}
+
+	/**
+	* This test will ensure that the king is not captured by a horizontal sandwich capture on a special square, capture not should occur
+	*/
+	@Test
+	public void testIfKingIsCaptureBySpecialSquareHoriz()
+	{
+		Data d=new Data();
+		d.set(0,10);
+		d.set(17,9);
+		ArrayList<Coordinate> test_arr=d.pieceLost(9);
+		assertEquals(test_arr.size(),0);
+	}
+
+	/**
+	* This test will ensure that the king is not captured by a vertical sandwich capture on a special square, capture not should occur
+	*/
+	@Test
+	public void testIfKingIsCaptureBySpecialSquareVert()
+	{
+		Data d=new Data();
+		d.set(0,100);
+		d.set(29,89);
+		ArrayList<Coordinate> test_arr=d.pieceLost(89);
+		assertEquals(test_arr.size(),0);
+	}
+
+	/**
+	* Test is white method to ensure king is a white piece, capture should occur
+	*/
+	@Test
+	public void testIfKingIsWhite()
+	{
+		Data d=new Data();
+		assertTrue(d.isWhite(61));
+	}
+
+	/**
+	* tests captures via a simple left right sandwich capture, capture should occur
+	*/
+	@Test
+	public void leftRightWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(24,58);
+		d.set(9,68);
+		d.set(9,57);
+		ArrayList<Coordinate> test_arr=d.pieceLost(57);
+		assertTrue(2==test_arr.get(0).getX() && 5==test_arr.get(0).getY()); 
+	}
+
+	/**
+	* tests captures via a simple up down sandwich capture, capture should occur
+	*/
+	@Test
+	public void upDownWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(21,48);
+		d.set(8,37);
+		ArrayList<Coordinate> test_arr=d.pieceLost(37);
+		assertTrue(3==test_arr.get(0).getX() && 4==test_arr.get(0).getY());
+	}
+
+
+	/**
+	* tests horizontal sandwich captures with top left special square for white pieces, capture should occur
+	*/
+	@Test
+	public void topLeftHorizWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(24,2);
+		d.set(1,3);
+		ArrayList<Coordinate> test_arr=d.pieceLost(3);
+		assertTrue(1==test_arr.get(0).getX() && 0==test_arr.get(0).getY());
+	}
+
+	/**
+	* tests vertical sandwich captures with top left special square for white pieces, capture should occur
+	*/                     
+	public void topLeftVertWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(19,12);
+		d.set(1,23);
+		ArrayList<Coordinate> test_arr=d.pieceLost(23);
+		assertTrue(1==test_arr.get(0).getX() && 1==test_arr.get(0).getY());
+
+	}
+
+	/**
+	* tests horizontal sandwich captures with bottom left special square for white pieces, capture should occur
+	*/
+	@Test
+	public void bottomLeftHorizWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(32,112);
+		d.set(1,113);
+		ArrayList<Coordinate> test_arr=d.pieceLost(113);
+		assertTrue(1==test_arr.get(0).getX() && 10==test_arr.get(0).getY());
+
+	}
+
+	/**
+	* tests vertical sandwich captures with bottom left special square for white pieces, capture should occur
+	*/
+	@Test
+	public void bottomLeftVertWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(31,100);
+		d.set(1,89);
+		ArrayList<Coordinate> test_arr=d.pieceLost(89);
+		assertTrue(0==test_arr.get(0).getX() && 9==test_arr.get(0).getY());
+
+	}
+
+	/**
+	* tests horizontal sandwich captures with top right special square for white pieces, capture should occur
+	*/
+	@Test
+	public void topRightHorizWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(17,10);
+		d.set(4,9);
+		ArrayList<Coordinate> test_arr=d.pieceLost(9);
+		assertTrue(9==test_arr.get(0).getX() && 0==test_arr.get(0).getY());
+
+	}
+
+	//top right square vert cap for white
+	/**
+	* tests vertical sandwich captures with top right special square for white pieces, capture should occur
+	*/
+	@Test
+	public void topRightVertWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(20,22);
+		d.set(8,33);
+		ArrayList<Coordinate> test_arr=d.pieceLost(33);
+		assertTrue(10==test_arr.get(0).getX() && 1==test_arr.get(0).getY());
+
+	}
+
+	/**
+	* tests horizontal sandwich captures with bottom right special square for white pieces, capture should occur
+	*/
+	@Test
+	public void bottomRightHorizWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(36,120);
+		d.set(4,119);
+		ArrayList<Coordinate> test_arr=d.pieceLost(119);
+		assertTrue(9==test_arr.get(0).getX() && 10==test_arr.get(0).getY());
+
+	}
+	
+	/**
+	* tests vertical sandwich captures with bottom right special square for white pieces, capture should occur
+	*/
+	@Test
+	public void bottomRightVertWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(30,110);
+		d.set(12,99);
+		ArrayList<Coordinate> test_arr=d.pieceLost(99);
+		assertTrue(10==test_arr.get(0).getX() && 9==test_arr.get(0).getY());
+
+	}
+
+	/**
+	* tests up down sandwich capture for black pieces, capture should occur
+	*/
+	@Test
+	public void upDownBlackCapture()
+	{
+		Data d=new Data();
+		d.set(21,48);
+		d.set(27,70);
+		ArrayList<Coordinate> test_arr=d.pieceLost(70);
+		assertTrue(3==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+
+	}
+
+	/**
+	* tests left right sandwich capture for black pieces, capture should occur
+	*/
+	@Test
+	public void leftRighBlackCapture()
+	{
+		Data d=new Data();
+		d.set(19,38);
+		d.set(20,40);
+		ArrayList<Coordinate> test_arr=d.pieceLost(40);
+		assertTrue(5==test_arr.get(0).getX() && 3==test_arr.get(0).getY());
+
+	}
+
+	/**
+	* tests horizontal sandwich captures with top right special square for black pieces, capture should not occur
+	*/ 
+	@Test
+	public void topRightHorizBlackCapture()
+	{
+		Data d=new Data();
+		d.set(8,10);
+		d.set(17,9);
+		ArrayList<Coordinate> test_arr=d.pieceLost(9);
+		assertEquals(test_arr.size(),0);
+
+	}
+
+	/**
+	* tests vertical sandwich captures with top right special square for black pieces, capture should not occur
+	*/  
+	@Test
+	public void topRightVertBlackCapture()
+	{
+		Data d=new Data();
+		d.set(8,22);
+		d.set(20,33);
+		ArrayList<Coordinate> test_arr=d.pieceLost(33);
+		assertEquals(test_arr.size(),0);
+
+	}
+	
+	/**
+	* tests vertical sandwich captures with top left special square for black pieces, capture should not occur
+	*/  
+	@Test
+	public void topLeftVertBlackCapture()
+	{
+		Data d=new Data();
+		d.set(8,12);
+		d.set(19,23);
+		ArrayList<Coordinate> test_arr=d.pieceLost(23);
+		assertEquals(test_arr.size(),0);
+	}                        
+	
+	/**
+	* tests horizontal sandwich captures with top left special square for black pieces, capture should not occur
+	*/  
+	@Test
+	public void topLeftHorizBlackCapture()
+	{
+		Data d=new Data();
+		d.set(1,2);
+		d.set(13,3);
+		ArrayList<Coordinate> test_arr=d.pieceLost(3);
+		assertEquals(test_arr.size(),0);
+
+	}
+
+	/**
+	* tests horizontal sandwich captures with bottom left special square for black pieces, capture should not occur
+	*/  
+	@Test 
+	public void bottomleftHorizBlackCapture()
+	{
+		Data d=new Data();
+		d.set(9,112);
+		d.set(32,113);
+		ArrayList<Coordinate> test_arr=d.pieceLost(113);
+		assertEquals(test_arr.size(),0);
+	}
+
+	/**
+	* tests vertical sandwich captures with bottom left special square for black pieces, capture should not occur
+	*/  
+	@Test
+	public void bottomLeftVertBlackCapture()
+	{
+		Data d=new Data();
+		d.set(12,100);
+		d.set(29,89);
+		ArrayList<Coordinate> test_arr=d.pieceLost(89);
+		assertEquals(test_arr.size(),0);
+	}
+
+	/**
+	* tests horizontal sandwich captures with bottom right special square for black pieces, capture should not occur
+	*/  
+	@Test
+	public void bottomRightHorizBlackCapture()
+	{
+		Data d=new Data();
+		d.set(11,120);
+		d.set(36,119);
+		ArrayList<Coordinate> test_arr=d.pieceLost(119);
+		assertEquals(test_arr.size(),0);
+	}
+
+	/**
+	* tests vertical sandwich captures with bottom right special square for black pieces, capture should not occur
+	*/  
+	@Test
+	public void bottomRightVertBlackCapture()
+	{
+		Data d=new Data();
+		d.set(12,110);
+		d.set(30,99);
+		ArrayList<Coordinate> test_arr=d.pieceLost(99);
+		assertEquals(test_arr.size(),0);
+	}
+
+	/**
+	* Tests whether a black piece will be captured when it is to the right of the throne
+	* with the king on it. The black piece is then sandwiched by a white piece, capture should occur
+	*/
+	@Test
+	public void kingOnThroneBlackPieceRightWhiteCapture()
+	{
+		Data d=new Data();
+		//moving pieces out so capture can occur
+		d.set(24,68);
+		d.set(7,29);
+		d.set(36,119);
+		d.set(11,106);
+		d.set(20,33);
+		d.set(4,85);
+		d.set(35,118);
+		d.set(3,95);
+		d.set(25,62);
+		d.set(4,63);
+		ArrayList<Coordinate> test_arr=d.pieceLost(63);
+		assertTrue(6==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+
+	}
+	
+	/**
+	* Tests whether a black piece will be captured when it is to the left of the throne
+	* with the king on it. The black piece is then sandwiched by a white piece, capture should occur
+	*/
+	@Test
+	public void kingOnThroneBlackPieceLeftWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(29,100);
+		d.set(1,103);
+		d.set(27,89);
+		d.set(5,46);
+		d.set(24,58);
+		d.set(2,16);
+		d.set(24,60);
+		d.set(5,27);
+		d.set(32,112);
+		d.set(5,49);
+		ArrayList<Coordinate> test_arr=d.pieceLost(49);
+		assertTrue(4==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+	}
+
+	/**
+	* Tests whether a black piece will be captured when it is north of the throne
+	* with the king on it. The black piece is then sandwiched by a white piece, capture should occur
+	*/
+	@Test
+	public void kingOnThroneBlackPieceUpWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(8,35);
+		d.set(6,39);
+		d.set(24,79);
+		d.set(6,40);
+		d.set(18,50);
+		d.set(6,39);
+		ArrayList<Coordinate> test_arr=d.pieceLost(39);
+		assertTrue(5==test_arr.get(0).getX() && 4==test_arr.get(0).getY());
+	}
+ 
+	/**
+	* Tests whether a black piece will be captured when it is south of the throne
+	* with the king on it. The black piece is then sandwiched by a white piece, capture should occur
+	*/
+	@Test
+	public void kingOnThroneBlackPieceDownWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(12,86);
+		d.set(9,82);
+		d.set(11,75);
+		d.set(10,70);
+		d.set(34,72);
+		d.set(9,83);
+		ArrayList<Coordinate> test_arr=d.pieceLost(83);
+		assertTrue(5==test_arr.get(0).getX() && 6==test_arr.get(0).getY());
+	}
+
+	/**
+	* Tests whether a black piece will be captured when it is to the right of the throne
+	* with the king NOT on it. The black piece is then sandwiched by a white piece, capture should occur
+	*/
+	@Test
+	public void kingNotOnThroneBlackPieceRightWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(4,52);
+		d.set(4,53);
+		d.set(11,84);
+		d.set(3,29);
+		d.set(0,65);
+		d.set(35,85);
+		d.set(4,64);
+		d.set(35,63);
+		d.set(35,62);
+		d.set(4,63);
+		ArrayList<Coordinate> test_arr=d.pieceLost(63);
+		assertTrue(6==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+
+	}
+
+	/**
+	* Tests whether a black piece will be captured when it is to the left of the throne
+	* with the king NOT on it. The black piece is then sandwiched by a white piece, capture should occur
+	*/
+	@Test 
+	public void kingNotOnThroneBlackPieceLeftWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(1,15);
+		d.set(5,16);
+		d.set(9,104);
+		d.set(2,49);
+		d.set(0,91);
+		d.set(24,60);
+		d.set(2,59);
+		ArrayList<Coordinate> test_arr=d.pieceLost(59);
+		assertTrue(4==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+
+	}
+
+	/**
+	* Tests whether a black piece will be captured when it is north of the throne
+	* with the king NOT on it. The black piece is then sandwiched by a white piece, capture should occur
+	*/
+	@Test
+	public void kingNotOnThroneBlackPieceUpWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(8,43);
+		d.set(7,54);
+		d.set(5,27);
+		d.set(6,53);
+		d.set(0,42);
+		d.set(18,50);
+		d.set(5,39);
+		ArrayList<Coordinate> test_arr=d.pieceLost(39);
+		assertTrue(5==test_arr.get(0).getX() && 4==test_arr.get(0).getY());
+	}
+	
+	/**
+	* Tests whether a black piece will be captured when it is south of the throne
+	* with the king NOT on it. The black piece is then sandwiched by a white piece, capture should occur
+	*/
+	@Test
+	public void kingNotOnThroneBlackPieceDownWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(11,76);
+		d.set(9,68);
+		d.set(10,69);
+		d.set(0,75);
+		d.set(12,84);
+		d.set(31,72);
+		d.set(12,83);
+		ArrayList<Coordinate> test_arr=d.pieceLost(83);
+		assertTrue(5==test_arr.get(0).getX() && 6==test_arr.get(0).getY());
+	}
+
+	/**
+	* Tests whether a white piece will be captured when it is to the right of the throne
+	* with the king on it. The white piece is then sandwiched by a black piece, capture should occur
+	*/
+	@Test
+	public void kingOnThroneWhitePieceRightBlackCapture()
+	{
+		Data d=new Data();
+		d.set(4,30);
+		d.set(25,63);
+		ArrayList<Coordinate> test_arr=d.pieceLost(63);
+		assertTrue(6==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+	}
+
+	/**
+	* Tests whether a white piece will be captured when it is to the left of the throne
+	* with the king on it. The white piece is then sandwiched by a black piece, capture should occur
+	*/
+	@Test
+	public void kingOnThroneWhitePieceLeftBlackCapture()
+	{
+		Data d=new Data();
+		d.set(1,26);
+		d.set(24,59);
+		ArrayList<Coordinate> test_arr=d.pieceLost(59);
+		assertTrue(4==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+	}
+
+	/**
+	* Tests whether a white piece will be captured when it is north of the throne
+	* with the king on it. The white piece is then sandwiched by a black piece, capture should occur
+	*/
+	@Test
+	public void kingOnThroneWhitePieceUpBlackCapture()
+	{
+		Data d=new Data();
+		d.set(8,35);
+		d.set(18,39);
+		ArrayList<Coordinate> test_arr=d.pieceLost(39);
+		assertTrue(5==test_arr.get(0).getX() && 4==test_arr.get(0).getY());
+	}
+
+	/**
+	* Tests whether a white piece will be captured when it is south of the throne
+	* with the king on it. The white piece is then sandwiched by a black piece, capture should occur
+	*/
+	@Test
+	public void kingOnThroneWhitePieceDownBlackCapture()
+	{
+		Data d=new Data();
+		d.set(12,87);
+		d.set(31,83);
+		ArrayList<Coordinate> test_arr=d.pieceLost(83);
+		assertTrue(5==test_arr.get(0).getX() && 6==test_arr.get(0).getY());
+	}
+
+	/**
+	* Tests whether a white piece will be captured when it is to the right of the throne
+	* with the king NOT on it. The white piece is then sandwiched by a black piece, capture should occur
+	*/
+	@Test
+	public void kingNotOnThroneWhitePieceRightBlackCapture()
+	{
+		Data d=new Data();
+		d.set(11,106);
+		d.set(4,96);
+		d.set(3,64);
+		d.set(0,85);
+		d.set(7,53);
+		d.set(16,62);
+		d.set(3,63);
+		ArrayList<Coordinate> test_arr=d.pieceLost(63);
+		assertTrue(6==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+	}
+
+	/**
+	* Tests whether a white piece will be captured when it is to the left of the throne
+	* with the king NOT on it. The white piece is then sandwiched by a black piece, capture should occur
+	*/
+	@Test
+	public void kingNotOnThroneWhitePieceLeftBlackCapture()
+	{
+		Data d=new Data();
+		d.set(1,15);
+		d.set(5,27);
+		d.set(2,80);
+		d.set(0,37);
+		d.set(24,60);
+		d.set(2,59);
+		ArrayList<Coordinate> test_arr=d.pieceLost(59);
+		assertTrue(4==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
+	}
+
+	/**
+	* Tests whether a white piece will be captured when it is north of the throne
+	* with the king NOT on it. The white piece is then sandwiched by a black piece, capture should occur
+	*/
+	@Test
+	public void kingNotOnThroneWhitePieceUpBlackCapture()
+	{
+		Data d=new Data();
+		d.set(8,36);
+		d.set(6,28);
+		d.set(0,43);
+		d.set(18,19);
+		d.set(5,50);
+		d.set(13,39);
+		ArrayList<Coordinate> test_arr=d.pieceLost(39);
+		assertTrue(5==test_arr.get(0).getX() && 4==test_arr.get(0).getY());
+	}
+
+	/**
+	* Tests whether a white piece will be captured when it is south of the throne
+	* with the king NOT on it. The white piece is then sandwiched by a black piece, capture should occur
+	*/
+	@Test
+	public void kingNoOnThroneWhitePieceDownBlackCapture()
+	{
+		Data d=new Data();
+		d.set(12,79);
+		d.set(11,76);
+		d.set(9,70);
+		d.set(10,85);
+		d.set(0,91);
+		d.set(24,58);
+		d.set(10,72);
+		d.set(31,83);
+		ArrayList<Coordinate> test_arr=d.pieceLost(83);
+		assertTrue(5==test_arr.get(0).getX() && 6==test_arr.get(0).getY());
+	}
+
+	/**
+	* Tests whether two black pieces can be captured at the same time, capture should occur
+	*/
+	@Test
+	public void twoPieceWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(36,107);
+		d.set(11,106);
+		d.set(30,109);
+		d.set(12,110);
+		d.set(10,108);
+		ArrayList<Coordinate> test_arr=d.pieceLost(108);
+		assertTrue(9==test_arr.get(0).getX() && 9==test_arr.get(0).getY()
+			&& 7==test_arr.get(1).getX() && 9==test_arr.get(1).getY());
+
+	}
+
+	/**
+	* Tests whether three black pieces can be captured at the same time, capture should occur
+	*/
+	@Test
+	public void threePieceWhiteCapture()
+	{
+		Data d=new Data();
+		d.set(29,80);
+		d.set(9,79);
+		d.set(33,82);
+		d.set(12,94);
+		d.set(32,114);
+		d.set(32,70);
+		d.set(12,92);
+		d.set(10,83);
+		d.set(12,81);
+		ArrayList<Coordinate> test_arr=d.pieceLost(81);
+		assertTrue(3==test_arr.get(0).getX() && 6==test_arr.get(0).getY()
+			&& 4==test_arr.get(1).getX() && 7==test_arr.get(1).getY()
+			&& 2==test_arr.get(2).getX() && 7==test_arr.get(2).getY());
+	}
+
+	/**
+	* Tests whether two white pieces can be captured at the same time, capture should occur
+	*/
+	@Test
+	public void twoPieceBlackCapture()
+	{
+		Data d=new Data();
+		d.set(35,95);
+		d.set(11,74);
+		d.set(30,99);
+		d.set(11,96);
+		d.set(4,98);
+		d.set(36,97);
+		ArrayList<Coordinate> test_arr=d.pieceLost(97);
+		assertTrue(9==test_arr.get(0).getX() && 8==test_arr.get(0).getY()
+			&& 7==test_arr.get(1).getX() && 8==test_arr.get(1).getY());
+
+	}
+
+	/**
+	* Tests whether three white pieces can be captured at the same time, capture should occur
+	*/
+	@Test
+	public void threePieceBlackCapture()
+	{
+		Data d=new Data();
+		d.set(24,90);
+		d.set(9,93);
+		d.set(31,94);
+		d.set(1,91);
+		d.set(27,70);
+		d.set(12,81);
+		d.set(32,92);
+		ArrayList<Coordinate> test_arr=d.pieceLost(92);
+		assertTrue(3==test_arr.get(0).getX() && 7==test_arr.get(0).getY()
+			&& 4==test_arr.get(1).getX() && 8==test_arr.get(1).getY()
+			&& 2==test_arr.get(2).getX() && 8==test_arr.get(2).getY());
+
+	}
+
+	/**
+	* Tests whether a piece is "removed" from the backend, setting it's location to -1 means 
+	* the piece is no longer on the board
+	*/
+	@Test
+	public void removeFromBackend()
+	{
+		Data d=new Data();
+		d.set(24,-1);
+		assertEquals(d.boardData[24].intValue(),-1);
+
+	}
+
+	//need to ensure that when a piece moves to a sandwich position, i.e. between two enemy pieces it is not removed
+
+	/**
+	* Tests whether when a piece moves into a sandwich position it is not capture
+	* ex: a white piece moves in between two blacl pieces, the white piece should be captured
+	*/
+	@Test
+	public void pieceMovesToSandwichPosition()
+	{
+		Data d=new Data();
+		d.set(9,93);
+		d.set(32,103);
+		d.set(9,104);
+		ArrayList<Coordinate> test_arr=d.pieceLost(104);
+		assertEquals(test_arr.size(),0);
+	}
+
+
+
 	
 }
 
