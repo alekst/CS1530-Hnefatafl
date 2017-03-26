@@ -15,11 +15,19 @@ public class Manager
 	private static final int totalPieces = 37;
 	
 	/**
-	* initialize a data object
+	* initialize a data object with initial board configuration
 	*/
 	public Manager()
 	{
 		_data = new Data();
+	}
+	
+	/**
+	* initialize a data object with specified board configuration
+	*/
+	public Manager(Data data)
+	{
+		_data = data;
 	}
 	
 	/**
@@ -390,6 +398,20 @@ public class Manager
 	{
 		int value = encode(coord);
 		return _data.kingLost(value);
+	}
+	
+	/**
+	* Loads board array values into a new data object
+	* @param board : Integer array representing board configuration
+	* @return 0 if no error
+	*/
+	public int loadData(Integer[] board) 
+	{
+		for (int i = 0; i < 37; i++)
+		{
+			_data.set(i, board[i]);
+		}
+		return 0;
 	}
 	
 }

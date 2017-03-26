@@ -14,13 +14,23 @@ public class Data
 	*/
 	public Data()
 	{
-	    Integer[] initialData = {61, 59, 60, 62, 63, 49, 50, 51, 39, 71, 72, 73, 83, 4, 5, 6, 7, 8, 17, 34, 44, 45, 55, 56, 57, 65, 66, 67, 77, 78, 88, 105, 114, 115, 116, 117, 118
-	    };
-		Integer[] special = {1, 11, 61, 111, 121};
-        boardData = initialData.clone();
-		specialSquares = special.clone();
+	   Integer[] initialData = {61, 59, 60, 62, 63, 49, 50, 51, 39, 71, 72, 73, 83, 4, 5, 6, 7, 8, 17, 34, 44, 45, 55, 56, 57, 65, 66, 67, 77, 78, 88, 105, 114, 115, 116, 117, 118
+	   };
+     Integer[] special = {1, 11, 61, 111, 121};
+     boardData = initialData.clone();
+     specialSquares = special.clone();
 	}
-    
+  
+  /**
+  * The Data object constructor. Initializes the boardData array along with the specialSquares array. 
+  */
+  public Data(Integer[] boardStatus)
+  {
+    Integer[] initialData = boardStatus;
+  	Integer[] special = {1, 11, 61, 111, 121};
+    boardData = initialData.clone();
+    specialSquares = special.clone();
+  }
 	
 	/**
 	* Decodes the Coordinate object for storage

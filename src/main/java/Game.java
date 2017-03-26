@@ -1,6 +1,10 @@
 import java.lang.*;
 import java.io.*;
 import java.nio.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Game
 {
@@ -39,6 +43,20 @@ public class Game
 		MainFrame _mf = new MainFrame(this);
 	}
 	
+	private void load_init(Manager manager, Player whites, Player blacks)
+	{
+		// manager
+		_manager = manager;	
+		// player 1
+		_whites = whites;
+		// player 2
+		_blacks = blacks;
+			
+		_board = new Board(_manager, _whites, _blacks);
+			
+		MainFrame _mf = new MainFrame(this);
+	}
+	
 	/**
 	* @return the game's Manager object
 	*/
@@ -69,16 +87,14 @@ public class Game
 	}
 	
 	/**
-	* Opens a new file "saved_games/saved_hnefetafl.txt" and writes the current board array to a csv file
+	* Opens a new file "saved_hnefetafl.csv" and writes the current board array to a csv file
 	* Throws IO exception on error in file opening or writing
 	*/
 	public void save() throws java.io.IOException
 	{
 		FileOutputStream out = null;
 		try {
-			File dir = new File("saved_games");
-			dir.mkdirs();
-			File f = new File(dir, "saved_hnefatafl.csv");
+			File f = new File("saved_hnefatafl.csv");
 			f.createNewFile();
       out = new FileOutputStream("saved_hnefatafl.csv");
         
@@ -87,7 +103,7 @@ public class Game
 			byte[] boardBytes = b.getBytes("UTF-8");
       out.write(boardBytes);
 		} catch(IOException e) {
-  		e.printStackTrace();
+  		System.err.format("IOException: %s%n", e);
 		} finally {
 			if (out != null)
 			{
@@ -98,11 +114,36 @@ public class Game
 	}
 	
 	/**
-	* Currently unused...will be used to load game
+	* Reads in the bytes of the "saved_hnefetafl.csv" file and converts it to a string
+	* Passes the string representation of the file to the board to load
+	* Throws IO exception on error in file opening or reading
 	*/
-	public void load()
+	public void load() throws java.io.IOException
 	{
-		throw new UnsupportedOperationException();
+		Path path = Paths.get("saved_hnefatafl.csv");
+		Charset charset = Charset.forName("UTF-8");
+		try (BufferedReader reader = Files.newBufferedReader(path, charset)) 
+		{
+			if (reader != null) {
+    		String line = null;
+				line = reader.readLine();
+				String[] result = line.split(",");
+				Integer[] locs = new Integer[37];
+				for (int i = 0; i < 37; i++)
+				{
+					locs[i] = Integer.valueOf(result[i]);
+				}
+				_manager.loadData(locs);
+				load_init(_manager, _whites, _blacks);
+			} else 
+			{
+				System.out.println("Sorry, there are no saved games to load!");
+			}
+
+		} catch (IOException e) 
+		{
+    	System.err.format("IOException: %s%n", e);
+		}
 	}
 	
 	

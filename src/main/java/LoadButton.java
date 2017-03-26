@@ -2,6 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
+import java.io.*;
 
 public class LoadButton extends JButton 
 {
@@ -30,7 +31,7 @@ public class LoadButton extends JButton
 			try {
 				_m.load();
 			} catch (IOException ex) {
-				JOptionPane.showMessageDialog(null, "Error: There was a problem saving this game.");
+				JOptionPane.showMessageDialog(null, "Error: There was a problem loading this game.");
 			}
 		}
 	}

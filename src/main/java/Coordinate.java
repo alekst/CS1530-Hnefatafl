@@ -26,4 +26,12 @@ public class Coordinate
 	{
 		return y;
 	}
+	
+	/**
+	* Prints a coordinate object for use in saving the board status to a file
+	*/
+	public void print()
+	{
+		// do something
+	}
 }
