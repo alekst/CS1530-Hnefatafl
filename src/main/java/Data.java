@@ -289,10 +289,15 @@ public class Data
 	}
 	
 	/**
-	* Returns true if there is a shield wall capture
-	* @param Coord-Coordinate of last piece moved
-	* @return true if the moved piece ends with a shield-wall 
-	* @return false if no capture has taken place
+	* Returns the array of coordinates of those pieces that must be removed. 
+	* Looks to see if the value is on one of the walls
+	* 	If this is true then depending on the wall we search through all opposite
+	*	player pieces that are next to the piece along that wall until we hit
+	*	a piece of the player who is doing the capturing.
+	* As we traverse through the opponent pieces on the wall
+	* 	we gather up the pieces into an arraylist that we will eventually return 
+	* @param value-tile of the last moved piece
+	* @return ArrayList<Coordinate> - Each piece that is meant to be removed
 	*/
 	public ArrayList<Coordinate> shieldWallCapture(int value)
 	{
@@ -302,20 +307,16 @@ public class Data
 		Coordinate coord = decode(value);
 		int streak_count = 0;
 		int offset = 1;
-		System.out.println("x = " + coord.getX() + ", y = " + coord.getY());
 		if((coord.getX() - 1 < 0) && (coord.getY() - 1 >= 0)) // west wall
 		{
-					System.out.println("WESTWALL");
 			while(isMember(value - 11 * offset) && (isWhite(value - 11 * offset) != isWhite(value))
 				&& isMember(value - 11 * offset + 1) && (isWhite(value - 11 * offset + 1) == isWhite(value)))
 				{
 					return_list.add(decode(value - 11 * offset));
 					streak_count++;
-					System.out.println("west1");
 					if(((isMember(value - 11 * (offset + 1)) && (isWhite(value - 11 * (offset + 1)) == (isWhite(value)))) 
 						|| (isSpecialSquare(value - 11 * (offset + 1)))) && streak_count > 1)
 					{
-						System.out.println("me");
 						return return_list;
 					}
 					offset++;
@@ -324,13 +325,11 @@ public class Data
 			while(isMember(value + 11 * offset) && (isWhite(value + 11 * offset) != isWhite(value))
 				&& isMember(value + 11 * offset + 1) && (isWhite(value + 11 * offset + 1) == isWhite(value)))
 				{
-					System.out.println("west2");
 					streak_count++;
 					return_list.add(decode(value + 11 * offset));
 					if(((isMember(value + 11 * (offset + 1)) && (isWhite(value + 11 * (offset + 1)) == (isWhite(value))))
 						|| (isSpecialSquare(value + 11 * (offset + 1)))) && streak_count > 1)
 					{
-						System.out.println("me");
 						return return_list;
 					}
 					offset++;
@@ -338,18 +337,14 @@ public class Data
 		}	
 		else if((coord.getX() + 1 > 10) && (coord.getY() + 1 <= 10)) // east wall
 		{
-			
-					System.out.println("EASTWALL");
 			while(isMember(value - 11 * offset) && (isWhite(value - 11 * offset) != isWhite(value))
 				&& isMember(value - 11 * offset - 1) && (isWhite(value - 11 * offset - 1) == isWhite(value)))
 				{
-					System.out.println("east1");
 					streak_count++;
 					return_list.add(decode(value - 11 * offset));
 					if(((isMember(value - 11 * (offset + 1)) && (isWhite(value - 11 * (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value - 11 * (offset + 1))) && streak_count > 1)
 					{
-						System.out.println("me");
 						return return_list;
 					}
 					offset++;
@@ -359,12 +354,10 @@ public class Data
 				&& isMember(value + 11 * offset - 1) && (isWhite(value + 11 * offset - 1) == isWhite(value)))
 				{
 					streak_count++;
-					System.out.println("east2");
 					return_list.add(decode(value + 11 * offset));
 					if(((isMember(value + 11 * (offset + 1)) && (isWhite(value + 11 * (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value + 11 * (offset + 1))) && streak_count > 1)
 					{
-						System.out.println("me");
 						return return_list;
 					}
 					offset++;
@@ -372,17 +365,14 @@ public class Data
 		}
 		else if((coord.getX() - 1 >= 0) && (coord.getY() + 1 > 10)) // south wall
 		{
-					System.out.println("SOUTHWALL");
 			while(isMember(value - offset) && (isWhite(value - offset) != isWhite(value))
 				&& isMember(value - offset - 11) && (isWhite(value - offset - 11) == isWhite(value)))
 				{
 					streak_count++;
-					System.out.println("south1");
 					return_list.add(decode(value - offset));
 					if(((isMember(value - (offset + 1)) && (isWhite(value - (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value - (offset + 1))) && streak_count > 1)
 					{
-						System.out.println("me");
 						return return_list;
 					}
 					offset++;
@@ -392,12 +382,10 @@ public class Data
 				&& isMember(value + offset - 11) && (isWhite(value + offset - 11) == isWhite(value)))
 				{
 					streak_count++;
-					System.out.println("south2");
 					return_list.add(decode(value + offset));
 					if(((isMember(value + (offset + 1)) && (isWhite(value + (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value + (offset + 1))) && streak_count > 1)
 					{
-						System.out.println("me");
 						return return_list;
 					}
 					offset++;
@@ -405,17 +393,14 @@ public class Data
 		}
 		else if((coord.getX() + 1 <= 10) && (coord.getY() - 1 < 0)) // north wall
 		{
-					System.out.println("NORTHWALL");
 			while(isMember(value - offset) && (isWhite(value - offset) != isWhite(value))
 				&& isMember(value - offset + 11) && (isWhite(value - offset + 11) == isWhite(value)))
 				{
-					System.out.println("orth1");
 					streak_count++;
 					return_list.add(decode(value - offset));
 					if(((isMember(value - (offset + 1)) && (isWhite(value - (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value - (offset + 1))) && streak_count > 1)
 					{
-						System.out.println("me");
 						return return_list;
 					}
 					offset++;
@@ -425,12 +410,10 @@ public class Data
 				&& isMember(value + offset + 11) && (isWhite(value + offset + 11) == isWhite(value)))
 				{
 					streak_count++;
-					System.out.println("north2");
 					return_list.add(decode(value + offset));
 					if(((isMember(value + (offset + 1)) && (isWhite(value + (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value + (offset + 1))) && streak_count > 1)
 					{
-						System.out.println("me");
 						return return_list;
 					}
 					offset++;
@@ -444,4 +427,5 @@ public class Data
 		}
 		return return_list;
 	}
+	
 }
