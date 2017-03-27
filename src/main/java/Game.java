@@ -43,6 +43,12 @@ public class Game
 		MainFrame _mf = new MainFrame(this);
 	}
 	
+	/**
+	* Initializes the game state with existing manager (related data) and players
+	* @param manager : Manager object with related Data
+	* @param whites : white player
+	* @param blacks : black player
+	*/
 	private void load_init(Manager manager, Player whites, Player blacks)
 	{
 		// manager
@@ -93,23 +99,15 @@ public class Game
 	public void save() throws java.io.IOException
 	{
 		FileOutputStream out = null;
+		
 		try {
-			File f = new File("saved_hnefatafl.csv");
-			f.createNewFile();
-      out = new FileOutputStream("saved_hnefatafl.csv");
-        
-			String b = new String();
-			b = _board.printBoard();
-			byte[] boardBytes = b.getBytes("UTF-8");
-      out.write(boardBytes);
-		} catch(IOException e) {
+      out = openOutStream();
+      printBoard(out);
+		} catch(IOException e) 
+		{
   		System.err.format("IOException: %s%n", e);
 		} finally {
-			if (out != null)
-			{
-				out.flush();
-				out.close();
-			}
+			closeOutStream(out);
 		}
 	}
 	
@@ -146,5 +144,95 @@ public class Game
 		}
 	}
 	
+	/**
+	* Gets turn value from black player 
+	* @return byte 1 if it is black's turn to move
+	* @return byte 0 if it is white's turn to move
+	*/
+	private byte getTurn()
+	{
+		byte turnByte;
+		if(_blacks.myTurn())
+		{
+			turnByte = (byte) 1;
+		} else 
+		{
+			turnByte = (byte) 1;
+		}
+		return turnByte;
+	}
+	
+	/**
+	* Opens file output stream for specified game saving file "saved_hnefatafl.csv"
+	* @return FileOutputStream out 
+	*/
+	private FileOutputStream openOutStream() throws java.io.IOException
+	{
+		FileOutputStream out = null;
+		try 
+		{
+			File f = new File("saved_hnefatafl.csv");
+			f.createNewFile();
+      out = new FileOutputStream("saved_hnefatafl.csv");
+		} catch(IOException e) 
+		{
+  		System.err.format("IOException: %s%n", e);
+		}
+		return out;
+	}
+	
+	/**
+	* Closes file output stream for game saving file
+	* @return 0 upon no error
+	* @return 1 if error, also prints error code to system error
+	*/
+	private int closeOutStream(FileOutputStream out) throws java.io.IOException
+	{
+		try 
+		{
+			if (out != null)
+			{
+				out.flush();
+				out.close();
+			}
+		} catch(IOException e) 
+		{
+	  	System.err.format("IOException: %s%n", e);
+			return 1;
+		}
+		return 0;
+	}
+	
+	/**
+	* Prints board array to file output stream
+	* @return 0 upon no error
+	* @return 1 if error, also prints error code to system error
+	*/
+	private int printBoard(FileOutputStream out) throws java.io.IOException
+	{
+		try 
+		{
+			String b = new String();
+			b = _board.printBoard();
+			byte[] boardBytes = b.getBytes("UTF-8");
+			int len = boardBytes.length;
+
+			// appends turn to array
+			byte[] finalBytes = new byte[len + 1]; 
+			for (int i = 0; i < len; i++)
+			{
+				finalBytes[i] = boardBytes[i];
+			}
+			finalBytes[len] = getTurn();
+			
+			// append timer data to array 
+			out.write(finalBytes);
+		} catch(IOException e) 
+		{
+			System.err.format("IOException: %s%n", e);
+			return 1;
+		}
+		return 0;
+	}
 	
 }

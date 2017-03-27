@@ -413,5 +413,5 @@ public class Manager
 		}
 		return 0;
 	}
-	
+
 }
