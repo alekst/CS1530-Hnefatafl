@@ -3,6 +3,7 @@ public class Player
 	private Manager _manager;
 	private boolean _white;
 	private boolean _turn;
+	private PlayerInfoPanel _info;
 	
 	/**
 	* Constructor
@@ -22,15 +23,30 @@ public class Player
 	}
 	
 	/**
-	* Player is set to be the white player
+	* Add the info panel to player. TO BE TESTED.
 	*/
-	public void setWhite()
+	public void addInfo(PlayerInfoPanel panel)
 	{
-		_white = true;
-		_turn = false;
-		
+		_info = panel;
+	} 
+	
+	/*
+	* Returns the PlayerInfoPanel object
+	*/
+	public PlayerInfoPanel getInfo()
+	{
+		return _info;
 	}
 	
+    /**
+     * Player is set to be the white player
+     */
+    public void setWhite()
+    {
+        _white = true;
+        _turn = false;
+    }
+
 	/**
 	* Player is set to be the black player
 	*/
@@ -129,5 +145,9 @@ public class Player
 		}
 		return false;
 	}
+	
+
+	
+	
 	
 }
