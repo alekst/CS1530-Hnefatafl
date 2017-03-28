@@ -48,8 +48,6 @@ public class Manager
         return (data.getY() * 11 + data.getX() + 1);
     }
 	
-
-	
 	/**
 	* Returns an index based on the coordinates. It would return -1 if the index is not found. 
 	* @param data-coordinates of a piece
@@ -408,7 +406,7 @@ public class Manager
 	{//NEED TO TEST, will probs be tested via testing data.pieceLost()
 		int value=encode(coord);
 		ArrayList<Coordinate>piecesToRemove=_data.pieceLost(value);
-		
+		piecesToRemove.addAll(_data.shieldWallCapture(value));
 		//will probs needed to return an array of pieces to remove
 		return piecesToRemove;
 	}

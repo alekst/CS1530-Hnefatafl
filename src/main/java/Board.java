@@ -8,7 +8,7 @@ import java.util.*;
 public class Board extends JPanel
 {
 	
-	private JButton[][] boardSquares = new JButton[11][11];
+	private Square[][] boardSquares = new Square[11][11];
 	private JPanel board;
 	private static final String COLS = "ABCDEFGHIJK";
 	private static final int height = 2000;
@@ -23,14 +23,15 @@ public class Board extends JPanel
 	private static final int numBlacks = 24;
 	
 	
-	private Coordinate first_clicked = new Coordinate(-1,-1);
-	private Coordinate second_clicked = new Coordinate(-1,-1);
+	private Coordinate first_clicked = new Coordinate(-1, -1);
+	private Coordinate second_clicked = new Coordinate(-1, -1);
 	private Color selected_color;
 	
 	//private Data pieces = new Data();
 	private Manager _manager;
 	private Player _player;
 	private Player _other;
+	
 	
 	/**
 	 *	Empty constructor for game initialization purposes. Overridden by constructor below when instantiated.
@@ -88,6 +89,7 @@ public class Board extends JPanel
 	 */
 	private void createSquares()
 	{
+		
 		// create the board squares
 		Insets buttonMargin = new Insets(0, 0, 0, 0);
 		for (int i = 0; i < boardSquares.length; i++)
@@ -95,7 +97,7 @@ public class Board extends JPanel
 			for (int j = 0; j < boardSquares[i].length; j++)
 			{
 				
-				JButton square = new JButton();
+				Square square = new Square(new Coordinate(j, i));
 				square.addActionListener(actionListener);
 				// todo: allow user to change board colors?
 				if (( j == 0 && i == 0 ) || ( j == 10 && i == 10 ) || ( j == 0 && i == 10 ) || ( j == 10 && i == 0 ) || ( j == 5 && i == 5 ))
@@ -110,14 +112,7 @@ public class Board extends JPanel
 				{
 					square.setBackground(Color.gray);
 				}
-					//square.setFont(new Font("Serif", Font.PLAIN, 20));
 				square.setMargin(buttonMargin);
-				square.setPreferredSize(new Dimension(50, 50));
-				// the square needs to be opaque to use the setBackground method. 
-				//https://docs.oracle.com/javase/7/docs/api/javax/swing/JComponent.html#setBackground(java.awt.Color)
-				square.setOpaque(true); 
-				square.setBorderPainted(true);
-				square.setFont(new Font("UNI-8", Font.PLAIN, 36));
 				square.setMaximumSize(new Dimension(j * 1000, i * 1000));
 				boardSquares[j][i] = square;
 			}
@@ -153,16 +148,16 @@ public class Board extends JPanel
 			}
 		}
 		printAll();
-		switchTurn();
+		switchTurn(false); // this switch turn does not count. This is done so that the Black player would go first. 
 	}	
 	
 	/**
-		*	Prints appropriate piece image (black, white, king) on location designated by the Coordinate argument
-		*	@param coor: Coordinate object designating the location where the piece should be printed
-		* @param type: String desginating type of piece to print, either whiteKing, whitePiece, or blackPiece
-		* @return int, 1 if coor does not have a valid location on the board
-		*							 0 if the piece is printed
-		*/
+	* Prints appropriate piece image (black, white, king) on location designated by the Coordinate argument
+	* @param coor: Coordinate object designating the location where the piece should be printed
+	* @param type: String desginating type of piece to print, either whiteKing, whitePiece, or blackPiece
+	* @return int, 1 if coor does not have a valid location on the board
+	* 0 if the piece is printed
+	*/
 	public int printPiece(Coordinate coor, String type)
 	{
 		
@@ -170,7 +165,7 @@ public class Board extends JPanel
 		{
 			return 1;
 		}
-		JButton square = boardSquares[coor.getX()][coor.getY()];
+		Square square = boardSquares[coor.getX()][coor.getY()];
 		
 		if (type.equals(whiteKing))
 		{
@@ -188,26 +183,26 @@ public class Board extends JPanel
 	}
 	
 	/**
-		*	Removes appropriate piece image (black, white, king) to a blank space on location designated by the Coordinate argument
-		*	@param coor: Coordinate object designating the location where the piece should be removed
-		* @return int, 1 if coor does not have a valid location on the board
-		*							 0 if the piece is removed
-		*/
+	* Removes appropriate piece image (black, white, king) to a blank space on location designated by the Coordinate argument
+	* @param coor: Coordinate object designating the location where the piece should be removed
+	* @return int, 1 if coor does not have a valid location on the board
+	* 0 if the piece is removed
+	*/
 	public int removePiece(Coordinate coor)
 	{
 		if(coor.getX() < 0 || coor.getY() < 0)
 		{
 			return 1;
 		}
-		JButton square = boardSquares[coor.getX()][coor.getY()];
+		Square square = boardSquares[coor.getX()][coor.getY()];
 		square.setText("");
 		return 0;
 	}
 	
 	/**
-		*	Calls printPieces to print the pieces for each player on the board
-		* @return 0 on successful completion
-		*/
+	* Calls printPieces to print the pieces for each player on the board
+	* @return 0 on successful completion
+	*/
 	public int printAll()
 	{
 		printPieces(_player);
@@ -216,10 +211,10 @@ public class Board extends JPanel
 	}
 	
 	/**
-		*	Prints the pieces for a particular player
-		*	@param player: Player object indicating for which player to print
-		* @return int, 0 on successful completion
-		*/
+	* Prints the pieces for a particular player
+	* @param player: Player object indicating for which player to print
+	* @return int, 0 on successful completion
+	*/
 	public int printPieces(Player player)
 	{	
 		Coordinate[] pieces = player.getPieces();
@@ -245,76 +240,71 @@ public class Board extends JPanel
 	} 
 	
 	/**
-		*	Enables button at designated coordinate, for use in switching turns
-		*	@param coor: Coordinate object designating the location where the piece should be enabled
-		* @return int, 0 on successful completion
-		*/
-	private int enable(Coordinate coor) 
-	{ 
-		if(coor==null)
-			return 0;
-		if(coor.getX() < 0 || coor.getY() < 0)
+
+	* Enables pieces related to designated player 
+	*/
+	private void enable(Player player)
+	{
+		Coordinate [] pieces = player.getPieces();
+		
+		for(int i = 0 ; i < pieces.length; i++)
 		{
-			return 1;
+			enable(pieces[i]);
 		}
-		JButton square = boardSquares[coor.getX()][coor.getY()];
-		square.setEnabled(true);
-		return 0;
 	}
 	
 	/**
-		*	Disables button at designated coordinate, for use in switching turns
-		*	@param coor: Coordinate object designating the location where the piece should be disabled
-		* @return int, 0 on successful completion
-		*/
-	private int disable(Coordinate coor)
+	* Disables pieces related to designated player 
+	* @param player: Player object designating which player should be disabled
+	*/
+	private void disable(Player player)
 	{
-		if(coor==null)
-			return 0;
-		if(coor.getX() < 0 || coor.getY() < 0)
-		{
-			return 1;
-		}
-		JButton square = boardSquares[coor.getX()][coor.getY()];
-		square.setEnabled(false);
-		return 0;
-	}
-	
-		/**
-			*	Action listener for user actions clicking board pieces for moves.
-			* Gets coordiante from click location for first click to change to coordinate related to second click 
-			* Calls manager to access/update data 
-			* Switches player turns on end of move
-			*	@param actionEvent: ActionEvent object passed in from frame 
-			*/
-	ActionListener actionListener = new GameListener()
-	{
-		public void doPerformAction(ActionEvent actionEvent)
+		Coordinate [] pieces = player.getPieces();
+		
+		for(int i = 0 ; i < pieces.length; i++)
 		{
 			
-			JButton b = (JButton)actionEvent.getSource();
-			Coordinate coor = getButtonCoordinate(b);
-			if((first_clicked.getX() == -1 && first_clicked.getY() == -1) && (_manager.getIndex(coor) != -1))
+			disable(pieces[i]);
+		
+		}
+	}
+	
+	/**
+	* Action listener for user actions clicking board pieces for moves.
+	* Gets coordiante from click location for first click to change to coordinate related to second click 
+	* Calls manager to access/update data 
+	* Switches player turns on end of move
+	* @param actionEvent: ActionEvent object passed in from frame 
+	*/
+	ActionListener actionListener = new GameListener()
+	{
+		 public void doPerformAction(ActionEvent actionEvent)
+ 		{			
+ 			Square b = (Square)actionEvent.getSource();
+ 			Coordinate coor = b.getCoord();
+				
+			if((first_clicked.isMinusOne()) && (_manager.getIndex(coor) != -1))
 			{
-				first_clicked = coor;
 				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
+				first_clicked = coor;	
 				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
 			}
-			else if(first_clicked.getX() == coor.getX() && first_clicked.getY() == coor.getY())
-			{
-				// Unselect it
-				boardSquares[coor.getX()][coor.getY()].setBackground(selected_color);
-			}
+ 			else if(first_clicked.equal(coor))
+ 			{
+// 				// Unselect it
+ 				boardSquares[coor.getX()][coor.getY()].setBackground(selected_color);
+				first_clicked = new Coordinate(-1,-1);
+ 			} 
 			else if(_manager.getIndex(coor) == -1)
-			{
-				second_clicked = coor;
-				
-				if(_manager.isValid(first_clicked, second_clicked))
+ 			{
+ 				second_clicked = coor;
+
+ 				if(_manager.isValid(first_clicked, second_clicked))
 				{
 					move(first_clicked, second_clicked);
-					
+
 					boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
-					
+
 					_manager.updateLocation(second_clicked, first_clicked);
 					
 					ArrayList<Coordinate>piecesToRemove=_manager.isPieceSurrounded(second_clicked); //sees if a piece(s) is captured
@@ -328,12 +318,11 @@ public class Board extends JPanel
 					if (_player.hasWon())
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You have won!");
-						//disable whole board
-					}	
-					_player.doneWithTurn();
+					}
+					_player.doneWithTurn(); //disable whole board
 					_other.newTurn();
 					resetClicks();
-					switchTurn();
+					switchTurn(true); // this is an actual turn that has been made, so the flag is set to true
 				}
 			}
 			else
@@ -341,7 +330,7 @@ public class Board extends JPanel
 				// User has clicked occupied space...select this piece as
 				// 		the piece to move
 				boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
-				
+
 				first_clicked = coor;
 				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
 				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
@@ -349,64 +338,82 @@ public class Board extends JPanel
 		}
 	};
 	
-	/**
-		*	Returns Coordinate related to the particular button passed to the method.
-		*	@param b: JButton object from grid location on the board
-		* @return Coordinate object with x and y attributed to the button passed in 
-		*/
-	public Coordinate getButtonCoordinate(JButton b)
-	{
-		return new Coordinate((int)(b.getMaximumSize().getWidth()/1000), (int)(b.getMaximumSize().getHeight()/1000));
-	}
 	
 	/**
-		*	Changes current player to "other" and "other" player to now be the current player to move
-		* Calls enable and disable methods for the respective players' pieces 
-		*/
-	private void switchTurn()
+	* Disables a button at designated Coordinate, for use in switching turns
+	* @param coor: Coordinate object designating the location where the piece should be disabled
+	* @return int, 0 on successful completion
+	*/
+	private int disable(Coordinate coor)
 	{
+		if(coor==null)
+					return 0;
+		if(coor.getX() < 0 || coor.getY() < 0)
+		{
+			return 1;
+		}
+		Square square = boardSquares[coor.getX()][coor.getY()];
+		square.setEnabled(false);
+		return 0;
+	}
+
+	/**
+	* Enables button at designated coordinate, for use in switching turns
+	* @param coor: Coordinate object designating the location where the piece should be enabled
+	* @return int, 0 on successful completion
+	*/
+	private int enable(Coordinate coor)
+	{
+		if(coor==null)
+					return 0;
+		if(coor.getX() < 0 || coor.getY() < 0)
+		{
+			return 1;
+		}
+		Square square = boardSquares[coor.getX()][coor.getY()];
+		square.setEnabled(true);
+		return 0;
+	}
+
+	
+	/**
+	* Changes current player to "other" and "other" player to now be the current player to move
+	* Calls enable and disable methods for the respective players' pieces 
+	*/
+	private void switchTurn(boolean turn)
+	{
+		
+		PlayerInfoPanel playerInfo = _player.getInfo();
+
+		// stop the active player timer
+		playerInfo.stopTimer();
+		// if this is the end of an actual turn and not done in preparation for the game
+		if (turn)
+		{
+			// add three seconds to this player's time
+			playerInfo.addTime();
+		}		
+		// start the passive player timer
+		PlayerInfoPanel otherInfo = _other.getInfo();
+		otherInfo.startTimer();
+		
+		// switch players
 		Player temp = _player;
 		_player = _other;
 		_other = temp;
+		
+		// enable the active player
 		enable(_player);
+		
+		// disable the passive player. 
 		disable(_other);
 	}
-	
-	/**
-		*	Enables pieces related to designated player 
-		*	@param player: Player object designating which player should be enabled
-		*/
-	private void enable(Player player)
-	{
-		Coordinate [] pieces = player.getPieces();
-		
-		for(int i = 0 ; i < pieces.length; i++)
-		{
-				enable(pieces[i]);
-		}
-	}
-	
-	/**
-		*	Disables pieces related to designated player 
-		*	@param player: Player object designating which player should be disabled
-		*/
-	private void disable(Player player)
-	{
-		Coordinate [] pieces = player.getPieces();
-		
-		for(int i = 0 ; i < pieces.length; i++)
-		{
-			
-				disable(pieces[i]);
-		
-		}
-	}
 		
 	/**
-		*	"Moves" the piece by deleting piece at old location and printing piece at new location 
-		*	@param oldData: Coordinate object indicating old location of the moving piece
-		* @param newData: Coordinate object indicating new location to where the piece should move
-		*/
+	* "Moves" the piece by deleting piece at old location and printing piece at new location 
+	* @param oldData: Coordinate object indicating old location of the moving piece
+	* @param newData: Coordinate object indicating new location to where the piece should move
+	*/
 	private void move(Coordinate oldData, Coordinate newData)
 	{
 		removePiece(oldData);
@@ -426,8 +433,8 @@ public class Board extends JPanel
 	}
 	
 	/**
-		*	Sets clicks to non-board locations to clear clicks 
-		*/
+	* Sets clicks to non-board locations to clear clicks 
+	*/
 	private void resetClicks()
 	{
 		first_clicked = new Coordinate(-1, -1);
