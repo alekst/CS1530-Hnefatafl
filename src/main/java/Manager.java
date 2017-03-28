@@ -164,7 +164,6 @@ public class Manager
 	{
 		if(someoneThere(origin) && someoneThere(destination)) //both coordinates are occupied
 		{
-			System.out.println("Both are occupied");
 			return true;
 		}
 		else
@@ -305,7 +304,6 @@ public class Manager
 	*/
 	public boolean isValid(Coordinate origin, Coordinate destination) 
 	{	
-		// System.out.println(origin.getX()+ " "+origin.getY() + " ____ "+ destination.getX()+ " "+ destination.getY());
  		if(inSameSpot(origin, destination)) //both coordinates are occupied
  		{
  			return false;
@@ -379,6 +377,31 @@ public class Manager
 	{
 		int value = encode(coord);
 		return _data.kingLost(value);
+	}
+
+	
+	/**
+	* determines which pieces are captured
+	* @param coord the coordinate of the piece that was just moved
+	* @return an arraylist of coordinates to remove
+	*/
+	public ArrayList<Coordinate> isPieceSurrounded(Coordinate coord)
+	{//NEED TO TEST, will probs be tested via testing data.pieceLost()
+		int value=encode(coord);
+		ArrayList<Coordinate>piecesToRemove=_data.pieceLost(value);
+		
+		//will probs needed to return an array of pieces to remove
+		return piecesToRemove;
+	}
+
+	/**
+	* removes a piece from the board utilizing the data.java
+	* @param coord-The piece to remove
+	*/
+	public void removePiece(Coordinate coord) 
+	{//tested via data method it calls 
+		_data.set(getIndex(coord),-1);
+		
 	}
 	
 }
