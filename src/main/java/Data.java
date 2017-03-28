@@ -425,6 +425,7 @@ public class Data
 			// wall capture
 			return return_list;
 		}
+		return_list.clear();
 		return return_list;
 	}
 	
