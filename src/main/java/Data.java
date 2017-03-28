@@ -108,6 +108,8 @@ public class Data
 		int index = Arrays.asList(boardData).indexOf(value);
 		if (index < 13 && index > 0)
 			return true;
+		else if(index==0)
+			return true;
 		else 
 			return false;
 	}
@@ -124,7 +126,7 @@ public class Data
 			return Arrays.asList(specialSquares).contains(value);
 		}
 		return false;	
-	}	
+	}
 	
 	/**
 	* Returns true if the king is surrounded by black pieces in four directions. 
@@ -175,8 +177,114 @@ public class Data
 	{
 		return Arrays.asList(specialSquares).contains(value);
 	}
-	
-	
-	
-	
+
+	/**
+	* determines if a piece should be removed
+	* @param temp_value-the location of where a teammate should be for a capture
+	* @param turn-whose turn it is, true=white, false=black
+	* @return true if a piece should be captured
+	* @return false if a piece should not be captured
+	*/
+	private boolean isPieceRemoved(int temp_value, boolean turn)
+	{ //tested indirectly via pieceLost()
+		if(turn)
+		{
+			boolean teammate=isMember(temp_value)&&isWhite(temp_value);
+			return teammate||isSpecialSquare(temp_value);
+		}
+		else
+		{
+			boolean teammate=isMember(temp_value)&&!isWhite(temp_value);
+			return teammate||temp_value==61;
+		}
+	}
+
+	//get enemy neigbors method
+	/**
+	* Gets the neighboring enemy pieces of a location
+	* @param value- an encoded value of the Coordinate object
+	* @return an arrayList of nieghboring Integers containing locations of enemy pieces
+	*/
+	private ArrayList<Integer> getEnemyNeighbors(int value)
+	{//tested indirectly via pieceLost
+		Integer[] neighbors = getNeighbors(value); 	//gets neighbors of the coordinate
+		ArrayList<Integer> enemyNeighbors = new ArrayList<Integer>(); //array of enemy neighbors
+		for(int x=0; x<neighbors.length;x++) 
+		{
+			if(isWhite(value)) //turn is white
+			{
+				if((!isWhite(neighbors[x]) && isMember(neighbors[x]))) //if piece is black and on the board
+				{
+					enemyNeighbors.add(neighbors[x]); //add enemy neighbor to array of enemies
+				}
+			}
+			else //turn is black
+			{	
+				if((isWhite(neighbors[x]))&&isMember(neighbors[x])) //if piece is white and on the board
+				{
+					enemyNeighbors.add(neighbors[x]);
+				}
+			}
+		}
+		return enemyNeighbors;
+	}
+
+	//going to return an array of pieces captured
+	/**
+	* Determines which pieces are captured during a move
+	* @param value-the value of the location of piece
+	* @return an arraylist of coordinates to remove
+	*/
+	public ArrayList<Coordinate> pieceLost(int value)  
+	{ 
+		ArrayList<Integer> enemyNeighbors =getEnemyNeighbors(value); //array of enemy neighbors
+		ArrayList<Coordinate>coordsToRemove=new ArrayList<Coordinate>(); //array of coordinates to remove
+		if(enemyNeighbors.size()==0) //no  enemy neighbors
+		{
+			//do nothing
+		}
+		else //time to check to see if piece will be captured
+		{
+			//will need to loop through array of enemies and check the direction of where they are in relation to value
+			//once direction is determined, see if there is a friendly piece 2 spaces away in that direction	
+			for(int i=0; i<enemyNeighbors.size();i++) 
+			{
+				int direction=0;
+				direction=enemyNeighbors.get(i).intValue()-value; //direction of enemy piece
+				if(direction==-11) //up
+				{	
+					if(isPieceRemoved(value-22,isWhite(value)))
+					{
+						if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
+							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+					}
+				}
+				else if (direction==11) //down
+				{	
+					if(isPieceRemoved(value+22,isWhite(value)))
+					{
+						if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
+							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+					}
+				}
+				else if(direction==1) //right
+				{
+					if(isPieceRemoved(value+2,isWhite(value)))
+					{
+						if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
+							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+					}
+				}
+				else if(direction==-1)//left
+				{	
+					if(isPieceRemoved(value-2,isWhite(value)))
+					{
+						if(getIndex(enemyNeighbors.get(i))!=0) //king can not be captured via sandwich capture
+							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+					}
+				}
+			}
+		}
+		return coordsToRemove;
+	}
 }
