@@ -293,6 +293,7 @@ public class Board extends JPanel
  			{
 // 				// Unselect it
  				boardSquares[coor.getX()][coor.getY()].setBackground(selected_color);
+				first_clicked = new Coordinate(-1,-1);
  			} 
 			else if(_manager.getIndex(coor) == -1)
  			{

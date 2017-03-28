@@ -66,5 +66,13 @@ public class Coordinate
 		}
 		return false;
 	}
-	
+		
+	/**
+	* Resets the coordinate to -1,-1
+	*/
+	public void setMinusOne()
+	{
+		this.x = -1;
+		this.y = -1;
+	}
 }
