@@ -243,7 +243,7 @@ public class Board extends JPanel
 
 	* Enables pieces related to designated player 
 	*/
-	public void enable(Player player)
+	private void enable(Player player)
 	{
 		Coordinate [] pieces = player.getPieces();
 		
@@ -257,7 +257,7 @@ public class Board extends JPanel
 	* Disables pieces related to designated player 
 	* @param player: Player object designating which player should be disabled
 	*/
-	public void disable(Player player)
+	private void disable(Player player)
 	{
 		Coordinate [] pieces = player.getPieces();
 		
