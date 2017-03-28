@@ -125,14 +125,11 @@ public class Game
 			if (reader != null) {
     		String line = null;
 				line = reader.readLine();
-				String[] result = line.split(",");
-				Integer[] locs = new Integer[37];
-				for (int i = 0; i < 37; i++)
-				{
-					locs[i] = Integer.valueOf(result[i]);
-				}
+
+				Integer[] locs = parseInput(line);
 				_manager.loadData(locs);
 				load_init(_manager, _whites, _blacks);
+
 			} else 
 			{
 				System.out.println("Sorry, there are no saved games to load!");
@@ -146,20 +143,65 @@ public class Game
 	
 	/**
 	* Gets turn value from black player 
-	* @return byte 1 if it is black's turn to move
-	* @return byte 0 if it is white's turn to move
+	* @return int 1 if it is black's turn to move
+	* @return int 0 if it is white's turn to move
 	*/
-	private byte getTurn()
+	private int getTurn()
 	{
-		byte turnByte;
+		int turn;
 		if(_blacks.myTurn())
 		{
-			turnByte = (byte) 1;
+			turn = 1;
 		} else 
 		{
-			turnByte = (byte) 1;
+			turn = 0;
 		}
-		return turnByte;
+		return turn;
+	}
+	
+	/**
+	* Gets the Integer array for board locations from input String
+	* Gets turn flag (last value) and sets player turn 
+	* @param input - String representation of board and turn flag
+	* @return Integer array of piece locations on the board
+	*/
+	private Integer[] parseInput(String input)
+	{
+		String[] result = input.split(",");	// result is array of locations + turn int
+
+		int turn = Integer.parseInt(result[37]); // extracts turn flag 
+		setPlayers(turn);	// calls method to reset players and set turn
+		
+		Integer[] locs = new Integer[37];
+		for (int i = 0; i < 37; i++)
+		{
+			locs[i] = Integer.valueOf(result[i]);
+		}
+		return locs;
+	}
+	
+	/**
+	* Resets players
+	* Receives turn flag and sets player turn accordingly 
+	* If the flag is 0, it is white's turn
+	* IF the flag is 1, it is black's turn (new game default)
+	*/
+	private void setPlayers(int turn) 
+	{
+		// player 1
+		_whites = new Player(_manager);
+		_whites.setWhite();
+				
+		// player 2
+		_blacks = new Player(_manager);
+		_blacks.setBlack();
+		
+		if (turn == 0) //White's turn
+		{
+			_blacks.doneWithTurn();
+			_whites.newTurn();
+			//_board.switchTurn();
+		}
 	}
 	
 	/**
@@ -213,20 +255,12 @@ public class Game
 		try 
 		{
 			String b = new String();
-			b = _board.printBoard();
+			b = _board.printBoard();	// gets String of board (comma separated)
+			String turn  = Integer.toString(getTurn());
+			b = b + "," + turn;
 			byte[] boardBytes = b.getBytes("UTF-8");
-			int len = boardBytes.length;
-
-			// appends turn to array
-			byte[] finalBytes = new byte[len + 1]; 
-			for (int i = 0; i < len; i++)
-			{
-				finalBytes[i] = boardBytes[i];
-			}
-			finalBytes[len] = getTurn();
-			
 			// append timer data to array 
-			out.write(finalBytes);
+			out.write(boardBytes);
 		} catch(IOException e) 
 		{
 			System.err.format("IOException: %s%n", e);
