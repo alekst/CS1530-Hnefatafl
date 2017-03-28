@@ -40,8 +40,6 @@ public class Manager
         return (data.getY() * 11 + data.getX() + 1);
     }
 	
-
-	
 	/**
 	* Returns an index based on the coordinates. It would return -1 if the index is not found. 
 	* @param data-coordinates of a piece
