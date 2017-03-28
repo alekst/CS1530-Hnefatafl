@@ -282,10 +282,10 @@ public class Board extends JPanel
  		{			
  			Square b = (Square)actionEvent.getSource();
  			Coordinate coor = b.getCoord();
-			selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
 				
 			if((first_clicked.isMinusOne()) && (_manager.getIndex(coor) != -1))
 			{
+				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
 				first_clicked = coor;	
 				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
 			}
