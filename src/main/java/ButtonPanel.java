@@ -18,7 +18,7 @@ public class ButtonPanel extends JPanel
   * Constructor - add all of the buttons to
   * the ButtonPanel.
   */
-	  public ButtonPanel(Board m, MainFrame f) 
+	  public ButtonPanel(Game m, MainFrame f) 
 	{
 
 		// Send a reference to the Main Panel

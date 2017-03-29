@@ -6,15 +6,15 @@ import java.util.*;
 public class NewGameButton extends JButton 
 {
 	
-	private Board _m;
+	private Game _m;
 	private MainFrame _f;
 	
 	/**
 	* Constructor
-	* @param m-Board that this button exists in
+	* @param m-Game that this button exists in
 	* @param f-MainFrame that this button exists in
 	*/
-	public NewGameButton(Board m, MainFrame f) 
+	public NewGameButton(Game m, MainFrame f) 
 	{
 		super("New Game");
 		_m = m;

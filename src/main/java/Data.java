@@ -14,13 +14,23 @@ public class Data
 	*/
 	public Data()
 	{
-	    Integer[] initialData = {61, 59, 60, 62, 63, 49, 50, 51, 39, 71, 72, 73, 83, 4, 5, 6, 7, 8, 17, 34, 44, 45, 55, 56, 57, 65, 66, 67, 77, 78, 88, 105, 114, 115, 116, 117, 118
-	    };
-		Integer[] special = {1, 11, 61, 111, 121};
-        boardData = initialData.clone();
-		specialSquares = special.clone();
+	   Integer[] initialData = {61, 59, 60, 62, 63, 49, 50, 51, 39, 71, 72, 73, 83, 4, 5, 6, 7, 8, 17, 34, 44, 45, 55, 56, 57, 65, 66, 67, 77, 78, 88, 105, 114, 115, 116, 117, 118
+	   };
+     Integer[] special = {1, 11, 61, 111, 121};
+     boardData = initialData.clone();
+     specialSquares = special.clone();
 	}
-    
+  
+  /**
+  * The Data object constructor. Initializes the boardData array along with the specialSquares array. 
+  */
+  public Data(Integer[] boardStatus)
+  {
+    Integer[] initialData = boardStatus;
+  	Integer[] special = {1, 11, 61, 111, 121};
+    boardData = initialData.clone();
+    specialSquares = special.clone();
+  }
 	
 	/**
 	* Decodes the Coordinate object for storage
@@ -108,6 +118,8 @@ public class Data
 		int index = Arrays.asList(boardData).indexOf(value);
 		if (index < 13 && index > 0)
 			return true;
+		else if(index==0)
+			return true;
 		else 
 			return false;
 	}
@@ -124,7 +136,7 @@ public class Data
 			return Arrays.asList(specialSquares).contains(value);
 		}
 		return false;	
-	}	
+	}
 	
 	/**
 	* Returns true if the king is surrounded by black pieces in four directions. 
@@ -176,7 +188,272 @@ public class Data
 		return Arrays.asList(specialSquares).contains(value);
 	}
 	
+	/**
+	* "Prints" the current board status by returning a comma deliniated string for use in saving to a file 
+	*/
+	public String print()
+	{
+    String csv_out = new String();
+    for (int i=0; i < boardData.length; i++)
+    {
+      csv_out = csv_out + Integer.toString(boardData[i]);
+      if (i != (boardData.length - 1))
+      {
+        csv_out = csv_out + ',';
+      }
+    }
+    return csv_out;
+  }
+
+	/**
+	* determines if a piece should be removed
+	* @param temp_value-the location of where a teammate should be for a capture
+	* @param turn-whose turn it is, true=white, false=black
+	* @return true if a piece should be captured
+	* @return false if a piece should not be captured
+	*/
+	private boolean isPieceRemoved(int temp_value, boolean turn)
+	{ //tested indirectly via pieceLost()
+		if(turn)
+		{
+			boolean teammate=isMember(temp_value)&&isWhite(temp_value);
+			return teammate||isSpecialSquare(temp_value);
+		}
+		else
+		{
+			boolean teammate=isMember(temp_value)&&!isWhite(temp_value);
+			return teammate||temp_value==61;
+		}
+	}
+
+	//get enemy neigbors method
+	/**
+	* Gets the neighboring enemy pieces of a location
+	* @param value- an encoded value of the Coordinate object
+	* @return an arrayList of nieghboring Integers containing locations of enemy pieces
+	*/
+	private ArrayList<Integer> getEnemyNeighbors(int value)
+	{//tested indirectly via pieceLost
+		Integer[] neighbors = getNeighbors(value); 	//gets neighbors of the coordinate
+		ArrayList<Integer> enemyNeighbors = new ArrayList<Integer>(); //array of enemy neighbors
+		for(int x=0; x<neighbors.length;x++) 
+		{
+			if(isWhite(value)) //turn is white
+			{
+				if((!isWhite(neighbors[x]) && isMember(neighbors[x]))) //if piece is black and on the board
+				{
+					enemyNeighbors.add(neighbors[x]); //add enemy neighbor to array of enemies
+				}
+			}
+			else //turn is black
+			{	
+				if((isWhite(neighbors[x]))&&isMember(neighbors[x])) //if piece is white and on the board
+				{
+					enemyNeighbors.add(neighbors[x]);
+				}
+			}
+		}
+		return enemyNeighbors;
+	}
+
+	//going to return an array of pieces captured
+	/**
+	* Determines which pieces are captured during a move
+	* @param value-the value of the location of piece
+	* @return an arraylist of coordinates to remove
+	*/
+	public ArrayList<Coordinate> pieceLost(int value)  
+	{ 
+		ArrayList<Integer> enemyNeighbors =getEnemyNeighbors(value); //array of enemy neighbors
+		ArrayList<Coordinate>coordsToRemove=new ArrayList<Coordinate>(); //array of coordinates to remove
+		if(enemyNeighbors.size()==0) //no  enemy neighbors
+		{
+			//do nothing
+		}
+		else //time to check to see if piece will be captured
+		{
+			//will need to loop through array of enemies and check the direction of where they are in relation to value
+			//once direction is determined, see if there is a friendly piece 2 spaces away in that direction	
+			for(int i=0; i<enemyNeighbors.size();i++) 
+			{
+				int direction=0;
+				direction=enemyNeighbors.get(i).intValue()-value; //direction of enemy piece
+				if(direction==-11) //up
+				{	
+					if(isPieceRemoved(value-22,isWhite(value)))
+					{
+						if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
+							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+					}
+				}
+				else if (direction==11) //down
+				{	
+					if(isPieceRemoved(value+22,isWhite(value)))
+					{
+						if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
+							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+					}
+				}
+				else if(direction==1) //right
+				{
+					if(isPieceRemoved(value+2,isWhite(value)))
+					{
+						if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
+							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+					}
+				}
+				else if(direction==-1)//left
+				{	
+					if(isPieceRemoved(value-2,isWhite(value)))
+					{
+						if(getIndex(enemyNeighbors.get(i))!=0) //king can not be captured via sandwich capture
+							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+					}
+				}
+			}
+		}
+		return coordsToRemove;
+	}
 	
-	
+	/**
+	* Returns the array of coordinates of those pieces that must be removed. 
+	* Looks to see if the value is on one of the walls
+	* 	If this is true then depending on the wall we search through all opposite
+	*	player pieces that are next to the piece along that wall until we hit
+	*	a piece of the player who is doing the capturing.
+	* As we traverse through the opponent pieces on the wall
+	* 	we gather up the pieces into an arraylist that we will eventually return 
+	* @param value-tile of the last moved piece
+	* @return ArrayList<Coordinate> - Each piece that is meant to be removed
+	*/
+	public ArrayList<Coordinate> shieldWallCapture(int value)
+	{
+		// Check if piece landed on a wall and 
+		// have a unique case for each wall
+		ArrayList<Coordinate> return_list = new ArrayList<Coordinate>();
+		Coordinate coord = decode(value);
+		int streak_count = 0;
+		int offset = 1;
+		if((coord.getX() - 1 < 0) && (coord.getY() - 1 >= 0)) // west wall
+		{
+			while(isMember(value - 11 * offset) && (isWhite(value - 11 * offset) != isWhite(value))
+				&& isMember(value - 11 * offset + 1) && (isWhite(value - 11 * offset + 1) == isWhite(value)))
+				{
+					return_list.add(decode(value - 11 * offset));
+					streak_count++;
+					if(((isMember(value - 11 * (offset + 1)) && (isWhite(value - 11 * (offset + 1)) == (isWhite(value)))) 
+						|| (isSpecialSquare(value - 11 * (offset + 1)))) && streak_count > 1)
+					{
+						return return_list;
+					}
+					offset++;
+				}
+			offset = 1;
+			while(isMember(value + 11 * offset) && (isWhite(value + 11 * offset) != isWhite(value))
+				&& isMember(value + 11 * offset + 1) && (isWhite(value + 11 * offset + 1) == isWhite(value)))
+				{
+					streak_count++;
+					return_list.add(decode(value + 11 * offset));
+					if(((isMember(value + 11 * (offset + 1)) && (isWhite(value + 11 * (offset + 1)) == (isWhite(value))))
+						|| (isSpecialSquare(value + 11 * (offset + 1)))) && streak_count > 1)
+					{
+						return return_list;
+					}
+					offset++;
+				}
+		}	
+		else if((coord.getX() + 1 > 10) && (coord.getY() + 1 <= 10)) // east wall
+		{
+			while(isMember(value - 11 * offset) && (isWhite(value - 11 * offset) != isWhite(value))
+				&& isMember(value - 11 * offset - 1) && (isWhite(value - 11 * offset - 1) == isWhite(value)))
+				{
+					streak_count++;
+					return_list.add(decode(value - 11 * offset));
+					if(((isMember(value - 11 * (offset + 1)) && (isWhite(value - 11 * (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value - 11 * (offset + 1))) && streak_count > 1)
+					{
+						return return_list;
+					}
+					offset++;
+				}
+			offset = 1;
+			while(isMember(value + 11 * offset) && (isWhite(value + 11 * offset) != isWhite(value))
+				&& isMember(value + 11 * offset - 1) && (isWhite(value + 11 * offset - 1) == isWhite(value)))
+				{
+					streak_count++;
+					return_list.add(decode(value + 11 * offset));
+					if(((isMember(value + 11 * (offset + 1)) && (isWhite(value + 11 * (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value + 11 * (offset + 1))) && streak_count > 1)
+					{
+						return return_list;
+					}
+					offset++;
+				}
+		}
+		else if((coord.getX() - 1 >= 0) && (coord.getY() + 1 > 10)) // south wall
+		{
+			while(isMember(value - offset) && (isWhite(value - offset) != isWhite(value))
+				&& isMember(value - offset - 11) && (isWhite(value - offset - 11) == isWhite(value)))
+				{
+					streak_count++;
+					return_list.add(decode(value - offset));
+					if(((isMember(value - (offset + 1)) && (isWhite(value - (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value - (offset + 1))) && streak_count > 1)
+					{
+						return return_list;
+					}
+					offset++;
+				}
+			offset = 1;
+			while(isMember(value + offset) && (isWhite(value + offset) != isWhite(value))
+				&& isMember(value + offset - 11) && (isWhite(value + offset - 11) == isWhite(value)))
+				{
+					streak_count++;
+					return_list.add(decode(value + offset));
+					if(((isMember(value + (offset + 1)) && (isWhite(value + (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value + (offset + 1))) && streak_count > 1)
+					{
+						return return_list;
+					}
+					offset++;
+				}
+		}
+		else if((coord.getX() + 1 <= 10) && (coord.getY() - 1 < 0)) // north wall
+		{
+			while(isMember(value - offset) && (isWhite(value - offset) != isWhite(value))
+				&& isMember(value - offset + 11) && (isWhite(value - offset + 11) == isWhite(value)))
+				{
+					streak_count++;
+					return_list.add(decode(value - offset));
+					if(((isMember(value - (offset + 1)) && (isWhite(value - (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value - (offset + 1))) && streak_count > 1)
+					{
+						return return_list;
+					}
+					offset++;
+				}
+			offset = 1;
+			while(isMember(value + offset) && (isWhite(value + offset) != isWhite(value))
+				&& isMember(value + offset + 11) && (isWhite(value + offset + 11) == isWhite(value)))
+				{
+					streak_count++;
+					return_list.add(decode(value + offset));
+					if(((isMember(value + (offset + 1)) && (isWhite(value + (offset + 1)) == (isWhite(value))))
+						|| isSpecialSquare(value + (offset + 1))) && streak_count > 1)
+					{
+						return return_list;
+					}
+					offset++;
+				}
+		}
+		else
+		{
+			// Not on an edge or is a corner so there is no shield 
+			// wall capture
+			return return_list;
+		}
+		return_list.clear();
+		return return_list;
+	}
 	
 }

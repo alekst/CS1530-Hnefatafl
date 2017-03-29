@@ -15,11 +15,19 @@ public class Manager
 	private static final int totalPieces = 37;
 	
 	/**
-	* initialize a data object
+	* initialize a data object with initial board configuration
 	*/
 	public Manager()
 	{
 		_data = new Data();
+	}
+	
+	/**
+	* initialize a data object with specified board configuration
+	*/
+	public Manager(Data data)
+	{
+		_data = data;
 	}
 	
 	/**
@@ -39,8 +47,6 @@ public class Manager
     {
         return (data.getY() * 11 + data.getX() + 1);
     }
-	
-
 	
 	/**
 	* Returns an index based on the coordinates. It would return -1 if the index is not found. 
@@ -103,6 +109,15 @@ public class Manager
 		return _board;
 	}
 	
+		/** 
+		* @return a current board status as a Data object
+		*
+		*/ 
+		public Data getBoardData()
+		{
+			return _data;
+		}
+		
 	/**
 	* @param coord-The coordinate object of a locatio
 	* @return true-if the coordinate contains a white piece
@@ -166,7 +181,6 @@ public class Manager
 	{
 		if(someoneThere(origin) && someoneThere(destination)) //both coordinates are occupied
 		{
-			System.out.println("Both are occupied");
 			return true;
 		}
 		else
@@ -307,7 +321,6 @@ public class Manager
 	*/
 	public boolean isValid(Coordinate origin, Coordinate destination) 
 	{	
-		// System.out.println(origin.getX()+ " "+origin.getY() + " ____ "+ destination.getX()+ " "+ destination.getY());
  		if(inSameSpot(origin, destination)) //both coordinates are occupied
  		{
  			return false;
@@ -382,5 +395,44 @@ public class Manager
 		int value = encode(coord);
 		return _data.kingLost(value);
 	}
+
 	
+	/**
+	* determines which pieces are captured
+	* @param coord the coordinate of the piece that was just moved
+	* @return an arraylist of coordinates to remove
+	*/
+	public ArrayList<Coordinate> isPieceSurrounded(Coordinate coord)
+	{//NEED TO TEST, will probs be tested via testing data.pieceLost()
+		int value=encode(coord);
+		ArrayList<Coordinate>piecesToRemove=_data.pieceLost(value);
+		piecesToRemove.addAll(_data.shieldWallCapture(value));
+		//will probs needed to return an array of pieces to remove
+		return piecesToRemove;
+	}
+
+	/**
+	* removes a piece from the board utilizing the data.java
+	* @param coord-The piece to remove
+	*/
+	public void removePiece(Coordinate coord) 
+	{//tested via data method it calls 
+		_data.set(getIndex(coord),-1);
+		
+	}
+	
+	/**
+	* Loads board array values into a new data object
+	* @param board : Integer array representing board configuration
+	* @return 0 if no error
+	*/
+	public int loadData(Integer[] board) 
+	{
+		for (int i = 0; i < 37; i++)
+		{
+			_data.set(i, board[i]);
+		}
+		return 0;
+	}
+
 }
