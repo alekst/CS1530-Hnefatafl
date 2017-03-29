@@ -75,4 +75,5 @@ public class Coordinate
 		this.x = -1;
 		this.y = -1;
 	}
+
 }
