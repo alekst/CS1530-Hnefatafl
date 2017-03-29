@@ -1,6 +1,12 @@
 import java.lang.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.io.*;
+import java.nio.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Game
 {
@@ -53,7 +59,33 @@ public class Game
 		//create the Game Info Panel
 		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo);
 		// create the main frame
-		MainFrame _mf = new MainFrame(_board, _gi);
+		MainFrame _mf = new MainFrame(this, _gi);
+	}
+	
+	/**
+	* Initializes the game state with existing manager (related data) and players
+	* @param manager : Manager object with related Data
+	* @param whites : white player
+	* @param blacks : black player
+	*/
+	private void load_init(Manager manager, Player whites, Player blacks)
+	{
+		// manager
+		_manager = manager;	
+		// player 1 : right now resets player info on load
+		_whites = whites;
+		_whiteInfo = new PlayerInfoPanel("Whites", 300); // 300 seconds
+		_whites.addInfo(_whiteInfo);
+		
+		// player 2 : right now resets player info on load
+		_blacks = blacks;
+		_blackInfo = new PlayerInfoPanel("Blacks", 300);
+		_blacks.addInfo(_blackInfo);
+		
+		_board = new Board(_manager, _whites, _blacks);
+	
+		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo);
+		MainFrame _mf = new MainFrame(this, _gi);
 	}
 	
 	/**
@@ -86,20 +118,180 @@ public class Game
 	}
 	
 	/**
-	* Currently unused...will be used to save game
+	* Opens a new file "saved_hnefetafl.csv" and writes the current board array to a csv file
+	* Throws IO exception on error in file opening or writing
 	*/
-	public void save()
+	public void save() throws java.io.IOException
 	{
-		throw new UnsupportedOperationException();
+		FileOutputStream out = null;
+		
+		try {
+      out = openOutStream();
+      printBoard(out);
+		} catch(IOException e) 
+		{
+  		System.err.format("IOException: %s%n", e);
+		} finally {
+			closeOutStream(out);
+		}
 	}
 	
 	/**
-	* Currently unused...will be used to load game
+	* Reads in the bytes of the "saved_hnefetafl.csv" file and converts it to a string
+	* Passes the string representation of the file to the board to load
+	* Throws IO exception on error in file opening or reading
 	*/
-	public void load()
+	public void load() throws java.io.IOException
 	{
-		throw new UnsupportedOperationException();
+		Path path = Paths.get("saved_hnefatafl.csv");
+		Charset charset = Charset.forName("UTF-8");
+		try (BufferedReader reader = Files.newBufferedReader(path, charset)) 
+		{
+			if (reader != null) {
+    		String line = null;
+				line = reader.readLine();
+
+				Integer[] locs = parseInput(line);
+				_manager.loadData(locs);
+				load_init(_manager, _whites, _blacks);
+
+			} else 
+			{
+				System.out.println("Sorry, there are no saved games to load!");
+			}
+
+		} catch (IOException e) 
+		{
+    	System.err.format("IOException: %s%n", e);
+		}
 	}
 	
+	/**
+	* Gets turn value from black player 
+	* @return int 1 if it is black's turn to move
+	* @return int 0 if it is white's turn to move
+	*/
+	private int getTurn()
+	{
+		int turn;
+		if(_blacks.myTurn())
+		{
+			turn = 1;
+		} else 
+		{
+			turn = 0;
+		}
+		return turn;
+	}
+	
+	/**
+	* Gets the Integer array for board locations from input String
+	* Gets turn flag (last value) and sets player turn 
+	* @param input - String representation of board and turn flag
+	* @return Integer array of piece locations on the board
+	*/
+	private Integer[] parseInput(String input)
+	{
+		String[] result = input.split(",");	// result is array of locations + turn int
+
+		int turn = Integer.parseInt(result[37]); // extracts turn flag 
+		setPlayers(turn);	// calls method to reset players and set turn
+		
+		Integer[] locs = new Integer[37];
+		for (int i = 0; i < 37; i++)
+		{
+			locs[i] = Integer.valueOf(result[i]);
+		}
+		return locs;
+	}
+	
+	/**
+	* Resets players
+	* Receives turn flag and sets player turn accordingly 
+	* If the flag is 0, it is white's turn
+	* IF the flag is 1, it is black's turn (new game default)
+	*/
+	private void setPlayers(int turn) 
+	{
+		// player 1
+		_whites = new Player(_manager);
+		_whites.setWhite();
+				
+		// player 2
+		_blacks = new Player(_manager);
+		_blacks.setBlack();
+		
+		if (turn == 0) //White's turn
+		{
+			_blacks.doneWithTurn();
+			_whites.newTurn();
+			//_board.switchTurn();
+		}
+	}
+	
+	/**
+	* Opens file output stream for specified game saving file "saved_hnefatafl.csv"
+	* @return FileOutputStream out 
+	*/
+	private FileOutputStream openOutStream() throws java.io.IOException
+	{
+		FileOutputStream out = null;
+		try 
+		{
+			File f = new File("saved_hnefatafl.csv");
+			f.createNewFile();
+      out = new FileOutputStream("saved_hnefatafl.csv");
+		} catch(IOException e) 
+		{
+  		System.err.format("IOException: %s%n", e);
+		}
+		return out;
+	}
+	
+	/**
+	* Closes file output stream for game saving file
+	* @return 0 upon no error
+	* @return 1 if error, also prints error code to system error
+	*/
+	private int closeOutStream(FileOutputStream out) throws java.io.IOException
+	{
+		try 
+		{
+			if (out != null)
+			{
+				out.flush();
+				out.close();
+			}
+		} catch(IOException e) 
+		{
+	  	System.err.format("IOException: %s%n", e);
+			return 1;
+		}
+		return 0;
+	}
+	
+	/**
+	* Prints board array to file output stream
+	* @return 0 upon no error
+	* @return 1 if error, also prints error code to system error
+	*/
+	private int printBoard(FileOutputStream out) throws java.io.IOException
+	{
+		try 
+		{
+			String b = new String();
+			b = _board.printBoard();	// gets String of board (comma separated)
+			String turn  = Integer.toString(getTurn());
+			b = b + "," + turn;
+			byte[] boardBytes = b.getBytes("UTF-8");
+			// append timer data to array 
+			out.write(boardBytes);
+		} catch(IOException e) 
+		{
+			System.err.format("IOException: %s%n", e);
+			return 1;
+		}
+		return 0;
+	}
 	
 }

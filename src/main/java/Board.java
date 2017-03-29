@@ -441,6 +441,15 @@ public class Board extends JPanel
 		second_clicked = new Coordinate(-1, -1);
 	}
 	
+	/**
+		*	"Prints" the board to the Game class who called it by getting the manager
+		* Manager accesses the data and calls the "print" method from that class which returns a String
+		* @return a String back to the Game that called it in order to print
+		*/
+	public String printBoard()
+	{
+		return _manager.getBoardData().print();
+	}
 }
 
 

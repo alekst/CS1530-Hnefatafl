@@ -13,17 +13,19 @@ public class MainFrame
 	
 	private GameInfoPanel _gameInfo; //game info
 
-  public MainFrame(Board board, GameInfoPanel gameInfo) 
+
+  public MainFrame(Game game, GameInfoPanel gameInfo) 
 	{
 		_frame.setSize(WIDTH, HEIGHT);
 		// Close program when window is closed
 		_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// Add Main Panel and Button Panel
-		_buttonPanel = new ButtonPanel(board, this);
+		
+		_buttonPanel = new ButtonPanel(game, this);
 		
 		//add the board	to the main frame
-		_frame.add(board.getBoard(), BorderLayout.CENTER);
+		_frame.add(game.queryBoard().getBoard(), BorderLayout.CENTER);
 		
 		// add the button panel to the main frame
 		_frame.add(_buttonPanel, BorderLayout.SOUTH);

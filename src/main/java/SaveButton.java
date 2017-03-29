@@ -5,33 +5,39 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.*;
+import java.io.*;
 
 public class SaveButton extends JButton 
 {
 
-	private Board _m;
+	private Game _m;
 
 	/**
-	* Constructor...Button is currently set to disabled
-	* @param m-Board that this button exists in
+	* Constructor creates general button in button panel labeled "Save"
+	* @param m-Game that this button exists in
 	*/
-	public SaveButton(Board m) 
+	public SaveButton(Game m) 
 	{
 		super("Save");
 		_m = m;
 		addActionListener(new SaveButtonListener());
-		this.setEnabled(false);
+		//this.setEnabled(false);
 	}
 
+	
 	class SaveButtonListener implements ActionListener 
 	{
 		/**
-		* Loads an existing game
+		* Saves an existing board data to a csv file by calling the game's void save method
 		* @param e-The action event
 		*/
-		public void actionPerformed(ActionEvent e) 
+		public void actionPerformed(ActionEvent e)
 		{
-
+			try {
+				_m.save();
+			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(null, "Error: There was a problem saving this game.");
+			}
 		}
 	}
 }

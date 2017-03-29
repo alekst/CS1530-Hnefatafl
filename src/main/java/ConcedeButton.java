@@ -6,13 +6,13 @@ import java.util.*;
 public class ConcedeButton extends JButton 
 {
 
-  private Board _m;
+  private Game _m;
     
 	/**
-	* Constructor
-	* @param m-Board that this button exists in
+	* Constructor creates general button in button panel labeled "Concede"
+	* @param m-Game that this button exists in
 	*/
-  public ConcedeButton(Board m) 
+  public ConcedeButton(Game m) 
   {
     super("Concede");
 	  _m = m;
