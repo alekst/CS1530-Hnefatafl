@@ -59,7 +59,7 @@ public class Game
 		//create the Game Info Panel
 		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo);
 		// create the main frame
-		MainFrame _mf = new MainFrame(_board, _gi);
+		MainFrame _mf = new MainFrame(this, _gi);
 	}
 	
 	/**
@@ -72,14 +72,20 @@ public class Game
 	{
 		// manager
 		_manager = manager;	
-		// player 1
+		// player 1 : right now resets player info on load
 		_whites = whites;
-		// player 2
+		_whiteInfo = new PlayerInfoPanel("Whites", 300); // 300 seconds
+		_whites.addInfo(_whiteInfo);
+		
+		// player 2 : right now resets player info on load
 		_blacks = blacks;
-			
+		_blackInfo = new PlayerInfoPanel("Blacks", 300);
+		_blacks.addInfo(_blackInfo);
+		
 		_board = new Board(_manager, _whites, _blacks);
-			
-		MainFrame _mf = new MainFrame(this);
+	
+		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo);
+		MainFrame _mf = new MainFrame(this, _gi);
 	}
 	
 	/**

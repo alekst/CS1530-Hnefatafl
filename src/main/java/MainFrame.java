@@ -25,7 +25,7 @@ public class MainFrame
 		_buttonPanel = new ButtonPanel(game, this);
 		
 		//add the board	to the main frame
-		_frame.add(game.queryBoard(), BorderLayout.CENTER);
+		_frame.add(game.queryBoard().getBoard(), BorderLayout.CENTER);
 		
 		// add the button panel to the main frame
 		_frame.add(_buttonPanel, BorderLayout.SOUTH);
