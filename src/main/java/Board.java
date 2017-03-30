@@ -240,7 +240,6 @@ public class Board extends JPanel
 	} 
 	
 	/**
-
 	* Enables pieces related to designated player 
 	*/
 	private void enable(Player player)

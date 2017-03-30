@@ -113,7 +113,10 @@ public class Player
 	{
 		if (escaped() || surroundedKing())
 			return true;
-		return false;
+		else if(exitFort())
+			return true;
+		else
+			return false;
 	}
 	
 	/**
@@ -144,6 +147,22 @@ public class Player
 			return true;
 		}
 		return false;
+	}
+
+	//create initial exit fort method here
+	/**
+	* @return True-exit fort has occured
+	* @retunr False-exit fort has not occured
+	*/
+	public boolean exitFort()
+	{
+		Coordinate king=_manager.getKing();
+		if(_manager.exitFort(king))
+		{
+			return true;
+		}
+		else
+			return false;
 	}
 	
 

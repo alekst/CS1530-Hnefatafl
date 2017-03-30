@@ -396,6 +396,11 @@ public class Manager
 		return _data.kingLost(value);
 	}
 
+	public boolean exitFort(Coordinate coord)
+	{
+		int value=encode(coord);
+		return _data.exitFort(value);
+	}
 	
 	/**
 	* determines which pieces are captured

@@ -165,6 +165,12 @@ public class Data
 		}
 		return false;	
 	}
+
+	public boolean exitFort(int value)
+	{
+		System.out.println("exit fort");
+		return false;
+	}
 	
 	/**
 	* Returns an array of integers of squares to check if they are taken
