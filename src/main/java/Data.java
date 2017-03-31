@@ -166,10 +166,129 @@ public class Data
 		return false;	
 	}
 
+	/**
+	* @param value-encoded value of king's location
+	* @return true-if exit fort has occured
+	* @return false-if exit fort has not occured
+	*/
 	public boolean exitFort(int value)
 	{
-		System.out.println("exit fort");
+		int edge=isKingOnEdge(value); //get edge
+		if(edge!=0 )//king on edge
+		{
+			System.out.println("good"); //
+			//check that it's surrounded by white pieces now, 
+			if(edge==1 || edge==2) //east/west wall check up and down first, +11 and -11
+			{
+				//loop through spots north and south from kings location
+				System.out.println("starting at"+" "+value);
+				int curr_spot=value-11;
+				while(!isSpecialSquare(curr_spot))
+				{
+					System.out.println(" in loop going up:"+ " "+ curr_spot);
+					if(!isWhite(curr_spot)&&isMember(curr_spot))
+					{
+						System.out.println("stop:"+" "+curr_spot);
+						break;
+					}
+					else if(isWhite(curr_spot) && isMember(curr_spot))
+					{
+						System.out.println("friendly @:"+ " "+curr_spot);
+					}
+					curr_spot=curr_spot-11;
+				}
+				curr_spot=value+11;
+				while(!isSpecialSquare(curr_spot))
+				{
+					System.out.println(" in loop going down:"+ " "+ curr_spot);
+					if(!isWhite(curr_spot)&&isMember(curr_spot))
+					{
+						System.out.println("stop:"+" "+curr_spot);
+						break;
+					}
+					else if(isWhite(curr_spot) && isMember(curr_spot))
+					{
+						System.out.println("friendly @:"+ " "+curr_spot);
+					}
+					curr_spot=curr_spot+11;
+				}
+			}
+			else if(edge==3 || edge==4)
+			{
+				System.out.println("starting at"+" "+value);
+				int curr_spot=value-1;
+				while(!isSpecialSquare(curr_spot)) //special squares at end of row/column always stop there
+				{
+					System.out.println(" in loop going left:"+ " "+ curr_spot);
+					if(!isWhite(curr_spot)&&isMember(curr_spot))
+					{
+						System.out.println("stop:"+" "+curr_spot);
+						break;
+					}
+					else if(isWhite(curr_spot) && isMember(curr_spot))
+					{
+						System.out.println("friendly @:"+ " "+curr_spot);
+					}
+					curr_spot=curr_spot-1;
+				}
+				curr_spot=value+1;
+				while(!isSpecialSquare(curr_spot))
+				{
+					System.out.println(" in loop going right:"+ " "+ curr_spot);
+					if(!isWhite(curr_spot)&&isMember(curr_spot))
+					{
+						System.out.println("stop:"+" "+curr_spot);
+						break;
+					}
+					else if(isWhite(curr_spot) && isMember(curr_spot))
+					{
+						System.out.println("friendly @:"+ " "+curr_spot);
+					}
+					curr_spot=curr_spot+1;
+				}
+
+			}
+
+		}
+		else
+			System.out.print("no");
 		return false;
+	}
+
+
+	/**
+	* @param value-encoded value of king's location
+	* @return 1-if king is on west wall
+	* @return 2-if king is on east wall
+	* @return 3-if king is on south wall
+	* @return 4-if king is on north wall
+	* @rerurn 0-if king is NOT on edge
+	*/
+	private int isKingOnEdge(int value)
+	{
+		Coordinate coord=decode(value);
+		if((coord.getX() - 1 < 0) && (coord.getY() - 1 >= 0)) // west wall
+		{
+			System.out.println("West Wall");
+			return 1;
+		}
+		else if((coord.getX() + 1 > 10) && (coord.getY() + 1 <= 10)) //east wall
+		{
+			System.out.println("East wall");
+			return 2;
+		}
+		else if((coord.getX() - 1 >= 0) && (coord.getY() + 1 > 10)) // south wall
+		{
+			System.out.println("South wall");
+			return 3;
+		}
+		else if((coord.getX() + 1 <= 10) && (coord.getY() - 1 < 0)) // north wall
+		{
+			System.out.println("North wall");
+			return 4;
+		}
+		else
+			return 0;
 	}
 	
 	/**
@@ -199,17 +318,17 @@ public class Data
 	*/
 	public String print()
 	{
-    String csv_out = new String();
-    for (int i=0; i < boardData.length; i++)
-    {
-      csv_out = csv_out + Integer.toString(boardData[i]);
-      if (i != (boardData.length - 1))
-      {
-        csv_out = csv_out + ',';
-      }
-    }
-    return csv_out;
-  }
+    	String csv_out = new String();
+    	for (int i=0; i < boardData.length; i++)
+   		{
+    		csv_out = csv_out + Integer.toString(boardData[i]);
+      		if (i != (boardData.length - 1))
+      		{
+        		csv_out = csv_out + ',';
+      		}
+    	}
+    	return csv_out;
+  	}
 
 	/**
 	* determines if a piece should be removed

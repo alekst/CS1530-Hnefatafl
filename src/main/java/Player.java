@@ -152,7 +152,7 @@ public class Player
 	//create initial exit fort method here
 	/**
 	* @return True-exit fort has occured
-	* @retunr False-exit fort has not occured
+	* @return False-exit fort has not occured
 	*/
 	public boolean exitFort()
 	{
