@@ -174,15 +174,17 @@ public class Data
 	public boolean exitFort(int value)
 	{
 		int edge=isKingOnEdge(value); //get edge
-		if(edge!=0&&canKingMove(value,edge))//king on edge
-		{
+		if(edge!=0)//&&canKingMove(value,edge))//king on edge
+		{//fix canKingMove()
 			//check that pieces in the kings row/column
 			if(edge==1 || edge==2) //east/west wall check up and down first, +11 and -11
 			{
+				int friendly_1=0;
+				int friendly_2=0;
 				//loop through spots north and south from kings location
 				System.out.println("starting at"+" "+value);
 				int curr_spot=value-11;
-				while(!isSpecialSquare(curr_spot))
+				while(!isSpecialSquare(curr_spot)) //need to find a white piece north
 				{
 					System.out.println(" in loop going up:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot))
@@ -193,14 +195,21 @@ public class Data
 					else if(isWhite(curr_spot) && isMember(curr_spot))
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
+						friendly_1=curr_spot; //setting a friendly_1 var
 						findFriendlies(curr_spot, value);
 						//when white piece  is found start checking in the spot directly perpendicular to it
 						//then check for a piece a diagonal it (more than 1 possible diagonal)
 					}
 					curr_spot=curr_spot-11;
 				}
+				if(friendly_1==0) //if 1 friendly is not found yet exit cannot occur
+				{
+					System.out.println("no friendly_1");
+					return false;
+				}
+				//at this point we need to have a white piece on the same column
 				curr_spot=value+11;
-				while(!isSpecialSquare(curr_spot))
+				while(!isSpecialSquare(curr_spot)) //need to find a white piece south
 				{
 					System.out.println(" in loop going down:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot))
@@ -211,17 +220,25 @@ public class Data
 					else if(isWhite(curr_spot) && isMember(curr_spot))
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
+						friendly_2=curr_spot; //setting friendly_2 var
 						findFriendlies(curr_spot, value);
 					}
 					curr_spot=curr_spot+11;
 				}
+				if(friendly_2==0)
+				{
+					System.out.println("no friendly_2");
+					return false;
+				}
 			}
 			else if(edge==3 || edge==4)
 			{
+				int friendly_1=0;
+				int friendly_2=0;
 				System.out.println("starting at"+" "+value);
 				int curr_spot=value-1;
 				while(!isSpecialSquare(curr_spot)) //special squares at end of row/column always stop there
-				{
+				{//need to find a white piece west
 					System.out.println(" in loop going left:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot))
 					{
@@ -231,13 +248,19 @@ public class Data
 					else if(isWhite(curr_spot) && isMember(curr_spot))
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
+						friendly_1=curr_spot; //setting a friendly_1 var
 						findFriendlies(curr_spot, value);
 					}
 					curr_spot=curr_spot-1;
 				}
+				if(friendly_1==0) //if 1 friendly is not found yet exit cannot occur
+				{
+					System.out.println("no friendly_1");
+					return false;
+				}
 				curr_spot=value+1;
 				while(!isSpecialSquare(curr_spot))
-				{
+				{//need to find a white piece east
 					System.out.println(" in loop going right:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot))
 					{
@@ -247,9 +270,15 @@ public class Data
 					else if(isWhite(curr_spot) && isMember(curr_spot))
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
+						friendly_2=curr_spot;
 						findFriendlies(curr_spot, value);
 					}
 					curr_spot=curr_spot+1;
+				}
+				if(friendly_2==0)
+				{
+					System.out.println("no friendly_2");
+					return false;
 				}
 			}
 		}
