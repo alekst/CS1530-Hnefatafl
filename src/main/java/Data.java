@@ -174,10 +174,9 @@ public class Data
 	public boolean exitFort(int value)
 	{
 		int edge=isKingOnEdge(value); //get edge
-		if(edge!=0 )//king on edge
+		if(edge!=0&&canKingMove(value,edge))//king on edge
 		{
-			System.out.println("good"); //
-			//check that it's surrounded by white pieces now, 
+			//check that pieces in the kings row/column
 			if(edge==1 || edge==2) //east/west wall check up and down first, +11 and -11
 			{
 				//loop through spots north and south from kings location
@@ -194,6 +193,9 @@ public class Data
 					else if(isWhite(curr_spot) && isMember(curr_spot))
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
+						findFriendlies(curr_spot, value);
+						//when white piece  is found start checking in the spot directly perpendicular to it
+						//then check for a piece a diagonal it (more than 1 possible diagonal)
 					}
 					curr_spot=curr_spot-11;
 				}
@@ -209,6 +211,7 @@ public class Data
 					else if(isWhite(curr_spot) && isMember(curr_spot))
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
+						findFriendlies(curr_spot, value);
 					}
 					curr_spot=curr_spot+11;
 				}
@@ -228,6 +231,7 @@ public class Data
 					else if(isWhite(curr_spot) && isMember(curr_spot))
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
+						findFriendlies(curr_spot, value);
 					}
 					curr_spot=curr_spot-1;
 				}
@@ -243,15 +247,77 @@ public class Data
 					else if(isWhite(curr_spot) && isMember(curr_spot))
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
+						findFriendlies(curr_spot, value);
 					}
 					curr_spot=curr_spot+1;
 				}
-
 			}
-
 		}
 		else
 			System.out.print("no");
+		return false;
+	}
+
+	private boolean canKingMove(int value, int edge)
+	{
+		boolean ret_val=false; //initially king cannot move
+		Integer [] neighb=getNeighbors(value);
+		if(edge==1)//west
+		{
+			boolean b1=isMember(neighb[0]);
+			boolean b2=isMember(neighb[1]);
+			boolean b3=isMember(neighb[2]);
+			ret_val=b1||b2||b3;
+		}
+		else if(edge==2)
+		{
+			boolean b1=isMember(neighb[0]);
+			boolean b2=isMember(neighb[1]);
+			boolean b3=isMember(neighb[3]);
+			ret_val=b1||b2||b3;
+		}
+		else if(edge==3)
+		{
+			boolean b1=isMember(neighb[1]);
+			boolean b2=isMember(neighb[2]);
+			boolean b3=isMember(neighb[3]);
+			ret_val=b1||b2||b3;
+		}
+		else if(edge==4)
+		{
+			boolean b1=isMember(neighb[0]);
+			boolean b2=isMember(neighb[2]);
+			boolean b3=isMember(neighb[3]);
+			ret_val=b1||b2||b3;
+		}
+		return ret_val;
+	}
+
+
+	private Integer [] getDiagNeighbors(int val)
+	{
+		//top left diag, top right diag, bottom left diag, bottom right diag
+		Integer [] arr={val-12, val-10, val+10, val+12};
+		return arr;
+	}
+
+	private boolean findFriendlies(int value, int kingVal)
+	{
+		System.out.println("**FINDING FRIENDLIES"+" for "+value);
+		Integer [] allies=getNeighbors(value);
+		Integer [] diag_allies=getDiagNeighbors(value);
+		for(int i=0; i<allies.length; i++)
+		{
+			if(isWhite(allies[i])&&allies[i]!=kingVal)
+			{
+				System.out.println("*friend @:"+ " "+allies[i]);
+			}
+
+			if(isWhite(diag_allies[i])&&diag_allies[i]!=kingVal)
+			{
+				System.out.println("*diag_friend @:"+ " "+diag_allies[i]);
+			}
+		}
 		return false;
 	}
 
