@@ -196,7 +196,7 @@ public class Data
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_1=curr_spot; //setting a friendly_1 var
-						findFriendlies(curr_spot, value);
+						//findFriendlies(curr_spot, value);
 						//when white piece  is found start checking in the spot directly perpendicular to it
 						//then check for a piece a diagonal it (more than 1 possible diagonal)
 					}
@@ -221,7 +221,7 @@ public class Data
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_2=curr_spot; //setting friendly_2 var
-						findFriendlies(curr_spot, value);
+						//findFriendlies(curr_spot, value);
 					}
 					curr_spot=curr_spot+11;
 				}
@@ -229,6 +229,12 @@ public class Data
 				{
 					System.out.println("no friendly_2");
 					return false;
+				}
+				else
+				{
+					System.out.println("**start finding loop");
+					ArrayList<Integer> prev_pieces = new ArrayList<Integer>(); 
+					System.out.println("loop?"+" "+loop_(friendly_1, friendly_2, prev_pieces));
 				}
 			}
 			else if(edge==3 || edge==4)
@@ -249,7 +255,7 @@ public class Data
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_1=curr_spot; //setting a friendly_1 var
-						findFriendlies(curr_spot, value);
+						//findFriendlies(curr_spot, value);
 					}
 					curr_spot=curr_spot-1;
 				}
@@ -271,7 +277,7 @@ public class Data
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_2=curr_spot;
-						findFriendlies(curr_spot, value);
+						//findFriendlies(curr_spot, value);
 					}
 					curr_spot=curr_spot+1;
 				}
@@ -279,6 +285,12 @@ public class Data
 				{
 					System.out.println("no friendly_2");
 					return false;
+				}
+				else
+				{
+					System.out.println("**start finding loop");
+					ArrayList<Integer> prev_pieces = new ArrayList<Integer>(); 
+					System.out.println("loop?"+" "+loop_(friendly_1, friendly_2, prev_pieces));
 				}
 			}
 		}
@@ -320,6 +332,92 @@ public class Data
 			ret_val=b1||b2||b3;
 		}
 		return ret_val;
+	}
+
+	private boolean loop_(int start, int stop, ArrayList<Integer> prev_pieces)
+	{
+		if(start==stop)
+			return true; //made loop
+		else
+		{
+			//add start to prev pieces
+			prev_pieces.add(start);
+			System.out.println("___starting with"+" "+start);
+			//check north
+			if(isWhite(start-11)&&isMember(start-11) && !prev_pieces.contains(start-11))
+			{
+				System.out.println("checking north");
+				if(loop_(start-11, stop, prev_pieces))
+					return true;
+				else 
+					return false;
+			}
+			//check south
+			else if(isWhite(start+11)&&isMember(start+11) && !prev_pieces.contains(start+11))
+			{
+				System.out.println("checking south");
+				if(loop_(start+11, stop, prev_pieces))
+					return true;
+				else 
+					return false;
+			}
+			//check west
+			else if(isWhite(start-1)&&isMember(start-1) && !prev_pieces.contains(start-1))
+			{
+				System.out.println("checking west");
+				if(loop_(start-1, stop, prev_pieces))
+					return true;
+				else 
+					return false;
+			}
+			//check east
+			else if(isWhite(start+1)&&isMember(start+1) && !prev_pieces.contains(start+1))
+			{
+				System.out.println("checking east");
+				if(loop_(start+1, stop, prev_pieces))
+					return true;
+				else 
+					return false;
+			}
+			//check northWest
+			else if(isWhite(start-12)&&isMember(start-12) && !prev_pieces.contains(start-12))
+			{
+				System.out.println("Checking northWest");
+				if(loop_(start-12, stop, prev_pieces))
+					return true;
+				else 
+					return false;
+			}
+			//check northEast
+			else if(isWhite(start+10)&&isMember(start+10) && !prev_pieces.contains(start+10))
+			{
+				System.out.println("Checking northEast");
+				if(loop_(start+10, stop, prev_pieces))
+					return true;
+				else 
+					return false;
+			}
+			//check southWest
+			else if(isWhite(start-10)&&isMember(start-10) && !prev_pieces.contains(start-10))
+			{
+				System.out.println("Checking southWest");
+				if(loop_(start-10, stop, prev_pieces))
+					return true;
+				else 
+					return false;
+			}
+			//check southEast
+			else if(isWhite(start+12)&&isMember(start+12) && !prev_pieces.contains(start+12))
+			{
+				System.out.println("Checking southEast");
+				if(loop_(start+12, stop, prev_pieces))
+					return true;
+				else 
+					return false;
+			}
+			else
+				return false;
+		}	
 	}
 
 
