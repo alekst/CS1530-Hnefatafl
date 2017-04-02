@@ -457,17 +457,23 @@ public class Data
 		return return_list;
 	}
 	
+	/*
+	* checks to see if there is encircling and therefore a win
+	* @param value - location of last moved piece
+	* @return true - encircling is happening
+	* @return false - there is no encircling
+	*/
 	public boolean isEncircled(int value)
 	{
 		seenPieces.clear();
 		
-		if(isWhite(value))
+		if(isWhite(value)) // no need to check if the last move was a white move
 		{
 			return false;
 		}
 		else if(isLooped(value))
 		{
-			return isEncapsulated(value);
+			return isEncapsulated();
 		}
 		else
 		{
@@ -475,6 +481,13 @@ public class Data
 		}
 		
 	}
+	
+	/*
+	* returns whether or not there is a loop of black pieces connected by the last moved piece
+	* @param value - location of last moved piece
+	* @return true - there is a loop
+	* @return false - there is no loop
+	*/
 	
 	private boolean isLooped(int value)
 	{
@@ -547,7 +560,12 @@ public class Data
 		return false;
 	}
 	
-	private boolean isEncapsulated(int value)
+	/*
+	* checks to see if all white pieces are within two black pieces on the board
+	* acts as half of the isencircled method
+	* @return - returns whether or not there is encapsulation
+	*/
+	private boolean isEncapsulated()
 	{
 		boolean first_seen = false;
 		boolean second_seen = true;
