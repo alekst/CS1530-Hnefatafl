@@ -27,6 +27,9 @@ public class Board extends JPanel
 	private Coordinate second_clicked = new Coordinate(-1, -1);
 	private Color selected_color;
 	
+	private ArrayList<Color> tile_colors = new ArrayList<Color>(); // used to store past colors for possible move tiles
+	private ArrayList<Coordinate> tile_coordinates = new ArrayList<Coordinate>(); // used to store coordinates of possible move tiles
+	
 	//private Data pieces = new Data();
 	private Manager _manager;
 	private Player _player;
@@ -288,12 +291,14 @@ public class Board extends JPanel
 				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
 				first_clicked = coor;	
 				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
+				showPossibleMoves(first_clicked);
 			}
  			else if(first_clicked.equal(coor))
  			{
 // 				// Unselect it
  				boardSquares[coor.getX()][coor.getY()].setBackground(selected_color);
 				first_clicked = new Coordinate(-1,-1);
+				hidePossibleMoves();
  			} 
 			else if(_manager.getIndex(coor) == -1)
  			{
@@ -301,6 +306,7 @@ public class Board extends JPanel
 
  				if(_manager.isValid(first_clicked, second_clicked))
 				{
+					hidePossibleMoves();
 					move(first_clicked, second_clicked);
 
 					boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
@@ -330,10 +336,11 @@ public class Board extends JPanel
 				// User has clicked occupied space...select this piece as
 				// 		the piece to move
 				boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
-
+				hidePossibleMoves();
 				first_clicked = coor;
 				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
 				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
+				showPossibleMoves(first_clicked);
 			}
 		}
 	};
@@ -449,6 +456,61 @@ public class Board extends JPanel
 	public String printBoard()
 	{
 		return _manager.getBoardData().print();
+	}
+	
+	private void showPossibleMoves(Coordinate coord)
+	{
+		tile_coordinates.clear();
+		for(int i = coord.getX() + 1 ; i < 11 ; i++)
+		{
+			if(_manager.someoneThere(new Coordinate(i, coord.getY())) || _manager.inSpecialSquare(i, coord.getY()))
+			{
+				break;
+			}
+			tile_coordinates.add(new Coordinate(i, coord.getY()));
+			tile_colors.add(boardSquares[i][coord.getY()].getBackground());
+			boardSquares[i][coord.getY()].setBackground(Color.GREEN);
+		}
+		for(int i = coord.getX() - 1 ; i >= 0 ; i--)
+		{
+			if(_manager.someoneThere(new Coordinate(i, coord.getY())) || _manager.inSpecialSquare(i, coord.getY()))
+			{
+				break;
+			}
+			tile_coordinates.add(new Coordinate(i, coord.getY()));
+			tile_colors.add(boardSquares[i][coord.getY()].getBackground());
+			boardSquares[i][coord.getY()].setBackground(Color.GREEN);
+		}
+		for(int i = coord.getY() + 1 ; i < 11 ; i++)
+		{
+			if(_manager.someoneThere(new Coordinate(coord.getX(), i)) || _manager.inSpecialSquare(i, coord.getY()))
+			{
+				break;
+			}
+			tile_coordinates.add(new Coordinate(coord.getX(), i));
+			tile_colors.add(boardSquares[coord.getX()][i].getBackground());
+			boardSquares[coord.getX()][i].setBackground(Color.GREEN);
+		}
+		for(int i = coord.getY() - 1 ; i >= 0 ; i--)
+		{
+			if(_manager.someoneThere(new Coordinate(coord.getX(), i)) || _manager.inSpecialSquare(i, coord.getY()))
+			{
+				break;
+			}
+			tile_coordinates.add(new Coordinate(coord.getX(), i));
+			tile_colors.add(boardSquares[coord.getX()][i].getBackground());
+			boardSquares[coord.getX()][i].setBackground(Color.GREEN);
+		}
+	}
+	
+	private void hidePossibleMoves()
+	{
+		for(int i = 0 ; i < tile_coordinates.size() ; i++)
+		{
+			boardSquares[tile_coordinates.get(i).getX()][tile_coordinates.get(i).getY()].setBackground(tile_colors.get(i));
+		}
+		tile_coordinates.clear();
+		tile_colors.clear();
 	}
 }
 
