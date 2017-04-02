@@ -343,12 +343,18 @@ public class Data
 		if(start==stop)//king cannot be a "friendly" piece as well
 		{
 			loop_pieces.add(stop);
+			System.out.println("KING:"+" "+kingVal);
 			System.out.println("loop: ");
 			for(int i=0; i<loop_pieces.size(); i++)
 			{//check for vulnerable pieces here
 				System.out.println(loop_pieces.get(i));
 			}
-			getSafeRegion(loop_pieces, kingVal);
+			ArrayList<Integer> safe_spots=getSafeRegion(loop_pieces, kingVal);
+			System.out.println("safe space:");
+			for(int i=0;i<safe_spots.size();i++)
+			{
+				System.out.println(safe_spots.get(i));
+			}
 			return true; //made loop
 		}
 		else
@@ -471,11 +477,97 @@ public class Data
 		for(int i=0; i<loop_pieces.size(); i++)
 		{//check for vulnerable pieces here
 			if((loop_pieces.get(i).intValue()/10)==kingVal/10)
+			{
 				System.out.println("same row");
+				int temp=loop_pieces.get(i).intValue();
+				if(temp>kingVal)
+				{
+					while(temp!=kingVal)
+					{
+						temp=temp-1;
+						System.out.println("____going left"+" "+temp);
+						//if temp is not a piece, not king and not in the array
+						//add it
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+							safe_spots.add(temp);
+					}
+				}
+				else if(temp<kingVal)
+				{
+					while(temp!=kingVal)
+					{
+						temp=temp+1;
+						System.out.println("____going right"+" "+temp);
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+							safe_spots.add(temp);
+					}
+				}
+			}
 			else if(loop_pieces.get(i).intValue()>kingVal)
+			{
 				System.out.println("go north");
+				//int temp=loop_pieces.get(i).intValue()-10;
+				int temp=loop_pieces.get(i).intValue();
+				while((temp/10)!=kingVal/10)
+				{
+					temp=temp-11;
+					System.out.println("going up"+" "+temp);
+					if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+							safe_spots.add(temp);
+				}
+				if(temp>kingVal)
+				{
+					while(temp!=kingVal)
+					{
+						temp=temp-1;
+						System.out.println("____going left"+" "+temp);
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+							safe_spots.add(temp);
+					}
+				}
+				else if(temp<kingVal)
+				{
+					while(temp!=kingVal)
+					{
+						temp=temp+1;
+						System.out.println("____going right"+" "+temp);
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+							safe_spots.add(temp);
+					}
+				}
+			}
 			else if(loop_pieces.get(i).intValue()<kingVal)
+			{
 				System.out.println("go south");
+				int temp=loop_pieces.get(i).intValue();
+				while((temp/10)!=kingVal/10)
+				{
+					temp=temp+11;
+					System.out.println("going down"+" "+temp);
+					if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+						safe_spots.add(temp);
+				}
+				if(temp>kingVal)
+				{
+					while(temp!=kingVal)
+					{
+						temp=temp-1;
+						System.out.println("___going left"+" "+temp);
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+							safe_spots.add(temp);
+					}
+				}
+				else if(temp<kingVal)
+				{
+					while(temp!=kingVal)
+					{
+						temp=temp+1;
+						System.out.println("___going right"+" "+temp);
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+							safe_spots.add(temp);
+					}
+				}
+			}
 		}
 
 		return safe_spots;
