@@ -196,7 +196,6 @@ public class Data
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_1=curr_spot; //setting a friendly_1 var
-						//findFriendlies(curr_spot, value);
 						//when white piece  is found start checking in the spot directly perpendicular to it
 						//then check for a piece a diagonal it (more than 1 possible diagonal)
 					}
@@ -221,7 +220,6 @@ public class Data
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_2=curr_spot; //setting friendly_2 var
-						//findFriendlies(curr_spot, value);
 					}
 					curr_spot=curr_spot+11;
 				}
@@ -234,7 +232,8 @@ public class Data
 				{
 					System.out.println("**start finding loop");
 					ArrayList<Integer> prev_pieces = new ArrayList<Integer>(); 
-					System.out.println("loop?"+" "+loop_(friendly_1, friendly_2, prev_pieces, value));
+					ArrayList<Integer> loop_pieces = new ArrayList<Integer>(); 
+					System.out.println("loop?"+" "+loop_(friendly_1, friendly_2, prev_pieces, value,loop_pieces));
 				}
 			}
 			else if(edge==3 || edge==4)
@@ -255,7 +254,6 @@ public class Data
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_1=curr_spot; //setting a friendly_1 var
-						//findFriendlies(curr_spot, value);
 					}
 					curr_spot=curr_spot-1;
 				}
@@ -277,7 +275,6 @@ public class Data
 					{
 						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_2=curr_spot;
-						//findFriendlies(curr_spot, value);
 					}
 					curr_spot=curr_spot+1;
 				}
@@ -290,7 +287,10 @@ public class Data
 				{
 					System.out.println("**start finding loop");
 					ArrayList<Integer> prev_pieces = new ArrayList<Integer>(); 
-					System.out.println("loop?"+" "+loop_(friendly_1, friendly_2, prev_pieces, value));
+					ArrayList<Integer> loop_pieces = new ArrayList<Integer>();
+					System.out.println("loop?"+" "+loop_(friendly_1, friendly_2, prev_pieces, value, loop_pieces));
+
+
 				}
 			}
 		}
@@ -334,10 +334,23 @@ public class Data
 		return ret_val;
 	}
 
-	private boolean loop_(int start, int stop, ArrayList<Integer> prev_pieces, int kingVal)
+
+	//needs work, once a loop is found need to ensure that no captures can occur in it(no black pieces is in it)
+	//and need to make sure none of the pieces making the fort can be cap'd
+	private boolean loop_(int start, int stop, ArrayList<Integer> prev_pieces, int kingVal, ArrayList<Integer> loop_pieces)
 	{
+		//base case
 		if(start==stop)//king cannot be a "friendly" piece as well
+		{
+			loop_pieces.add(stop);
+			System.out.println("loop: ");
+			for(int i=0; i<loop_pieces.size(); i++)
+			{//check for vulnerable pieces here
+				System.out.println(loop_pieces.get(i));
+			}
+			getSafeRegion(loop_pieces, kingVal);
 			return true; //made loop
+		}
 		else
 		{
 			//add start to prev pieces
@@ -347,8 +360,12 @@ public class Data
 			if(isWhite(start-11)&&isMember(start-11) && !prev_pieces.contains(start-11) && (start-11)!=kingVal)
 			{
 				System.out.println("checking north");
-				if(loop_(start-11, stop, prev_pieces,kingVal))
+				loop_pieces.add(start);
+				if(loop_(start-11, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					//loop_pieces.add(start-11);
 					return true;
+				}
 				else 
 					return false;
 			}
@@ -356,8 +373,12 @@ public class Data
 			else if(isWhite(start+11)&&isMember(start+11) && !prev_pieces.contains(start+11) && (start+11)!=kingVal)
 			{
 				System.out.println("checking south");
-				if(loop_(start+11, stop, prev_pieces,kingVal))
+				loop_pieces.add(start);
+				if(loop_(start+11, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					//loop_pieces.add(start+11);
 					return true;
+				}
 				else 
 					return false;
 			}
@@ -365,8 +386,12 @@ public class Data
 			else if(isWhite(start-1)&&isMember(start-1) && !prev_pieces.contains(start-1) && (start-1)!=kingVal)
 			{
 				System.out.println("checking west");
-				if(loop_(start-1, stop, prev_pieces,kingVal))
+				loop_pieces.add(start);
+				if(loop_(start-1, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					//loop_pieces.add(start-1);
 					return true;
+				}
 				else 
 					return false;
 			}
@@ -374,8 +399,12 @@ public class Data
 			else if(isWhite(start+1)&&isMember(start+1) && !prev_pieces.contains(start+1) && (start+1)!=kingVal)
 			{
 				System.out.println("checking east");
-				if(loop_(start+1, stop, prev_pieces,kingVal))
+				loop_pieces.add(start);
+				if(loop_(start+1, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					//loop_pieces.add(start+1);
 					return true;
+				}
 				else 
 					return false;
 			}
@@ -383,8 +412,12 @@ public class Data
 			else if(isWhite(start-12)&&isMember(start-12) && !prev_pieces.contains(start-12) && (start-12)!=kingVal)
 			{
 				System.out.println("Checking northWest");
-				if(loop_(start-12, stop, prev_pieces,kingVal))
+				loop_pieces.add(start);
+				if(loop_(start-12, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					//loop_pieces.add(start-12);
 					return true;
+				}
 				else 
 					return false;
 			}
@@ -392,8 +425,12 @@ public class Data
 			else if(isWhite(start+10)&&isMember(start+10) && !prev_pieces.contains(start+10) && (start+10)!=kingVal)
 			{
 				System.out.println("Checking northEast");
-				if(loop_(start+10, stop, prev_pieces,kingVal))
+				loop_pieces.add(start);
+				if(loop_(start+10, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					//loop_pieces.add(start+10);
 					return true;
+				}
 				else 
 					return false;
 			}
@@ -401,8 +438,12 @@ public class Data
 			else if(isWhite(start-10)&&isMember(start-10) && !prev_pieces.contains(start-10) && (start-10)!=kingVal)
 			{
 				System.out.println("Checking southWest");
-				if(loop_(start-10, stop, prev_pieces,kingVal))
+				loop_pieces.add(start);
+				if(loop_(start-10, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					//loop_pieces.add(start-10);
 					return true;
+				}
 				else 
 					return false;
 			}
@@ -410,8 +451,12 @@ public class Data
 			else if(isWhite(start+12)&&isMember(start+12) && !prev_pieces.contains(start+12) && (start+12)!=kingVal)
 			{
 				System.out.println("Checking southEast");
-				if(loop_(start+12, stop, prev_pieces,kingVal))
+				loop_pieces.add(start);
+				if(loop_(start+12, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					//loop_pieces.add(start+12);
 					return true;
+				}
 				else 
 					return false;
 			}
@@ -420,34 +465,21 @@ public class Data
 		}	
 	}
 
-
-	private Integer [] getDiagNeighbors(int val)
+	private ArrayList<Integer> getSafeRegion(ArrayList<Integer> loop_pieces,int kingVal)
 	{
-		//top left diag, top right diag, bottom left diag, bottom right diag
-		Integer [] arr={val-12, val-10, val+10, val+12};
-		return arr;
-	}
-
-	private boolean findFriendlies(int value, int kingVal)
-	{
-		System.out.println("**FINDING FRIENDLIES"+" for "+value);
-		Integer [] allies=getNeighbors(value);
-		Integer [] diag_allies=getDiagNeighbors(value);
-		for(int i=0; i<allies.length; i++)
-		{
-			if(isWhite(allies[i])&&allies[i]!=kingVal)
-			{
-				System.out.println("*friend @:"+ " "+allies[i]);
-			}
-
-			if(isWhite(diag_allies[i])&&diag_allies[i]!=kingVal)
-			{
-				System.out.println("*diag_friend @:"+ " "+diag_allies[i]);
-			}
+		ArrayList<Integer> safe_spots = new ArrayList<Integer>();
+		for(int i=0; i<loop_pieces.size(); i++)
+		{//check for vulnerable pieces here
+			if((loop_pieces.get(i).intValue()/10)==kingVal/10)
+				System.out.println("same row");
+			else if(loop_pieces.get(i).intValue()>kingVal)
+				System.out.println("go north");
+			else if(loop_pieces.get(i).intValue()<kingVal)
+				System.out.println("go south");
 		}
-		return false;
-	}
 
+		return safe_spots;
+	}
 
 	/**
 	* @param value-encoded value of king's location
