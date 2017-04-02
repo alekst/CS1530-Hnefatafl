@@ -47,7 +47,6 @@ public class TimerListener implements ActionListener
 	*/
 	public int getMoveTime()
 	{
-		System.out.println("This is moveTime " + moveTime);
 		return moveTime;
 	}
 	

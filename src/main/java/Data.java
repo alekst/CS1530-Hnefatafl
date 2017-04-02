@@ -8,6 +8,7 @@ public class Data
 	public Integer[] boardData; // Should be public so that the Board object can actually access the coordinates
 	public Integer[] specialSquares; 
 	
+	private ArrayList<Integer> seenPieces = new ArrayList<Integer>();
 	
 	/**
 	* The Data object constructor. Initializes the boardData array along with the specialSquares array. 
@@ -456,4 +457,210 @@ public class Data
 		return return_list;
 	}
 	
+	public boolean isEncircled(int value)
+	{
+		seenPieces.clear();
+		
+		if(isWhite(value))
+		{
+			return false;
+		}
+		else if(isLooped(value))
+		{
+			return isEncapsulated(value);
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	
+	private boolean isLooped(int value)
+	{
+		seenPieces.add(value);
+		
+		Integer[] neighbor_values;
+		
+		if(value == 1)
+		{
+			neighbor_values = new Integer[] {value + 1, value + 11, value + 12};
+		}
+		else if(value == 11)
+		{
+			neighbor_values = new Integer[] {value - 1, value + 10, value + 11};
+		}
+		else if(value < 12)
+		{
+			neighbor_values = new Integer[] {value + 1, value - 1, value + 10, value + 11, value + 12};
+		}
+		else if(value == 111)
+		{
+			neighbor_values = new Integer[] {value + 1, value - 10, value - 11};
+		}
+		else if(value == 121)
+		{
+			neighbor_values = new Integer[] {value - 11, value - 12, value - 1};
+		}
+		else if(value % 11 == 1)
+		{
+			neighbor_values = new Integer[] {value + 1, value - 10, value - 11, value + 11, value + 12};
+		}
+		else if(value % 11 == 0)
+		{
+			neighbor_values = new Integer[] {value - 11, value - 12, value - 1, value + 10, value + 11};
+		}
+		else if(value > 111)
+		{
+			neighbor_values = new Integer[] {value + 1, value - 10, value - 11, value - 12, value - 1};
+		}
+		else 
+		{
+			neighbor_values = new Integer[] {value + 1, value - 10, value - 11, value - 12, value - 1, value + 10, value + 11, value + 12};
+		}
+		
+		if(seenPieces.size() > 3 && (seenPieces.get(seenPieces.size() - 1) == seenPieces.get(0)))
+		{
+			return true;
+		}
+		for(int i = 0 ; i < neighbor_values.length ; i++)
+		{
+			if(seenPieces.size() == 1)
+			{
+				if(isMember(neighbor_values[i]) && (! isWhite(neighbor_values[i])))
+				{
+					if(isLooped(neighbor_values[i]))
+					{
+						return true;
+					}
+				}
+			}
+			if(isMember(neighbor_values[i]) && (! isWhite(neighbor_values[i]) && (! seenPieces.subList(1, seenPieces.size()).contains(neighbor_values[i]))))
+			{
+				if(isLooped(neighbor_values[i]))
+				{
+					return true;
+				}
+			}
+		}
+		seenPieces.remove(seenPieces.size() - 1);
+		return false;
+	}
+	
+	private boolean isEncapsulated(int value)
+	{
+		boolean first_seen = false;
+		boolean second_seen = true;
+		
+		boolean nothing = true;
+		
+		for(int i = 1 ; i < 12 ; i++)
+		{
+			for(int j = 0 ; j < 11 ; j++)
+			{
+				if((! first_seen) && isWhite(i + (11 * j)))
+				{
+					return false;
+				}
+				else if((! first_seen) && isMember(i + (11 * j)) && (! isWhite(i + (11 * j))))
+				{
+					nothing = false;
+					first_seen = true;
+				}
+				else if((first_seen) && isWhite(i + (11 * j)))
+				{
+					nothing = false;
+					second_seen = false;
+				}
+				else if((first_seen) && isMember(i + (11 * j)) && (! isWhite(i + (11 * j))))
+				{
+					nothing = false;
+					second_seen = true;
+				}
+			}
+			if((!(first_seen && second_seen)) && (! nothing))
+			{
+				return false;
+			}
+			else
+			{
+				nothing = true;
+				first_seen = false;
+				second_seen = true;
+			}
+		}
+		
+		first_seen = false;
+		second_seen = true;
+		for(int j = 1 ; j < 12 ; j++)
+		{
+			for(int i = 0 ; i < 11 ; i++)
+			{
+				if((! first_seen) && isWhite(i + (11 * j)))
+				{
+					return false;
+				}
+				else if((! first_seen) && isMember(i + (11 * j)) && (! isWhite(i + (11 * j))))
+				{
+					first_seen = true;
+				}
+				else if((first_seen) && isWhite(i + (11 * j)))
+				{
+					second_seen = false;
+				}
+				else if((first_seen) && isMember(i + (11 * j)) && (! isWhite(i + (11 * j))))
+				{
+					second_seen = true;
+				}
+			}
+			if((!(first_seen && second_seen)) && (! nothing))
+			{
+				return false;
+			}
+			else
+			{
+				nothing = true;
+				first_seen = false;
+				second_seen = true;
+			}
+		}
+		return true;
+		
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

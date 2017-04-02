@@ -1222,6 +1222,25 @@ public class DataTest
 			&& 10==test_arr.get(3).getX() && 6==test_arr.get(3).getY()
 			&& 10==test_arr.get(4).getX() && 7==test_arr.get(4).getY());
 	}
+	
+	// Tests to see if there is encapturing
+	public void encaptureTest()
+	{
+		Data d = new Data();
+		d.set(21, 47);
+		d.set(19, 37);
+		d.set(13, 27);
+		d.set(14, 29);
+		d.set(16, 29);
+		d.set(17, 41);
+		d.set(22, 63);
+		d.set(28, 75);
+		d.set(30, 85);
+		d.set(33, 93);
+		d.set(29, 81);
+		d.set(27, 69);
+		assertTrue(d.isEncircled(29));
+	}
 }
 
 
