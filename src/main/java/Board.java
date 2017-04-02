@@ -458,6 +458,11 @@ public class Board extends JPanel
 		return _manager.getBoardData().print();
 	}
 	
+	
+	/**
+	* will display a different color on all possible moves from the coordinate given.
+	*
+	*/
 	private void showPossibleMoves(Coordinate coord)
 	{
 		tile_coordinates.clear();
@@ -503,6 +508,10 @@ public class Board extends JPanel
 		}
 	}
 	
+	/*
+	* Will remove all possible move coloring and return back to the 
+	* initial colors from the board*
+	*/
 	private void hidePossibleMoves()
 	{
 		for(int i = 0 ; i < tile_coordinates.size() ; i++)
