@@ -608,11 +608,140 @@ public class Data
 						System.out.println(temp);
 						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
 								safe_spots.add(temp);
-
 					}
 				}
-
 			} // do north and south wall
+			else if(isKingOnEdge(kingVal)==4)//north
+			{
+				if((loop_pieces.get(i).intValue()/10)==kingVal/10) //same row
+				{
+					System.out.println("same row");
+					int temp=loop_pieces.get(i).intValue();
+					if(temp>kingVal)
+					{
+						while(temp!=kingVal)
+						{
+							temp=temp-1;
+							System.out.println("____going left"+" "+temp);
+							//if temp is not a piece, not king and not in the array
+							//add it
+							if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+						}
+					}
+					else if(temp<kingVal)
+					{
+						while(temp!=kingVal)
+						{
+							temp=temp+1;
+							System.out.println("____going right"+" "+temp);
+							if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+						}
+					}
+				}
+				else if(loop_pieces.get(i).intValue()>kingVal) //below the king
+				{//go up, then over
+					System.out.println("below");
+					int temp=loop_pieces.get(i).intValue();
+					while(isKingOnEdge(temp)==0)
+					{
+						temp=temp-11;//get to edge
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+					}
+					//now we've gotten to the edge
+					//now see if piece is to the left or to the right of the king
+					if(temp<kingVal) //to the left of the king, so add 1 until the king
+					{
+						while(temp!=kingVal)
+						{
+							temp=temp+1;
+							System.out.println("____going right"+" "+temp);
+							if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+						}
+					}
+					else if(temp>kingVal)//to the right of the king, so sub 1 until king is hit
+					{
+						while(temp!=kingVal)
+						{
+							temp=temp-1;
+							System.out.println("____going left"+" "+temp);
+							//if temp is not a piece, not king and not in the array
+							//add it
+							if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+						}
+					}
+				}
+			}
+			else if(isKingOnEdge(kingVal)==3)
+			{
+				if((loop_pieces.get(i).intValue()/10)==kingVal/10) //same row
+				{
+					System.out.println("same row");
+					int temp=loop_pieces.get(i).intValue();
+					if(temp>kingVal)
+					{
+						while(temp!=kingVal)
+						{
+							temp=temp-1;
+							System.out.println("____going left"+" "+temp);
+							//if temp is not a piece, not king and not in the array
+							//add it
+							if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+						}
+					}
+					else if(temp<kingVal)
+					{
+						while(temp!=kingVal)
+						{
+							temp=temp+1;
+							System.out.println("____going right"+" "+temp);
+							if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+						}
+					}
+				}
+				else if(loop_pieces.get(i).intValue()>kingVal) //below the king
+				{//go up, then over
+					System.out.println("below");
+					int temp=loop_pieces.get(i).intValue();
+					while(isKingOnEdge(temp)==0)
+					{
+						temp=temp+11;//get to edge
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+					}
+					//now we've gotten to the edge
+					//now see if piece is to the left or to the right of the king
+					if(temp<kingVal) //to the left of the king, so add 1 until the king
+					{
+						while(temp!=kingVal)
+						{
+							temp=temp+1;
+							System.out.println("____going right"+" "+temp);
+							if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+						}
+					}
+					else if(temp>kingVal)//to the right of the king, so sub 1 until king is hit
+					{
+						while(temp!=kingVal)
+						{
+							temp=temp-1;
+							System.out.println("____going left"+" "+temp);
+							//if temp is not a piece, not king and not in the array
+							//add it
+							if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+						}
+					}
+				}
+			}
+			//do south wall here
 			
 			//need to handle other walls now
 			/*
