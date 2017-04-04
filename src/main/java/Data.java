@@ -355,6 +355,7 @@ public class Data
 			{
 				System.out.println(safe_spots.get(i));
 			}
+			//now make sure no piece can be captured
 			return true; //made loop
 		}
 		else
@@ -676,7 +677,7 @@ public class Data
 					}
 				}
 			}
-			else if(isKingOnEdge(kingVal)==3)
+			else if(isKingOnEdge(kingVal)==3)//south wall
 			{
 				if((loop_pieces.get(i).intValue()/10)==kingVal/10) //same row
 				{
@@ -705,7 +706,7 @@ public class Data
 						}
 					}
 				}
-				else if(loop_pieces.get(i).intValue()>kingVal) //below the king
+				else if(loop_pieces.get(i).intValue()<kingVal) //below the king
 				{//go up, then over
 					System.out.println("below");
 					int temp=loop_pieces.get(i).intValue();
@@ -740,6 +741,7 @@ public class Data
 						}
 					}
 				}
+
 			}
 			//do south wall here
 			
