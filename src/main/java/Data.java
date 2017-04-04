@@ -373,10 +373,10 @@ public class Data
 					return true;
 				}//back track, but its not working correct, i should make the other recursive call here?
 				else 
-					return false;
+					loop_pieces.remove(Integer.valueOf(start));
 			}
 			//check south
-			else if(isWhite(start+11)&&isMember(start+11) && !prev_pieces.contains(start+11) && (start+11)!=kingVal)
+			if(isWhite(start+11)&&isMember(start+11) && !prev_pieces.contains(start+11) && (start+11)!=kingVal)
 			{
 				System.out.println("checking south");
 				loop_pieces.add(start);
@@ -386,10 +386,10 @@ public class Data
 					return true;
 				}
 				else 
-					return false;
+					loop_pieces.remove(Integer.valueOf(start));
 			}
 			//check west
-			else if(isWhite(start-1)&&isMember(start-1) && !prev_pieces.contains(start-1) && (start-1)!=kingVal)
+			if(isWhite(start-1)&&isMember(start-1) && !prev_pieces.contains(start-1) && (start-1)!=kingVal)
 			{
 				System.out.println("checking west");
 				loop_pieces.add(start);
@@ -399,10 +399,10 @@ public class Data
 					return true;
 				}
 				else 
-					return false;
+					loop_pieces.remove(Integer.valueOf(start));
 			}
 			//check east
-			else if(isWhite(start+1)&&isMember(start+1) && !prev_pieces.contains(start+1) && (start+1)!=kingVal)
+			if(isWhite(start+1)&&isMember(start+1) && !prev_pieces.contains(start+1) && (start+1)!=kingVal)
 			{
 				System.out.println("checking east");
 				loop_pieces.add(start);
@@ -412,10 +412,10 @@ public class Data
 					return true;
 				}
 				else 
-					return false;
+					loop_pieces.remove(Integer.valueOf(start));
 			}
 			//check northWest
-			else if(isWhite(start-12)&&isMember(start-12) && !prev_pieces.contains(start-12) && (start-12)!=kingVal)
+			if(isWhite(start-12)&&isMember(start-12) && !prev_pieces.contains(start-12) && (start-12)!=kingVal)
 			{
 				System.out.println("Checking northWest");
 				loop_pieces.add(start);
@@ -425,10 +425,10 @@ public class Data
 					return true;
 				}
 				else 
-					return false;
+					loop_pieces.remove(Integer.valueOf(start));
 			}
 			//check northEast
-			else if(isWhite(start+10)&&isMember(start+10) && !prev_pieces.contains(start+10) && (start+10)!=kingVal)
+			if(isWhite(start+10)&&isMember(start+10) && !prev_pieces.contains(start+10) && (start+10)!=kingVal)
 			{
 				System.out.println("Checking northEast");
 				loop_pieces.add(start);
@@ -438,10 +438,10 @@ public class Data
 					return true;
 				}
 				else 
-					return false;
+					loop_pieces.remove(Integer.valueOf(start));
 			}
 			//check southWest
-			else if(isWhite(start-10)&&isMember(start-10) && !prev_pieces.contains(start-10) && (start-10)!=kingVal)
+			if(isWhite(start-10)&&isMember(start-10) && !prev_pieces.contains(start-10) && (start-10)!=kingVal)
 			{
 				System.out.println("Checking southWest");
 				loop_pieces.add(start);
@@ -451,10 +451,10 @@ public class Data
 					return true;
 				}
 				else 
-					return false;
+					loop_pieces.remove(Integer.valueOf(start));
 			}
 			//check southEast
-			else if(isWhite(start+12)&&isMember(start+12) && !prev_pieces.contains(start+12) && (start+12)!=kingVal)
+			if(isWhite(start+12)&&isMember(start+12) && !prev_pieces.contains(start+12) && (start+12)!=kingVal)
 			{
 				System.out.println("Checking southEast");
 				loop_pieces.add(start);
@@ -464,10 +464,9 @@ public class Data
 					return true;
 				}
 				else 
-					return false;
+					loop_pieces.remove(Integer.valueOf(start));
 			}
-			else
-				return false;
+			return false;
 		}	
 	}
 
@@ -505,10 +504,11 @@ public class Data
 			}
 			else if(loop_pieces.get(i).intValue()>kingVal)
 			{
-				System.out.println("go north");
+				System.out.println("below the king");
+				//go to edge, collecting then spots then go north, use isKingOnEdge function
 				//int temp=loop_pieces.get(i).intValue()-10;
 				int temp=loop_pieces.get(i).intValue();
-				while((temp/10)!=kingVal/10)
+				while((temp/10)!=kingVal/10) //going up
 				{
 					temp=temp-11;
 					System.out.println("going up"+" "+temp);
@@ -517,7 +517,7 @@ public class Data
 				}
 				if(temp>kingVal)
 				{
-					while(temp!=kingVal)
+					while(temp!=kingVal) //going left
 					{
 						temp=temp-1;
 						System.out.println("____going left"+" "+temp);
@@ -527,7 +527,7 @@ public class Data
 				}
 				else if(temp<kingVal)
 				{
-					while(temp!=kingVal)
+					while(temp!=kingVal) //going right
 					{
 						temp=temp+1;
 						System.out.println("____going right"+" "+temp);
@@ -538,7 +538,7 @@ public class Data
 			}
 			else if(loop_pieces.get(i).intValue()<kingVal)
 			{
-				System.out.println("go south");
+				System.out.println("above the king");
 				int temp=loop_pieces.get(i).intValue();
 				while((temp/10)!=kingVal/10)
 				{
