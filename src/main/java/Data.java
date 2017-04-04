@@ -475,6 +475,148 @@ public class Data
 		ArrayList<Integer> safe_spots = new ArrayList<Integer>();
 		for(int i=0; i<loop_pieces.size(); i++)
 		{//check for vulnerable pieces here
+
+			if(isKingOnEdge(kingVal)==2)
+			{
+				if((loop_pieces.get(i).intValue()/10)==kingVal/10)
+				{
+					System.out.println("same row");
+					int temp=loop_pieces.get(i).intValue();
+					if(temp>kingVal)
+					{
+						while(temp!=kingVal)
+						{
+							temp=temp-1;
+							System.out.println("____going left"+" "+temp);
+							//if temp is not a piece, not king and not in the array
+							//add it
+							if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+						}
+					}
+					else if(temp<kingVal)
+					{
+						while(temp!=kingVal)
+						{
+							temp=temp+1;
+							System.out.println("____going right"+" "+temp);
+							if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+						}
+					}
+				}
+
+				else if(loop_pieces.get(i).intValue()>kingVal) //below the king
+				{
+					System.out.println("below");
+					int temp=loop_pieces.get(i).intValue();
+					while(isKingOnEdge(temp)==0)
+					{
+						temp++;
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+					}
+					while(temp!=kingVal)
+					{
+						temp=temp-11;
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+					}
+				}
+
+				else if(loop_pieces.get(i).intValue()<kingVal) //above the king
+				{
+					System.out.println("above");
+					int temp=loop_pieces.get(i).intValue();
+					while(isKingOnEdge(temp)==0)
+					{
+						temp++;
+						System.out.println(temp);
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+					}
+					while(temp!=kingVal)
+					{
+						temp=temp+11;
+						System.out.println(temp);
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+
+					}
+				}
+			}
+			else if(isKingOnEdge(kingVal)==1) //west wall
+			{
+				if((loop_pieces.get(i).intValue()/10)==kingVal/10)
+				{
+					System.out.println("same row");
+					int temp=loop_pieces.get(i).intValue();
+					if(temp>kingVal)
+					{
+						while(temp!=kingVal)
+						{
+							temp=temp-1;
+							System.out.println("____going left"+" "+temp);
+							//if temp is not a piece, not king and not in the array
+							//add it
+							if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+						}
+					}
+					else if(temp<kingVal)
+					{
+						while(temp!=kingVal)
+						{
+							temp=temp+1;
+							System.out.println("____going right"+" "+temp);
+							if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+						}
+					}
+				}
+				else if(loop_pieces.get(i).intValue()>kingVal) //below the king
+				{
+					System.out.println("below");
+					int temp=loop_pieces.get(i).intValue();
+					while(isKingOnEdge(temp)==0)
+					{
+						temp--;//get to edge
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+					}
+					while(temp!=kingVal)
+					{
+						temp=temp-11;
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+					}
+				}
+				else if(loop_pieces.get(i).intValue()<kingVal) //above the king
+				{
+					System.out.println("above");
+					int temp=loop_pieces.get(i).intValue();
+					while(isKingOnEdge(temp)==0)
+					{
+						temp--;
+						System.out.println(temp);
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+					}
+					while(temp!=kingVal)
+					{
+						temp=temp+11;
+						System.out.println(temp);
+						if(!(safe_spots.contains(temp)) && !(loop_pieces.contains(temp))&& temp!=kingVal)
+								safe_spots.add(temp);
+
+					}
+				}
+
+			} // do north and south wall
+			
+			//need to handle other walls now
+			/*
+
 			if((loop_pieces.get(i).intValue()/10)==kingVal/10)
 			{
 				System.out.println("same row");
@@ -567,7 +709,7 @@ public class Data
 							safe_spots.add(temp);
 					}
 				}
-			}
+			}*/
 		}
 
 		return safe_spots;
@@ -605,7 +747,7 @@ public class Data
 			return 4;
 		}
 		else
-			return 0;
+			return 0; //not on edge
 	}
 	
 	/**
