@@ -338,7 +338,7 @@ public class Data
 	//needs work, once a loop is found need to ensure that no captures can occur in it(no black pieces is in it)
 	//and need to make sure none of the pieces making the fort can be cap'd
 	private boolean loop_(int start, int stop, ArrayList<Integer> prev_pieces, int kingVal, ArrayList<Integer> loop_pieces)
-	{
+	{//still needs work in the backtracking
 		//base case
 		if(start==stop)//king cannot be a "friendly" piece as well
 		{
@@ -371,7 +371,7 @@ public class Data
 				{
 					//loop_pieces.add(start-11);
 					return true;
-				}
+				}//back track, but its not working correct, i should make the other recursive call here?
 				else 
 					return false;
 			}
