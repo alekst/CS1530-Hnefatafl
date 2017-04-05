@@ -269,6 +269,7 @@ public class Board extends JPanel
 		}
 	}
 	
+		
 	/**
 	* Action listener for user actions clicking board pieces for moves.
 	* Gets coordiante from click location for first click to change to coordinate related to second click 
@@ -318,11 +319,15 @@ public class Board extends JPanel
 					if (_player.hasWon())
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You have won!");
+						end();
 					}
-					_player.doneWithTurn(); //disable whole board
-					_other.newTurn();
-					resetClicks();
-					switchTurn(true); // this is an actual turn that has been made, so the flag is set to true
+					else
+					{
+						_player.doneWithTurn(); //disable whole board
+						_other.newTurn();
+						resetClicks();
+						switchTurn(true); // this is an actual turn that has been made, so the flag is set to true
+					}	
 				}
 			}
 			else
@@ -337,6 +342,15 @@ public class Board extends JPanel
 			}
 		}
 	};
+	
+	/**
+	* End game routine
+	*/
+	private void end()
+	{
+		disable(_player);
+		_player.getInfo().stopTimer();
+	}
 	
 	
 	/**

@@ -83,6 +83,7 @@ public class PlayerInfoPanel extends JPanel
 		return time % 60;
 	}
 	
+	
 			
 	
 }
