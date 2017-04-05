@@ -233,7 +233,8 @@ public class Data
 					System.out.println("**start finding loop");
 					ArrayList<Integer> prev_pieces = new ArrayList<Integer>(); 
 					ArrayList<Integer> loop_pieces = new ArrayList<Integer>(); 
-					System.out.println("loop?"+" "+loop_(friendly_1, friendly_2, prev_pieces, value,loop_pieces));
+					//System.out.println("loop?"+" "+loop_(friendly_1, friendly_2, prev_pieces, value,loop_pieces));
+					return loop_(friendly_1, friendly_2, prev_pieces, value,loop_pieces);
 				}
 			}
 			else if(edge==3 || edge==4)
@@ -289,7 +290,7 @@ public class Data
 					ArrayList<Integer> prev_pieces = new ArrayList<Integer>(); 
 					ArrayList<Integer> loop_pieces = new ArrayList<Integer>();
 					System.out.println("loop?"+" "+loop_(friendly_1, friendly_2, prev_pieces, value, loop_pieces));
-
+					return loop_(friendly_1, friendly_2, prev_pieces, value, loop_pieces);
 
 				}
 			}
@@ -356,7 +357,8 @@ public class Data
 				System.out.println(safe_spots.get(i));
 			}
 			//now make sure no piece can be captured
-			return true; //made loop
+			return arePiecesVulnerable(loop_pieces, safe_spots);
+			//made valid loop
 		}
 		else
 		{
@@ -469,6 +471,80 @@ public class Data
 			}
 			return false;
 		}	
+	}
+
+	private boolean arePiecesVulnerable(ArrayList<Integer> loop_pieces, ArrayList<Integer> safe_spots)
+	{
+		System.out.println("check vulnerability");
+		for(int i=0;i<loop_pieces.size(); i++)
+		{
+			Integer[] neighbors=getNeighbors(loop_pieces.get(i).intValue());//get neighbors of a loop piece
+			System.out.println("neighbors for:"+" "+loop_pieces.get(i).intValue());
+			//System.out.println(neighbors[0]+" "+neighbors[1]+" "+neighbors[2]+" "+neighbors[3]);
+	
+			//if a piece is on edge dont check neighbor in that position
+			
+				int edge=isKingOnEdge(loop_pieces.get(i).intValue());
+				if(edge==1) //on west edge
+				{
+					System.out.println(neighbors[0]+" "+neighbors[1]+" "+neighbors[2]);
+
+				}
+				else if(edge==2)//on east edge
+				{
+					System.out.println(neighbors[0]+" "+neighbors[1]+" "+neighbors[3]);
+					//dont need to check left side
+					//just need to check up and down
+					//if up or down is in loop or safe space
+					if(loop_pieces.contains(neighbors[0]) || loop_pieces.contains(neighbors[1]) || safe_spots.contains(neighbors[0]) || safe_spots.contains(neighbors[1]))
+						System.out.println("good");
+				}
+				else if(edge==3) //on south edge
+				{
+					System.out.println(neighbors[1]+" "+neighbors[2]+" "+neighbors[3]);
+				}
+				else if(edge==4)//on north edge
+				{
+					System.out.println(neighbors[0]+" "+neighbors[2]+" "+neighbors[3]);
+				}
+				else //not on edge
+				{//tough one to handle
+					System.out.println(neighbors[0]+" "+neighbors[1]+" "+neighbors[2]+" "+neighbors[3]);
+					if(!loop_pieces.contains(neighbors[0]) && !safe_spots.contains(neighbors[0]) && !loop_pieces.contains(neighbors[1]) && !safe_spots.contains(neighbors[1]))
+						return false;
+
+					if(!loop_pieces.contains(neighbors[2]) && !safe_spots.contains(neighbors[2]) && !loop_pieces.contains(neighbors[3]) && !safe_spots.contains(neighbors[3]))
+						return false;
+				}
+
+			
+			//if up/down or left/right are exposed i.e it's neighbor is not in loop and not in safe spot
+			/*
+			boolean up=loop_pieces.contains(neighbors[0]);
+			boolean down=safe_spots.contains(neighbors[1]);
+			//boolean right=loop_pieces.contains([neighbors[2]);
+			boolean right=loop_pieces.contains(neighbors[2]);
+			boolean left=safe_spots.contains(neighbors[3]);
+			//if((!loop_pieces.contains(neighbors[0]) && !safe_spots.contains(neighbors[1])) || ((!loop_pieces.contains([neighbors[2]) && !safe_spots.contains(neighbors[3]))))
+			if((up || down) && (right || left))
+			{	
+
+				System.out.println(loop_pieces.get(i).intValue()+ " "+"nNo");	
+				return false;
+			}
+
+			up=safe_spots.contains(neighbors[0]);
+			down=loop_pieces.contains(neighbors[1]);
+			right=safe_spots.contains(neighbors[2]);
+			left=loop_pieces.contains(neighbors[3]);
+			if((up || down) && (right || left))
+			{	
+				System.out.println(loop_pieces.get(i).intValue()+ " "+"no");	
+				return false;
+			}
+*/
+		}
+		return true;
 	}
 
 	private ArrayList<Integer> getSafeRegion(ArrayList<Integer> loop_pieces,int kingVal)
