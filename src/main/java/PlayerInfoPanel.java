@@ -32,11 +32,13 @@ public class PlayerInfoPanel extends JPanel
 		minutes  = convertMinutes();
 		seconds = convertSeconds();
 		timerLabel = new JLabel(String.format("%d:%02d", minutes, seconds));
+		timerLabel.setFont(new Font("Serif", Font.PLAIN, 90));
 		add(timerLabel);
 		listener = new TimerListener(timerLabel);
 		timer = new Timer(1000, listener); // creates actionEvents every second on a separate thread. 
 		
 		nameLabel = new JLabel(name);
+		nameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		setPreferredSize(new Dimension(100, 150));
 		setLayout(new FlowLayout());
 		add(nameLabel);
