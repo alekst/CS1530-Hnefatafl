@@ -39,7 +39,7 @@ public class Game
 		
 		// TODO: set changeable values into a Settings object. 
 		// player info panel
-		_whiteInfo = new PlayerInfoPanel("Whites", 10); // 300 seconds
+		_whiteInfo = new PlayerInfoPanel("Whites", 300); // 300 seconds
 		
 		// add the info panel to the player
 		_whites.addInfo(_whiteInfo);
@@ -49,7 +49,7 @@ public class Game
 		_blacks.setBlack();
 		
 		// player info panel
-		_blackInfo = new PlayerInfoPanel("Blacks", 10);
+		_blackInfo = new PlayerInfoPanel("Blacks", 300);
 		// add player info to the player
 		_blacks.addInfo(_blackInfo);
 
