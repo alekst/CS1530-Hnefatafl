@@ -6,9 +6,10 @@ import javax.swing.*;
 
 public class TimerListener implements ActionListener
 {
-    private int countdown = 300;
+    private int countdown = 10;
 	private JLabel label;
 	private int moveTime = 0;
+	private boolean enabled = true;
 
 	/* 
 	* A basic constructor that takes a JLabel as an argument
@@ -18,30 +19,39 @@ public class TimerListener implements ActionListener
         this.label = label; 
     }
 	
+	
 	/* 
 	* This action is performed every time the Timer objects sends an Event (every second)
 	*/
     public void actionPerformed(ActionEvent e)
     {
+		if(!enabled)
+		{
+			return;
+		}
 		// increment the time for this move
 		moveTime++;
-		// decrement the countdown
-		countdown--;
-		// if the countdown is zero... 
-		if (countdown == 0)
+		// if the countdown is below zero... 
+		if (countdown < 0)
 		{
-			// then the player has run out of time and lost. 
-			JOptionPane.showMessageDialog(null, "You've run out of time. You lost!");
+			enabled = false;
+			// then the player has run out of time and lost. 	
 			// need to disable the board
 		}
-		// if not
-		// convert the countdown to minutes and seconds. 
-		int minutes = countdown / 60;
-		int seconds = countdown % 60;
-		// and update the label
-        label.setText(String.format("%d:%02d", minutes, seconds));
+		else
+		{
+			// if not
+			// convert the countdown to minutes and seconds. 
+			int minutes = countdown / 60;
+			int seconds = countdown % 60;
+			// and update the label
+			label.setText(String.format("%d:%02d", minutes, seconds));
+		}
+		// decrement the countdown
+		countdown--;
+		
     }
-	
+
 	/*
 	* This method takes no arguments, but returns the number of seconds it took the player to end his turn
 	*/
@@ -56,6 +66,14 @@ public class TimerListener implements ActionListener
 	public void resetMoveTime()
 	{
 		moveTime = 0;
+	}
+	
+	/**
+	*  Returns countdown value
+	*/
+	public int getCountdown()
+	{
+		return countdown;
 	}
 	
 	/* 

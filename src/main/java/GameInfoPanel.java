@@ -21,5 +21,6 @@ public class GameInfoPanel extends JPanel
 		add(otherInfo);
 	}
 
+
 }
 

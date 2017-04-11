@@ -280,10 +280,10 @@ public class Board extends JPanel
 	ActionListener actionListener = new GameListener()
 	{
 		 public void doPerformAction(ActionEvent actionEvent)
- 		{			
+ 		{	
  			Square b = (Square)actionEvent.getSource();
  			Coordinate coor = b.getCoord();
-				
+			
 			if((first_clicked.isMinusOne()) && (_manager.getIndex(coor) != -1))
 			{
 				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
@@ -307,7 +307,7 @@ public class Board extends JPanel
 					boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
 
 					_manager.updateLocation(second_clicked, first_clicked);
-					
+				
 					ArrayList<Coordinate>piecesToRemove=_manager.isPieceSurrounded(second_clicked); //sees if a piece(s) is captured
 					for(int i=0; i<piecesToRemove.size(); i++) //removes pieces from board
 					{
@@ -315,10 +315,10 @@ public class Board extends JPanel
 						removePiece(piecesToRemove.get(i)); //remove it from the front end
 						_manager.removePiece(piecesToRemove.get(i)); //remove it from the backedn
 					}
-					
+				
 					if (_player.hasWon())
 					{
-						JOptionPane.showMessageDialog(null, "Congratulations! You have won!");
+						JOptionPane.showMessageDialog(null, "Congratulations! You won!");
 						end();
 					}
 					else
@@ -326,8 +326,8 @@ public class Board extends JPanel
 						_player.doneWithTurn(); //disable whole board
 						_other.newTurn();
 						resetClicks();
-						switchTurn(true); // this is an actual turn that has been made, so the flag is set to true
-					}	
+						switchTurn(true); // this is an actual turn that has been made, so the flag is set to true 
+					}			
 				}
 			}
 			else
@@ -340,13 +340,18 @@ public class Board extends JPanel
 				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
 				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
 			}
+			if (_player.getInfo().isTimerDone()) // if the timer has run out
+			{
+				JOptionPane.showMessageDialog(null, "You've run out of time. You lost!");
+				end();
+			}	
 		}
 	};
 	
 	/**
-	* End game routine
+	* End game routine. It disables the current player and stops the timer.
 	*/
-	private void end()
+	public void end()
 	{
 		disable(_player);
 		_player.getInfo().stopTimer();

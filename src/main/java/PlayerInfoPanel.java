@@ -26,6 +26,9 @@ public class PlayerInfoPanel extends JPanel
 	private Timer timer;
 	private int time, minutes, seconds;
 	
+	/*
+	* A constructor for the PlayerInfoPanel, which contains the Timers. 
+	*/
 	public PlayerInfoPanel(String name, int t)
 	{	
 		time = t;
@@ -35,7 +38,6 @@ public class PlayerInfoPanel extends JPanel
 		add(timerLabel);
 		listener = new TimerListener(timerLabel);
 		timer = new Timer(1000, listener); // creates actionEvents every second on a separate thread. 
-		
 		nameLabel = new JLabel(name);
 		setPreferredSize(new Dimension(100, 150));
 		setLayout(new FlowLayout());
@@ -50,6 +52,14 @@ public class PlayerInfoPanel extends JPanel
 	{
 		timer.start();
 	}
+	
+	/*
+	 * This method returns true if the countdown is equal or below zero. Otherwise, true. 
+	 */
+	public boolean isTimerDone()
+	{
+		return listener.getCountdown() <= 0;
+	} 
 	
 	/* 
 	* This method stops a timer on a PlayerInfoPanel 
@@ -66,18 +76,33 @@ public class PlayerInfoPanel extends JPanel
 	*/
 	public void addTime()
 	{
-		listener.addToCountdown(); // adds three seconds for the running display in TimerListener
-		time = time + 3; // plus three seconds to the time
-		minutes = convertMinutes();
-		seconds = convertSeconds();
-		timerLabel.setText(String.format("%d:%02d", minutes, seconds)); // update the label
+		if (listener.getCountdown() <= 0) // if the time has run out
+		{
+			JOptionPane.showMessageDialog(null, "You've run out of time. You lost!");
+		}
+		else
+		{
+			listener.addToCountdown(); // adds three seconds for the running display in TimerListener
+			time = time + 3; // plus three seconds to the time
+			minutes = convertMinutes();
+			seconds = convertSeconds();
+			timerLabel.setText(String.format("%d:%02d", minutes, seconds)); // update the label
+		}
+		
 	}
+	/**
+	 * Converts time in seconds into complete minutes
+	 */ 
 	
 	private int convertMinutes()
 	{
 		return time / 60;
 	}
 	
+	/**
+	 * Converts time to seconds of an imcomplete minute
+	 */ 
+		
 	private int convertSeconds()
 	{
 		return time % 60;
