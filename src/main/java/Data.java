@@ -174,7 +174,7 @@ public class Data
 	public boolean exitFort(int value)
 	{
 		int edge=isKingOnEdge(value); //get edge
-		if(edge!=0)//&&canKingMove(value,edge))//king on edge
+		if(edge!=0 && canKingMove(value,edge))//king on edge
 		{//fix canKingMove()
 			//check that pieces in the kings row/column
 			if(edge==1 || edge==2) //east/west wall check up and down first, +11 and -11
@@ -182,7 +182,7 @@ public class Data
 				int friendly_1=0;
 				int friendly_2=0;
 				//loop through spots north and south from kings location
-				System.out.println("starting at"+" "+value);
+				System.out.println("STARTING AT"+" "+value+" *******************8");
 				int curr_spot=value-11;
 				while(!isSpecialSquare(curr_spot)) //need to find a white piece north
 				{
@@ -241,7 +241,7 @@ public class Data
 			{
 				int friendly_1=0;
 				int friendly_2=0;
-				System.out.println("starting at"+" "+value);
+				System.out.println("STARTING AT"+" "+value+" *******************8");
 				int curr_spot=value-1;
 				while(!isSpecialSquare(curr_spot)) //special squares at end of row/column always stop there
 				{//need to find a white piece west
@@ -306,30 +306,30 @@ public class Data
 		Integer [] neighb=getNeighbors(value);
 		if(edge==1)//west
 		{
-			boolean b1=isMember(neighb[0]);
-			boolean b2=isMember(neighb[1]);
-			boolean b3=isMember(neighb[2]);
+			boolean b1=!isMember(neighb[0]);
+			boolean b2=!isMember(neighb[1]);
+			boolean b3=!isMember(neighb[2]);
 			ret_val=b1||b2||b3;
 		}
 		else if(edge==2)
 		{
-			boolean b1=isMember(neighb[0]);
-			boolean b2=isMember(neighb[1]);
-			boolean b3=isMember(neighb[3]);
+			boolean b1=!isMember(neighb[0]);
+			boolean b2=!isMember(neighb[1]);
+			boolean b3=!isMember(neighb[3]);
 			ret_val=b1||b2||b3;
 		}
 		else if(edge==3)
 		{
-			boolean b1=isMember(neighb[1]);
-			boolean b2=isMember(neighb[2]);
-			boolean b3=isMember(neighb[3]);
+			boolean b1=!isMember(neighb[1]);
+			boolean b2=!isMember(neighb[2]);
+			boolean b3=!isMember(neighb[3]);
 			ret_val=b1||b2||b3;
 		}
 		else if(edge==4)
 		{
-			boolean b1=isMember(neighb[0]);
-			boolean b2=isMember(neighb[2]);
-			boolean b3=isMember(neighb[3]);
+			boolean b1=!isMember(neighb[0]);
+			boolean b2=!isMember(neighb[2]);
+			boolean b3=!isMember(neighb[3]);
 			ret_val=b1||b2||b3;
 		}
 		return ret_val;
@@ -547,14 +547,14 @@ public class Data
 		return true;
 	}
 
-	private ArrayList<Integer> getSafeRegion(ArrayList<Integer> loop_pieces,int kingVal)
-	{
+	private ArrayList<Integer> getSafeRegion(ArrayList<Integer> loop_pieces,int kingVal) 
+	{//this is the problem
 		ArrayList<Integer> safe_spots = new ArrayList<Integer>();
 		for(int i=0; i<loop_pieces.size(); i++)
 		{//check for vulnerable pieces here
 
 			if(isKingOnEdge(kingVal)==2)
-			{
+			{// east wall
 				if((loop_pieces.get(i).intValue()/10)==kingVal/10)
 				{
 					System.out.println("same row");
@@ -582,7 +582,6 @@ public class Data
 						}
 					}
 				}
-
 				else if(loop_pieces.get(i).intValue()>kingVal) //below the king
 				{
 					System.out.println("below");
@@ -600,7 +599,6 @@ public class Data
 								safe_spots.add(temp);
 					}
 				}
-
 				else if(loop_pieces.get(i).intValue()<kingVal) //above the king
 				{
 					System.out.println("above");
@@ -935,22 +933,22 @@ public class Data
 		Coordinate coord=decode(value);
 		if((coord.getX() - 1 < 0) && (coord.getY() - 1 >= 0)) // west wall
 		{
-			System.out.println("West Wall");
+			//System.out.println("West Wall");
 			return 1;
 		}
 		else if((coord.getX() + 1 > 10) && (coord.getY() + 1 <= 10)) //east wall
 		{
-			System.out.println("East wall");
+			//System.out.println("East wall");
 			return 2;
 		}
 		else if((coord.getX() - 1 >= 0) && (coord.getY() + 1 > 10)) // south wall
 		{
-			System.out.println("South wall");
+			//System.out.println("South wall");
 			return 3;
 		}
 		else if((coord.getX() + 1 <= 10) && (coord.getY() - 1 < 0)) // north wall
 		{
-			System.out.println("North wall");
+			//System.out.println("North wall");
 			return 4;
 		}
 		else
