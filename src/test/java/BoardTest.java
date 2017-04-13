@@ -79,7 +79,7 @@ public class BoardTest
 	{
 		Manager m = new Manager();
 		Player p1 = new Player(m);
-		PlayerInfoPanel in = new PlayerInfoPanel("weezy", 1);
+		PlayerInfoPanel in = new PlayerInfoPanel("weezy", 1, 12);
 		p1.addInfo(in);
 		Player p2 = new Player(m);
 		p2.addInfo(in);
