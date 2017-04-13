@@ -80,7 +80,7 @@ public class Game
 		
 		// player 2 : right now resets player info on load
 		_blacks = blacks;
-		_blackInfo = new PlayerInfoPanel("Blacks", 300, 24); // temporary solution. It assumes that all the pieces are in tact in the save game. This information should probably come from the Data array instead or come from the file.
+		_blackInfo = new PlayerInfoPanel("Blacks", 300, 24); // temporary solution. It assumes that all the pieces are in tact in the saved game. This information should probably come from the Data array after it is loaded instead or come directly from the file.
 		_blacks.addInfo(_blackInfo);
 		
 		_board = new Board(_manager, _whites, _blacks);
