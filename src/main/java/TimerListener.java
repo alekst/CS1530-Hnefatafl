@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class TimerListener implements ActionListener
 {
-    private int countdown = 300;
+    private int countdown = 10;
 	private JLabel label;
 	private int moveTime = 0;
 	public boolean enabled = true;
@@ -32,7 +32,7 @@ public class TimerListener implements ActionListener
 		// increment the time for this move
 		moveTime++;
 		// if the countdown is below zero... 
-		if (countdown < 0)
+		if (countdown == -1)
 		{
 			enabled = false;
 			JOptionPane.showMessageDialog(null, "You've run out of time. You lost!");

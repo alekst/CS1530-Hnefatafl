@@ -286,6 +286,7 @@ public class Board extends JPanel
 			if(_player.getInfo().timerDone())
 			{
 				end();
+				setActive(false);
 			}
 			
 			if((first_clicked.isMinusOne()) && (_manager.getIndex(coor) != -1))
@@ -326,6 +327,7 @@ public class Board extends JPanel
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You won!");
 						end();
+						setActive(false);
 					}
 					else
 					{
