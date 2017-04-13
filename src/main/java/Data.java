@@ -187,19 +187,24 @@ public class Data
 				while(!isSpecialSquare(curr_spot)) //need to find a white piece north, use
 				{
 					//System.out.println(" in loop going up:"+ " "+ curr_spot);
-					if(!isWhite(curr_spot)&&isMember(curr_spot))
+					if(!isWhite(curr_spot)&&isMember(curr_spot)) //blaack piece
 					{
 						//System.out.println("stop:"+" "+curr_spot);
 						break;
 					}
-					else if(isWhite(curr_spot) && isMember(curr_spot))
+					else if(isWhite(curr_spot) && isMember(curr_spot)) //white piece on board
 					{
-						//System.out.println("friendly @:"+ " "+curr_spot);
+						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_1=curr_spot; //setting a friendly_1 var
 						//when white piece  is found start checking in the spot directly perpendicular to it
 						//then check for a piece a diagonal it (more than 1 possible diagonal)
 					}
 					curr_spot=curr_spot-11;
+				}
+				System.out.println("end of checking up: "+" curr_spot is: "+curr_spot);
+				if(curr_spot==11 || curr_spot==121 ||curr_spot==1 ||curr_spot==111) //taking into account of special squares being a part of fort
+				{
+					friendly_1=curr_spot;
 				}
 				if(friendly_1==0) //if 1 friendly is not found yet exit cannot occur
 				{
@@ -218,11 +223,13 @@ public class Data
 					}
 					else if(isWhite(curr_spot) && isMember(curr_spot))
 					{
-						//System.out.println("friendly @:"+ " "+curr_spot);
+						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_2=curr_spot; //setting friendly_2 var
 					}
 					curr_spot=curr_spot+11;
 				}
+				System.out.println("end of checking up: "+" curr_spot is: "+curr_spot);
+				
 				if(friendly_2==0)
 				{
 					//System.out.println("no friendly_2");
