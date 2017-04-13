@@ -28,7 +28,6 @@ public class PlayerInfoPanel extends JPanel
 	private int time, minutes, seconds;
 	private int pieces;
 	
-<<<<<<< HEAD
 	/**
 	 * An empty constructor used for testing purposes only. 
 	 */
