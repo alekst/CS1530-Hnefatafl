@@ -133,7 +133,7 @@ public class PlayerTest
 	{
 		Manager m = new Manager();
 		Player p = new Player();
-		PlayerInfoPanel panel = new PlayerInfoPanel("dworb", 300);
+		PlayerInfoPanel panel = new PlayerInfoPanel("dworb", 300, 24);
 		p.addInfo(panel);
 		PlayerInfoPanel actual = p.getInfo();
 		assertEquals(panel, actual);
