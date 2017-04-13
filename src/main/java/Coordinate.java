@@ -3,7 +3,11 @@ import java.awt.*;
 public class Coordinate 
 {
 	private int x, y;
-	
+
+	/**
+	 * An emply constructor, used for testing purposes. 
+	 */	
+
 	public Coordinate()
 	{
 		// an empty constructor

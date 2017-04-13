@@ -1,4 +1,4 @@
-import java.awt.*;
+ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -312,7 +312,9 @@ public class Board extends JPanel
 					{
 						enable(piecesToRemove.get(i)); //enable the spot where the piece used to reside
 						removePiece(piecesToRemove.get(i)); //remove it from the front end
-						_manager.removePiece(piecesToRemove.get(i)); //remove it from the backedn
+						_other.getInfo().takeAPiece(); // decrement the number of pieces
+						_other.getInfo().updatePieces(); // update the display label to reflect the change. 
+						_manager.removePiece(piecesToRemove.get(i)); //remove it from the backend
 					}
 					
 					if (_player.hasWon())
