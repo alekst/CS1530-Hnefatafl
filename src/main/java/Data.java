@@ -184,7 +184,7 @@ public class Data
 				//loop through spots north and south from kings location
 				System.out.println("STARTING AT"+" "+value+" *******************8");
 				int curr_spot=value-11;
-				while(!isSpecialSquare(curr_spot)) //need to find a white piece north
+				while(!isSpecialSquare(curr_spot)) //need to find a white piece north, use
 				{
 					//System.out.println(" in loop going up:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot))
