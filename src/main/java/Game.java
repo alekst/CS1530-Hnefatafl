@@ -22,7 +22,7 @@ public class Game
 	*/
 	public Game()
 	{
-		init();	
+		init();
 	}
 	
 	/**
@@ -37,7 +37,6 @@ public class Game
 		_whites = new Player(_manager);
 		_whites.setWhite();
 		
-		// TODO: set changeable values into a Settings object. 
 		// player info panel
 		_whiteInfo = new PlayerInfoPanel("Whites", 300); // 300 seconds
 		
@@ -61,7 +60,7 @@ public class Game
 		// create the main frame
 		MainFrame _mf = new MainFrame(this, _gi);
 	}
-	
+
 	/**
 	* Initializes the game state with existing manager (related data) and players
 	* @param manager : Manager object with related Data

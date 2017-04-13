@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class Hnefatafl 
 {
     public static void main(String[] args) 

@@ -9,7 +9,7 @@ public class TimerListener implements ActionListener
     private int countdown = 300;
 	private JLabel label;
 	private int moveTime = 0;
-	private boolean enabled = true;
+	public boolean enabled = true;
 
 	/* 
 	* A basic constructor that takes a JLabel as an argument
@@ -35,6 +35,7 @@ public class TimerListener implements ActionListener
 		if (countdown < 0)
 		{
 			enabled = false;
+			JOptionPane.showMessageDialog(null, "You've run out of time. You lost!");
 			// then the player has run out of time and lost. 	
 			// need to disable the board
 		}

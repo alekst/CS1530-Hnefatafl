@@ -283,6 +283,10 @@ public class Board extends JPanel
  		{	
  			Square b = (Square)actionEvent.getSource();
  			Coordinate coor = b.getCoord();
+			if(_player.getInfo().timerDone())
+			{
+				end();
+			}
 			
 			if((first_clicked.isMinusOne()) && (_manager.getIndex(coor) != -1))
 			{
@@ -340,11 +344,6 @@ public class Board extends JPanel
 				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
 				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
 			}
-			if (_player.getInfo().isTimerDone()) // if the timer has run out
-			{
-				JOptionPane.showMessageDialog(null, "You've run out of time. You lost!");
-				end();
-			}	
 		}
 	};
 	

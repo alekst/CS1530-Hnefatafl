@@ -56,10 +56,12 @@ public class PlayerInfoPanel extends JPanel
 	/*
 	 * This method returns true if the countdown is equal or below zero. Otherwise, true. 
 	 */
-	public boolean isTimerDone()
+	public boolean timerDone()
 	{
-		return listener.getCountdown() <= 0;
+		System.out.println(listener.enabled);
+		return !listener.enabled;
 	} 
+	
 	
 	/* 
 	* This method stops a timer on a PlayerInfoPanel 
