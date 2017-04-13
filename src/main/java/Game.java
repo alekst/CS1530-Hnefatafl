@@ -57,7 +57,7 @@ public class Game
 		_board = new Board(_manager, _whites, _blacks);
 		
 		//create the Game Info Panel
-		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo);
+		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo, _board);
 		// create the main frame
 		MainFrame _mf = new MainFrame(this, _gi);
 	}
@@ -84,7 +84,7 @@ public class Game
 		
 		_board = new Board(_manager, _whites, _blacks);
 	
-		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo);
+		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo, _board);
 		MainFrame _mf = new MainFrame(this, _gi);
 	}
 	
