@@ -36,10 +36,6 @@ public class PlayerInfoPanel extends JPanel
 	{
 		// an empty constructor
 	}
-
-	
-	
-
 	
 	/**
 	 * A constructor for the info panel. 
