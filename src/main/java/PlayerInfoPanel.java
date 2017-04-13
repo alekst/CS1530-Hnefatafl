@@ -26,6 +26,13 @@ public class PlayerInfoPanel extends JPanel
 	private Timer timer;
 	private int time, minutes, seconds;
 	
+	
+	/**
+	 * A constructor for the info panel. 
+	 * @param name - a Player's handle. 
+	 * @param t - the initial time on the clock in seconds
+	 *
+	 */
 	public PlayerInfoPanel(String name, int t)
 	{	
 		time = t;
@@ -73,11 +80,19 @@ public class PlayerInfoPanel extends JPanel
 		timerLabel.setText(String.format("%d:%02d", minutes, seconds)); // update the label
 	}
 	
+	/**
+	 * A helper method to convert the time in seconds to show just whole minutes. 
+	 *
+	 */
 	private int convertMinutes()
 	{
 		return time / 60;
 	}
 	
+	/**
+	 * A helper method to convert the time in seconds to show just remainder of seconds to the complete minute. 
+	 *
+	 */
 	private int convertSeconds()
 	{
 		return time % 60;
