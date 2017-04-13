@@ -267,4 +267,52 @@ public class ManagerTest
 		//assert
 		assertFalse(m.hasKingEscaped(king));
 	}
+	
+	/** 
+	* the following tests will check to see if inSpecialSquare
+	* returns true when special squares are input and false
+	* when the x,y are not the coordinates for a special square
+	*/
+	
+	@Test
+	public void upperLeftSpecialCheck()
+	{
+		Manager m = new Manager();
+		assertTrue(m.inSpecialSquare(0,0));
+	}
+	
+	@Test
+	public void upperRightSpecialCheck()
+	{
+		Manager m = new Manager();
+		assertTrue(m.inSpecialSquare(10,0));
+	}
+	
+	@Test
+	public void lowerLeftSpecialCheck()
+	{
+		Manager m = new Manager();
+		assertTrue(m.inSpecialSquare(0,10));
+	}
+	
+	@Test
+	public void lowerRightSpecialCheck()
+	{
+		Manager m = new Manager();
+		assertTrue(m.inSpecialSquare(10,10));
+	}
+	
+	@Test
+	public void centerSpecialCheck()
+	{
+		Manager m = new Manager();
+		assertTrue(m.inSpecialSquare(5,5));
+	}
+	
+	@Test
+	public void notSpecialCheck()
+	{
+		Manager m = new Manager();
+		assertFalse(m.inSpecialSquare(3,4));
+	}
 }
