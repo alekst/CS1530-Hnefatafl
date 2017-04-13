@@ -28,16 +28,26 @@ public class PlayerInfoPanel extends JPanel
 	private int time, minutes, seconds;
 	private int pieces;
 	
-	// This constructor is used for testing only. 
+	/**
+	 * An empty constructor used for testing purposes only. 
+	 */
+
 	public PlayerInfoPanel()
 	{
 		// an empty constructor
 	}
-	/**
-	 * This constructor initializes the Info Panel
-	 * @param Player's name, initial time in seconds for the clock, and the number of pieces the Player has. 
-	 */
+
 	
+	
+
+	
+	/**
+	 * A constructor for the info panel. 
+	 * @param name - a Player's handle. 
+	 * @param t - the initial time on the clock in seconds
+	 * @param pieces - number of pieces for the player
+	 *
+	 */
 	public PlayerInfoPanel(String name, int t, int pieces)
 	{	
 		time = t;
@@ -131,11 +141,19 @@ public class PlayerInfoPanel extends JPanel
 		piecesLabel.setText(Integer.toString(pieces));
 	}
 	
+	/**
+	 * A helper method to convert the time in seconds to show just whole minutes. 
+	 *
+	 */
 	private int convertMinutes()
 	{
 		return time / 60;
 	}
 	
+	/**
+	 * A helper method to convert the time in seconds to show just remainder of seconds to the complete minute. 
+	 *
+	 */
 	private int convertSeconds()
 	{
 		return time % 60;

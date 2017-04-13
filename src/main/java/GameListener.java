@@ -14,12 +14,21 @@ public abstract class GameListener implements ActionListener
 {
 
     private static boolean active = true;
+	
+	/**
+	 * @param boolean true or false. 
+	 * Sets the GameListener active or passive. 
+	 */
     public static void setActive(boolean active){
         GameListener.active = active;
     }
 
     protected abstract void doPerformAction(ActionEvent e);
 
+	/**
+	 * @param ActionEvent object. 
+	 * This method performs action only when it is set to active. 
+	 */
     @Override
     public final void actionPerformed(ActionEvent e){
         if(active){
