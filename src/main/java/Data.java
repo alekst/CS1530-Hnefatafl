@@ -228,7 +228,7 @@ public class Data
 					}
 					curr_spot=curr_spot+11;
 				}
-				System.out.println("end of checking up: "+" curr_spot is: "+curr_spot);
+				System.out.println("end of checking down: "+" curr_spot is: "+curr_spot);
 				
 				if(friendly_2==0)
 				{
