@@ -529,6 +529,9 @@ public class Board extends JPanel
 		tile_colors.clear();
 	}
 	
+	/*
+	*	@param s-String that is the new theme of colors for the board
+	*/
 	public void setTileColors(String s)
 	{
 		last_color1 = color1;
@@ -570,6 +573,13 @@ public class Board extends JPanel
 		reprintTileColors();
 	}
 	
+	
+	/*
+	* will reprint the color theme assigned to color1 and color2
+	* if tiles are highlighted due to possible moves being shown
+	*	the saved colors for those tiles will be changed
+	*	to the correct themed color
+	*/
 	private void reprintTileColors()
 	{
 		int index;
