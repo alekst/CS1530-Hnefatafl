@@ -468,43 +468,71 @@ public class Board extends JPanel
 		tile_coordinates.clear();
 		for(int i = coord.getX() + 1 ; i < 11 ; i++)
 		{
-			if(_manager.someoneThere(new Coordinate(i, coord.getY())) || _manager.inSpecialSquare(i, coord.getY()))
+			if(_manager.someoneThere(new Coordinate(i, coord.getY())))
 			{
 				break;
 			}
-			tile_coordinates.add(new Coordinate(i, coord.getY()));
-			tile_colors.add(boardSquares[i][coord.getY()].getBackground());
-			boardSquares[i][coord.getY()].setBackground(Color.GREEN);
+			if(_manager.inSpecialSquare(i, coord.getY()) && ! _manager.isKing(coord))
+			{
+				// do nothing, continue to next piece past the special square
+			}
+			else
+			{
+				tile_coordinates.add(new Coordinate(i, coord.getY()));
+				tile_colors.add(boardSquares[i][coord.getY()].getBackground());
+				boardSquares[i][coord.getY()].setBackground(Color.GREEN);
+			}
 		}
 		for(int i = coord.getX() - 1 ; i >= 0 ; i--)
 		{
-			if(_manager.someoneThere(new Coordinate(i, coord.getY())) || _manager.inSpecialSquare(i, coord.getY()))
+			if(_manager.someoneThere(new Coordinate(i, coord.getY())))
 			{
 				break;
 			}
-			tile_coordinates.add(new Coordinate(i, coord.getY()));
-			tile_colors.add(boardSquares[i][coord.getY()].getBackground());
-			boardSquares[i][coord.getY()].setBackground(Color.GREEN);
+			if(_manager.inSpecialSquare(i, coord.getY()) && ! _manager.isKing(coord))
+			{
+				// do nothing, continue to next piece past the special square
+			}
+			else
+			{
+				tile_coordinates.add(new Coordinate(i, coord.getY()));
+				tile_colors.add(boardSquares[i][coord.getY()].getBackground());
+				boardSquares[i][coord.getY()].setBackground(Color.GREEN);
+			}
 		}
 		for(int i = coord.getY() + 1 ; i < 11 ; i++)
 		{
-			if(_manager.someoneThere(new Coordinate(coord.getX(), i)) || _manager.inSpecialSquare(i, coord.getY()))
+			if(_manager.someoneThere(new Coordinate(coord.getX(), i)))
 			{
 				break;
 			}
-			tile_coordinates.add(new Coordinate(coord.getX(), i));
-			tile_colors.add(boardSquares[coord.getX()][i].getBackground());
-			boardSquares[coord.getX()][i].setBackground(Color.GREEN);
+			if(_manager.inSpecialSquare(coord.getX(), i) && ! _manager.isKing(coord))
+			{
+				// do nothing, continue to next piece past the special square
+			}
+			else
+			{
+				tile_coordinates.add(new Coordinate(coord.getX(), i));
+				tile_colors.add(boardSquares[coord.getX()][i].getBackground());
+				boardSquares[coord.getX()][i].setBackground(Color.GREEN);
+			}
 		}
 		for(int i = coord.getY() - 1 ; i >= 0 ; i--)
 		{
-			if(_manager.someoneThere(new Coordinate(coord.getX(), i)) || _manager.inSpecialSquare(i, coord.getY()))
+			if(_manager.someoneThere(new Coordinate(coord.getX(), i)))
 			{
 				break;
 			}
-			tile_coordinates.add(new Coordinate(coord.getX(), i));
-			tile_colors.add(boardSquares[coord.getX()][i].getBackground());
-			boardSquares[coord.getX()][i].setBackground(Color.GREEN);
+			if(_manager.inSpecialSquare(coord.getX(), i) && ! _manager.isKing(coord))
+			{
+				// do nothing, continue to next piece past the special square
+			}
+			else
+			{
+				tile_coordinates.add(new Coordinate(coord.getX(), i));
+				tile_colors.add(boardSquares[coord.getX()][i].getBackground());
+				boardSquares[coord.getX()][i].setBackground(Color.GREEN);
+			}
 		}
 	}
 	
