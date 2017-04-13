@@ -26,6 +26,14 @@ public class PlayerInfoPanel extends JPanel
 	private Timer timer;
 	private int time, minutes, seconds;
 	
+	/**
+	 * An empty constructor used for testing purposes only. 
+	 */
+	
+	public PlayerInfoPanel()
+	{
+		// an empty constructor
+	}
 	
 	/**
 	 * A constructor for the info panel. 
