@@ -55,7 +55,6 @@ public class PlayerInfoPanel extends JPanel
 		add(timerLabel);
 		listener = new TimerListener(timerLabel);
 		timer = new Timer(1000, listener); // creates actionEvents every second on a separate thread. 
-		
 		nameLabel = new JLabel(name);
 		nameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
 		
@@ -81,6 +80,16 @@ public class PlayerInfoPanel extends JPanel
 		timer.start();
 	}
 	
+	/*
+	 * This method returns true if the countdown is equal or below zero. Otherwise, true. 
+	 */
+	public boolean timerDone()
+	{
+		System.out.println(listener.enabled);
+		return !listener.enabled;
+	} 
+	
+	
 	/* 
 	* This method stops a timer on a PlayerInfoPanel 
 	*/
@@ -96,12 +105,23 @@ public class PlayerInfoPanel extends JPanel
 	*/
 	public void addTime()
 	{
-		listener.addToCountdown(); // adds three seconds for the running display in TimerListener
-		time = time + 3; // plus three seconds to the time
-		minutes = convertMinutes();
-		seconds = convertSeconds();
-		timerLabel.setText(String.format("%d:%02d", minutes, seconds)); // update the label
+		if (listener.getCountdown() == 0) // if the time has run out
+		{
+			//JOptionPane.showMessageDialog(null, "You've run out of time. You lost!");
+		}
+		else
+		{
+			listener.addToCountdown(); // adds three seconds for the running display in TimerListener
+			time = time + 3; // plus three seconds to the time
+			minutes = convertMinutes();
+			seconds = convertSeconds();
+			timerLabel.setText(String.format("%d:%02d", minutes, seconds)); // update the label
+		}
+		
 	}
+	/**
+	 * Converts time in seconds into complete minutes
+	 */ 
 	
 	/*
 	* This method takes the number of pieces as an argument and sets it to the info panel
@@ -147,6 +167,7 @@ public class PlayerInfoPanel extends JPanel
 	}
 	
 	/**
+
 	 * A helper method to convert the time in seconds to show just remainder of seconds to the complete minute. 
 	 *
 	 */
@@ -154,6 +175,7 @@ public class PlayerInfoPanel extends JPanel
 	{
 		return time % 60;
 	}
+	
 	
 			
 	

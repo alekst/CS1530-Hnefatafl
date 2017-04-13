@@ -11,7 +11,10 @@ AutumnColor autumn;
 WinterColor winter;
 SpringColor spring;
 SummerColor summer;
+private PlayerInfoPanel _playerInfo;
+private PlayerInfoPanel _otherInfo;		
 	
+
 /*
 *	Create the game info panel for the main frame of the game. The panel contains individual Player information panels.
 */
@@ -42,6 +45,8 @@ SummerColor summer;
 		
 		tileColorMenuBar.add(tileColorMenu);
 		
+		_playerInfo = playerInfo;
+		_otherInfo = otherInfo;
 		
 		setPreferredSize(new Dimension(200, 250));
 		setFont(new Font(null, Font.BOLD, 200));
@@ -62,8 +67,6 @@ SummerColor summer;
 			return generic;
 		}
 	}
-	
-	
 
 }
 

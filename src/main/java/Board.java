@@ -158,6 +158,7 @@ public class Board extends JPanel
 			}
 		}
 		printAll();
+		
 		switchTurn(false); // this switch turn does not count. This is done so that the Black player would go first. 
 	}	
 	
@@ -279,6 +280,7 @@ public class Board extends JPanel
 		}
 	}
 	
+		
 	/**
 	* Action listener for user actions clicking board pieces for moves.
 	* Gets coordiante from click location for first click to change to coordinate related to second click 
@@ -289,10 +291,15 @@ public class Board extends JPanel
 	ActionListener actionListener = new GameListener()
 	{
 		 public void doPerformAction(ActionEvent actionEvent)
- 		{			
+ 		{	
  			Square b = (Square)actionEvent.getSource();
  			Coordinate coor = b.getCoord();
-				
+			if(_player.getInfo().timerDone())
+			{
+				end();
+				setActive(false);
+			}
+			
 			if((first_clicked.isMinusOne()) && (_manager.getIndex(coor) != -1))
 			{
 				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
@@ -319,7 +326,7 @@ public class Board extends JPanel
 					boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
 
 					_manager.updateLocation(second_clicked, first_clicked);
-					
+				
 					ArrayList<Coordinate>piecesToRemove=_manager.isPieceSurrounded(second_clicked); //sees if a piece(s) is captured
 					for(int i=0; i<piecesToRemove.size(); i++) //removes pieces from board
 					{
@@ -329,15 +336,20 @@ public class Board extends JPanel
 						_other.getInfo().updatePieces(); // update the display label to reflect the change. 
 						_manager.removePiece(piecesToRemove.get(i)); //remove it from the backend
 					}
-					
+				
 					if (_player.hasWon())
 					{
-						JOptionPane.showMessageDialog(null, "Congratulations! You have won!");
+						JOptionPane.showMessageDialog(null, "Congratulations! You won!");
+						end();
+						setActive(false);
 					}
-					_player.doneWithTurn(); //disable whole board
-					_other.newTurn();
-					resetClicks();
-					switchTurn(true); // this is an actual turn that has been made, so the flag is set to true
+					else
+					{
+						_player.doneWithTurn(); //disable whole board
+						_other.newTurn();
+						resetClicks();
+						switchTurn(true); // this is an actual turn that has been made, so the flag is set to true 
+					}			
 				}
 			}
 			else
@@ -353,6 +365,15 @@ public class Board extends JPanel
 			}
 		}
 	};
+	
+	/**
+	* End game routine. It disables the current player and stops the timer.
+	*/
+	private void end()
+	{
+		disable(_player);
+		_player.getInfo().stopTimer();
+	}
 	
 	
 	/**
