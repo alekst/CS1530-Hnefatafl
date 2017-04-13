@@ -27,6 +27,16 @@ public class Board extends JPanel
 	private Coordinate second_clicked = new Coordinate(-1, -1);
 	private Color selected_color;
 	
+	private Color special_color = Color.yellow;
+	private Color color1 = Color.lightGray;
+	private Color color2 = Color.gray;
+	
+	private Color last_color1;
+	private Color last_color2;
+	
+	private ArrayList<Color> tile_colors = new ArrayList<Color>(); // used to store past colors for possible move tiles
+	private ArrayList<Coordinate> tile_coordinates = new ArrayList<Coordinate>(); // used to store coordinates of possible move tiles
+	
 	//private Data pieces = new Data();
 	private Manager _manager;
 	private Player _player;
@@ -102,15 +112,15 @@ public class Board extends JPanel
 				// todo: allow user to change board colors?
 				if (( j == 0 && i == 0 ) || ( j == 10 && i == 10 ) || ( j == 0 && i == 10 ) || ( j == 10 && i == 0 ) || ( j == 5 && i == 5 ))
 				{
-					square.setBackground(Color.yellow);
+					square.setBackground(special_color);
 				}
 				else if (( j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0))
 				{
-					square.setBackground(Color.lightGray);
+					square.setBackground(color1);
 				}
 				else
 				{
-					square.setBackground(Color.gray);
+					square.setBackground(color2);
 				}
 				square.setMargin(buttonMargin);
 				square.setMaximumSize(new Dimension(j * 1000, i * 1000));
@@ -288,12 +298,14 @@ public class Board extends JPanel
 				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
 				first_clicked = coor;	
 				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
+				showPossibleMoves(first_clicked);
 			}
  			else if(first_clicked.equal(coor))
  			{
 // 				// Unselect it
  				boardSquares[coor.getX()][coor.getY()].setBackground(selected_color);
 				first_clicked = new Coordinate(-1,-1);
+				hidePossibleMoves();
  			} 
 			else if(_manager.getIndex(coor) == -1)
  			{
@@ -301,6 +313,7 @@ public class Board extends JPanel
 
  				if(_manager.isValid(first_clicked, second_clicked))
 				{
+					hidePossibleMoves();
 					move(first_clicked, second_clicked);
 
 					boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
@@ -332,10 +345,11 @@ public class Board extends JPanel
 				// User has clicked occupied space...select this piece as
 				// 		the piece to move
 				boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
-
+				hidePossibleMoves();
 				first_clicked = coor;
 				selected_color = boardSquares[coor.getX()][coor.getY()].getBackground();
 				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
+				showPossibleMoves(first_clicked);
 			}
 		}
 	};
@@ -451,6 +465,210 @@ public class Board extends JPanel
 	public String printBoard()
 	{
 		return _manager.getBoardData().print();
+	}
+	
+	
+	/**
+	* will display a different color on all possible moves from the coordinate given.
+	*
+	*/
+	private void showPossibleMoves(Coordinate coord)
+	{
+		tile_coordinates.clear();
+		for(int i = coord.getX() + 1 ; i < 11 ; i++)
+		{
+			if(_manager.someoneThere(new Coordinate(i, coord.getY())))
+			{
+				break;
+			}
+			if(_manager.inSpecialSquare(i, coord.getY()) && ! _manager.isKing(coord))
+			{
+				// do nothing, continue to next piece past the special square
+			}
+			else
+			{
+				tile_coordinates.add(new Coordinate(i, coord.getY()));
+				tile_colors.add(boardSquares[i][coord.getY()].getBackground());
+				boardSquares[i][coord.getY()].setBackground(Color.GREEN);
+			}
+		}
+		for(int i = coord.getX() - 1 ; i >= 0 ; i--)
+		{
+			if(_manager.someoneThere(new Coordinate(i, coord.getY())))
+			{
+				break;
+			}
+			if(_manager.inSpecialSquare(i, coord.getY()) && ! _manager.isKing(coord))
+			{
+				// do nothing, continue to next piece past the special square
+			}
+			else
+			{
+				tile_coordinates.add(new Coordinate(i, coord.getY()));
+				tile_colors.add(boardSquares[i][coord.getY()].getBackground());
+				boardSquares[i][coord.getY()].setBackground(Color.GREEN);
+			}
+		}
+		for(int i = coord.getY() + 1 ; i < 11 ; i++)
+		{
+			if(_manager.someoneThere(new Coordinate(coord.getX(), i)))
+			{
+				break;
+			}
+			if(_manager.inSpecialSquare(coord.getX(), i) && ! _manager.isKing(coord))
+			{
+				// do nothing, continue to next piece past the special square
+			}
+			else
+			{
+				tile_coordinates.add(new Coordinate(coord.getX(), i));
+				tile_colors.add(boardSquares[coord.getX()][i].getBackground());
+				boardSquares[coord.getX()][i].setBackground(Color.GREEN);
+			}
+		}
+		for(int i = coord.getY() - 1 ; i >= 0 ; i--)
+		{
+			if(_manager.someoneThere(new Coordinate(coord.getX(), i)))
+			{
+				break;
+			}
+			if(_manager.inSpecialSquare(coord.getX(), i) && ! _manager.isKing(coord))
+			{
+				// do nothing, continue to next piece past the special square
+			}
+			else
+			{
+				tile_coordinates.add(new Coordinate(coord.getX(), i));
+				tile_colors.add(boardSquares[coord.getX()][i].getBackground());
+				boardSquares[coord.getX()][i].setBackground(Color.GREEN);
+			}
+		}
+	}
+	
+	/*
+	* Will remove all possible move coloring and return back to the 
+	* initial colors from the board*
+	*/
+	private void hidePossibleMoves()
+	{
+		for(int i = 0 ; i < tile_coordinates.size() ; i++)
+		{
+			boardSquares[tile_coordinates.get(i).getX()][tile_coordinates.get(i).getY()].setBackground(tile_colors.get(i));
+		}
+		tile_coordinates.clear();
+		tile_colors.clear();
+	}
+	
+	/*
+	*	@param s-String that is the new theme of colors for the board
+	*/
+	public void setTileColors(String s)
+	{
+		last_color1 = color1;
+		last_color2 = color2;
+		if(s.equals("generic"))
+		{
+			special_color = Color.yellow;
+			color1 = Color.lightGray;
+			color2 = Color.gray;
+		}
+		else if(s.equals("autumn"))
+		{
+			special_color = Color.blue;
+			color1 = new Color(178, 65, 0);
+			color2 = new Color(255, 65, 0);
+		}
+		else if(s.equals("winter"))
+		{
+			special_color = Color.red;
+			color1 = Color.white;
+			color2 = new Color(51, 255, 225);
+		}
+		else if(s.equals("spring"))
+		{
+			special_color = Color.orange;
+			color1 = new Color(255, 204, 153);
+			color2 = new Color(255, 102, 178);
+		}
+		else if(s.equals("summer"))
+		{
+			special_color = Color.yellow;
+			color1 = Color.RED;
+			color2 = Color.BLUE;
+		}
+		else
+		{
+			// Do nothing
+		}
+		reprintTileColors();
+	}
+	
+	
+	/*
+	* will reprint the color theme assigned to color1 and color2
+	* if tiles are highlighted due to possible moves being shown
+	*	the saved colors for those tiles will be changed
+	*	to the correct themed color
+	*/
+	private void reprintTileColors()
+	{
+		int index;
+		for(int i = 0 ; i < boardSquares.length ; i++)
+		{
+			for(int j = 0 ; j < boardSquares[i].length ; j++)
+			{
+				if(boardSquares[i][j].getBackground() == Color.GREEN)
+				{
+					for(int k = 0 ; k < tile_colors.size() ; k++)
+					{
+						if(tile_colors.get(k) == last_color1)
+						{
+							tile_colors.set(k, color1);
+							break;
+						}
+						else if(tile_colors.get(k) == last_color2)
+						{
+							tile_colors.set(k, color2);
+							break;
+						}
+						else
+						{
+							// keep going along
+						}
+					}
+				}
+				else if(boardSquares[i][j].getBackground() == Color.darkGray)
+				{
+					if(selected_color == last_color1)
+					{
+						selected_color = color1;
+					}
+					else if(selected_color == last_color2)
+					{
+						selected_color = color2;
+					}
+					else
+					{
+						// Don't know what's going on
+					}
+				}
+				else
+				{
+					if (( j == 0 && i == 0 ) || ( j == 10 && i == 10 ) || ( j == 0 && i == 10 ) || ( j == 10 && i == 0 ) || ( j == 5 && i == 5 ))
+					{
+						boardSquares[i][j].setBackground(special_color);
+					}
+					else if (( j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0))
+					{
+						boardSquares[i][j].setBackground(color1);
+					}
+					else
+					{
+						boardSquares[i][j].setBackground(color2);
+					}
+				}
+			}
+		}
 	}
 }
 
