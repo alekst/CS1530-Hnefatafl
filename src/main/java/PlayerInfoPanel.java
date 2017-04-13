@@ -105,9 +105,9 @@ public class PlayerInfoPanel extends JPanel
 	*/
 	public void addTime()
 	{
-		if (listener.getCountdown() <= 0) // if the time has run out
+		if (listener.getCountdown() == 0) // if the time has run out
 		{
-			JOptionPane.showMessageDialog(null, "You've run out of time. You lost!");
+			//JOptionPane.showMessageDialog(null, "You've run out of time. You lost!");
 		}
 		else
 		{

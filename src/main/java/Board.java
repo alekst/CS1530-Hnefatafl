@@ -148,6 +148,7 @@ public class Board extends JPanel
 			}
 		}
 		printAll();
+		
 		switchTurn(false); // this switch turn does not count. This is done so that the Black player would go first. 
 	}	
 	

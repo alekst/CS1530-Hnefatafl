@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class TimerListener implements ActionListener
 {
-    private int countdown = 10;
+    private int countdown = 300;
 	private JLabel label;
 	private int moveTime = 0;
 	public boolean enabled = true;
