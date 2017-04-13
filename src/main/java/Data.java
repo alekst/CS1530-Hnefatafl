@@ -300,6 +300,13 @@ public class Data
 		return false;
 	}
 
+	/**
+	* Determines if the king is able to move, does by checking it's NSEW neighbors
+	* @param value-the int value of the king
+	* @param edge-the edge the king is on
+	* @return true-if the king is able to move
+	* @return false-if the king is not able to move
+	*/
 	private boolean canKingMove(int value, int edge)
 	{
 		boolean ret_val=false; //initially king cannot move
@@ -338,16 +345,24 @@ public class Data
 
 	//needs work, once a loop is found need to ensure that no captures can occur in it(no black pieces is in it)
 	//and need to make sure none of the pieces making the fort can be cap'd
+	/**
+	* Backtracking recursive method to find loop of white pieces around the king
+	* @param start-the starting int of the loop
+	* @param stop-the stopping int of the loop
+	* @param prev_pieces-array list of pieces already visited while searching for the loop
+	* @param kingVal-the int value of the king
+	* @param loop_pieces-array list of pieces in the loop
+	* @return true-if there is a valid loop
+	* @return false- if there is not a valid loop
+	*/
 	private boolean loop_(int start, int stop, ArrayList<Integer> prev_pieces, int kingVal, ArrayList<Integer> loop_pieces)
-	{//still needs work in the backtracking
+	{
 		//base case
-		if(start==stop)//king cannot be a "friendly" piece as well
+		if(start==stop)
 		{
 			loop_pieces.add(stop);
-			//System.out.println("KING:"+" "+kingVal);
-			//System.out.println("loop: ");
 			for(int i=0; i<loop_pieces.size(); i++)
-			{//check for vulnerable pieces here
+			{//check for vulnerable pieces h
 				System.out.println(loop_pieces.get(i));
 			}
 			//now make sure no piece can be captured
@@ -450,6 +465,12 @@ public class Data
 		}	
 	}
 
+	/**
+	* sees if any pieces creating the exit fort can be captured
+	* @param loop_pieces-array list of white pieces in the loop
+	* @return false-if a piece is vulnerable
+	* @return true-if pieces are not vulnerable
+	*/
 	private boolean arePiecesVulnerable(ArrayList<Integer> loop_pieces) 
 	{
 		System.out.println("check vulnerability");
