@@ -1022,6 +1022,7 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on north wall left special square
+	@Test
 	public void upperLeft2SWCSpecial()	
 	{
 		Data d = new Data();
@@ -1039,6 +1040,7 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on east wall top special square
+	@Test
 	public void upperRight1SWCSpecial()	
 	{
 		Data d = new Data();
@@ -1053,6 +1055,7 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on north wall right special square
+	@Test
 	public void upperRight2SWCSpecial()	
 	{
 		Data d = new Data();
@@ -1070,6 +1073,7 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on west wall bottom special square
+	@Test
 	public void lowerLeft1SWCSpecial()	
 	{
 		Data d = new Data();
@@ -1087,6 +1091,7 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on south wall left special square
+	@Test
 	public void lowerLeft2SWCSpecial()
 	{
 		Data d = new Data();
@@ -1101,6 +1106,7 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on east wall bottom special square
+	@Test
 	public void lowerRight1SWCSpecial()
 	{
 		Data d = new Data();
@@ -1115,6 +1121,7 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on south wall right special square
+	@Test
 	public void lowerRight2SWCSpecial()	
 	{
 		Data d = new Data();
@@ -1129,6 +1136,7 @@ public class DataTest
 	
 	// Tests shield wall captures without special spaces
 	// 	on north wall
+	@Test
 	public void northSWC()	
 	{
 		Data d = new Data();
@@ -1153,6 +1161,7 @@ public class DataTest
 	
 	// Tests shield wall captures without special spaces
 	// 	on south wall
+	@Test
 	public void southSWC()	
 	{
 		Data d = new Data();
@@ -1177,6 +1186,7 @@ public class DataTest
 	
 	// Tests shield wall captures without special spaces
 	// 	on east wall
+	@Test
 	public void eastSWC()	
 	{
 		Data d = new Data();
@@ -1201,6 +1211,7 @@ public class DataTest
 	
 	// Tests shield wall captures without special spaces
 	// 	on west wall
+	@Test
 	public void westSWC()
 	{
 		Data d = new Data();
@@ -1222,6 +1233,16 @@ public class DataTest
 			&& 10==test_arr.get(3).getX() && 6==test_arr.get(3).getY()
 			&& 10==test_arr.get(4).getX() && 7==test_arr.get(4).getY());
 	}
+	
+	// Tests if print returns a string's size is the size of the boardData array
+	@Test
+	public void testPrintData()
+	{
+		Data d = new Data();
+		String returned = d.print();
+		assertEquals(returned.length(), d.boardData.length);
+	}
+	
 }
 
 
