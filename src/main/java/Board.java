@@ -22,6 +22,9 @@ public class Board extends JPanel
 	private static final int numWhites = 12;
 	private static final int numBlacks = 24;
 	
+	private static final String IMG_PATH = "images/laboon.png";
+	private ImageIcon icon;
+	
 	
 	private Coordinate first_clicked = new Coordinate(-1, -1);
 	private Coordinate second_clicked = new Coordinate(-1, -1);
@@ -89,6 +92,9 @@ public class Board extends JPanel
 		JPanel boardConstrain = new JPanel(new GridBagLayout());
 		boardConstrain.setBackground(ochre);
 		boardConstrain.add(board);	
+		// set up the image
+        BufferedImage img = ImageIO.read(new File(IMG_PATH));
+        icon = new ImageIcon(img);
 	}
 	
 	
@@ -180,7 +186,7 @@ public class Board extends JPanel
 		
 		if (type.equals(whiteKing))
 		{
-			square.setText(whiteKing);
+			square.setText(icon);
 		}
 		else if (type.equals(whitePiece))
 		{
