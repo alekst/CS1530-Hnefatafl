@@ -66,6 +66,7 @@ public class PlayerInfoPanel extends JPanel
 		
 		setPreferredSize(new Dimension(100, 150));
 		setLayout(new FlowLayout());
+		setOpaque(true);
 		add(nameLabel);
 		add(timerLabel);
 		add(textLabel);

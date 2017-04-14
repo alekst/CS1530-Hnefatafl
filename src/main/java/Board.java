@@ -441,6 +441,8 @@ public class Board extends JPanel
 	{
 		
 		PlayerInfoPanel playerInfo = _player.getInfo();
+		playerInfo.setBackground(Color.lightGray);
+		
 
 		// stop the active player timer
 		playerInfo.stopTimer();
@@ -452,6 +454,9 @@ public class Board extends JPanel
 		}		
 		// start the passive player timer
 		PlayerInfoPanel otherInfo = _other.getInfo();
+		int color = (int) Long.parseLong("6495ed", 16);
+		otherInfo.setBackground(new Color (color));
+		
 		otherInfo.startTimer();
 		
 		// switch players
