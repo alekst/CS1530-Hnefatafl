@@ -259,24 +259,26 @@ public class Data
 					return loop_(friendly_1, friendly_2, prev_pieces, value,loop_pieces);
 				}
 			}
-			else if(edge==3 || edge==4)
+			else if(edge==3 || edge==4) //north and south walls
 			{
 				int friendly_1=0;
 				int friendly_2=0;
 				System.out.println("STARTING AT"+" "+value+" *******************8");
-				int curr_spot=value-1;
-				while(!isSpecialSquare(curr_spot)) //special squares at end of row/column always stop there
+				int curr_spot=value-1; //going until 1 or 111
+				//while(!isSpecialSquare(curr_spot)) //special squares at end of row/column always stop there
+				while(curr_spot>0 && curr_spot!=111)
 				{//need to find a white piece west
-					//System.out.println(" in loop going left:"+ " "+ curr_spot);
+					System.out.println(" in loop going left:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot))
 					{
 						//System.out.println("stop:"+" "+curr_spot);
 						break;
 					}
-					else if(isWhite(curr_spot) && isMember(curr_spot))
+					else if((isWhite(curr_spot) && isMember(curr_spot)) || isSpecialSquare(curr_spot)) 
 					{
-						//System.out.println("friendly @:"+ " "+curr_spot);
+						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_1=curr_spot; //setting a friendly_1 var
+						break;
 					}
 					curr_spot=curr_spot-1;
 				}
@@ -285,19 +287,21 @@ public class Data
 					//System.out.println("no friendly_1");
 					return false;
 				}
-				curr_spot=value+1;
-				while(!isSpecialSquare(curr_spot))
+				curr_spot=value+1; //going until 11 or 121
+				//while(!isSpecialSquare(curr_spot))
+				while(curr_spot!=12 && curr_spot!=121)
 				{//need to find a white piece east
-					//System.out.println(" in loop going right:"+ " "+ curr_spot);
+					System.out.println(" in loop going right:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot))
 					{
 						System.out.println("stop:"+" "+curr_spot);
 						break;
 					}
-					else if(isWhite(curr_spot) && isMember(curr_spot))
+					else if((isWhite(curr_spot) && isMember(curr_spot))|| isSpecialSquare(curr_spot))
 					{
-						//System.out.println("friendly @:"+ " "+curr_spot);
+						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_2=curr_spot;
+						break;
 					}
 					curr_spot=curr_spot+1;
 				}
