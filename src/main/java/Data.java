@@ -185,7 +185,8 @@ public class Data
 				System.out.println("STARTING AT"+" "+value+" *******************");
 				int curr_spot=value-11;
 				//while(!isSpecialSquare(curr_spot)) //need to find a white piece north, use
-				while(curr_spot!=0) //0 is off the board
+				//while(curr_spot!=0) //0 is off the board
+				while(curr_spot>0)
 				{
 					//System.out.println(" in loop going up:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot)) //blaack piece
@@ -219,7 +220,8 @@ public class Data
 				//at this point we need to have a white piece on the same column
 				curr_spot=value+11;
 				//while(!isSpecialSquare(curr_spot)) //need to find a white piece south
-				while(curr_spot!=132)
+				//while(curr_spot!=132)
+				while(curr_spot<122)
 				{
 					//System.out.println(" in loop going down:"+ " "+ curr_spot);
 					if((!isWhite(curr_spot)&&isMember(curr_spot)))
@@ -438,7 +440,7 @@ public class Data
 					loop_pieces.remove(Integer.valueOf(start));
 			}
 			//check northWest
-			if(isWhite(start-12)&&isMember(start-12) && !prev_pieces.contains(start-12) && (start-12)!=kingVal)
+			if((isWhite(start-12)&&isMember(start-12) && !prev_pieces.contains(start-12) && (start-12)!=kingVal)||start-12==1)
 			{
 				loop_pieces.add(start);
 				if(loop_(start-12, stop, prev_pieces,kingVal, loop_pieces))
@@ -449,7 +451,7 @@ public class Data
 					loop_pieces.remove(Integer.valueOf(start));
 			}
 			//check northEast
-			if(isWhite(start+10)&&isMember(start+10) && !prev_pieces.contains(start+10) && (start+10)!=kingVal)
+			if((isWhite(start+10)&&isMember(start+10) && !prev_pieces.contains(start+10) && (start+10)!=kingVal)||start+10==111)
 			{
 				loop_pieces.add(start);
 				if(loop_(start+10, stop, prev_pieces,kingVal, loop_pieces))
@@ -460,8 +462,11 @@ public class Data
 					loop_pieces.remove(Integer.valueOf(start));
 			}
 			//check southWest
-			if(isWhite(start-10)&&isMember(start-10) && !prev_pieces.contains(start-10) && (start-10)!=kingVal)
+				int x_=start-10;
+				System.out.println("start is"+start+" checking south west spot, it is: "+x_);
+			if((isWhite(start-10)&&isMember(start-10) && !prev_pieces.contains(start-10) && (start-10)!=kingVal) || start-10==11)
 			{
+			
 				loop_pieces.add(start);
 				if(loop_(start-10, stop, prev_pieces,kingVal, loop_pieces))
 				{
@@ -471,7 +476,7 @@ public class Data
 				else 
 					loop_pieces.remove(Integer.valueOf(start));
 			}//south east
-			if((isWhite(start+12)&&isMember(start+12) && !prev_pieces.contains(start+12) && (start+12)!=kingVal)||isSpecialSquare(start+12))
+			if((isWhite(start+12)&&isMember(start+12) && !prev_pieces.contains(start+12) && (start+12)!=kingVal)||start+12==121)
 			{
 				loop_pieces.add(start);
 				if(loop_(start+12, stop, prev_pieces,kingVal, loop_pieces))
