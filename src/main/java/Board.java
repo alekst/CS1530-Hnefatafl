@@ -360,7 +360,7 @@ public class Board extends JPanel
 					}
 					else
 					{
-						_player.doneWithTurn(); //disable whole board
+						_player.doneWithTurn(); 
 						_other.newTurn();
 						resetClicks();
 						switchTurn(true); // this is an actual turn that has been made, so the flag is set to true 
