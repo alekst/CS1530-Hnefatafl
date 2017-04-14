@@ -1022,6 +1022,7 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on north wall left special square
+	@Test
 	public void upperLeft2SWCSpecial()	
 	{
 		Data d = new Data();
@@ -1039,6 +1040,7 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on east wall top special square
+	@Test
 	public void upperRight1SWCSpecial()	
 	{
 		Data d = new Data();
@@ -1053,23 +1055,25 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on north wall right special square
+	@Test
 	public void upperRight2SWCSpecial()	
 	{
 		Data d = new Data();
 		d.set(5, 10);
 		d.set(1, 9);
-		d.set(17, 21);
-		d.set(13, 19);
+		d.set(15, 21);
+		d.set(13, 20);
+		d.set(17, 19);
 		d.set(6, 8);
-		d.set(14, 20);
 		ArrayList<Coordinate> test_arr = d.shieldWallCapture(7);
 		assertTrue(7==test_arr.get(0).getX() && 0==test_arr.get(0).getY()
-			&& 6==test_arr.get(1).getX() && 0==test_arr.get(1).getY()
-			&& 5==test_arr.get(2).getX() && 0==test_arr.get(2).getY());
+			&& 8==test_arr.get(1).getX() && 0==test_arr.get(1).getY()
+			&& 9==test_arr.get(2).getX() && 0==test_arr.get(2).getY());
 	}
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on west wall bottom special square
+	@Test
 	public void lowerLeft1SWCSpecial()	
 	{
 		Data d = new Data();
@@ -1087,6 +1091,7 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on south wall left special square
+	@Test
 	public void lowerLeft2SWCSpecial()
 	{
 		Data d = new Data();
@@ -1101,6 +1106,7 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on east wall bottom special square
+	@Test
 	public void lowerRight1SWCSpecial()
 	{
 		Data d = new Data();
@@ -1115,6 +1121,7 @@ public class DataTest
 	
 	// Tests shield wall captures utilizing special squares
 	// 	on south wall right special square
+	@Test
 	public void lowerRight2SWCSpecial()	
 	{
 		Data d = new Data();
@@ -1129,6 +1136,7 @@ public class DataTest
 	
 	// Tests shield wall captures without special spaces
 	// 	on north wall
+	@Test
 	public void northSWC()	
 	{
 		Data d = new Data();
@@ -1153,6 +1161,7 @@ public class DataTest
 	
 	// Tests shield wall captures without special spaces
 	// 	on south wall
+	@Test
 	public void southSWC()	
 	{
 		Data d = new Data();
@@ -1177,31 +1186,8 @@ public class DataTest
 	
 	// Tests shield wall captures without special spaces
 	// 	on east wall
+	@Test
 	public void eastSWC()	
-	{
-		Data d = new Data();
-		d.set(19, 35);
-		d.set(21, 46);
-		d.set(23, 89);
-		d.set(27, 68);
-		d.set(29, 79);
-		d.set(1, 34);
-		d.set(2, 45);
-		d.set(3, 56);
-		d.set(4, 67);
-		d.set(5, 78);
-		d.set(19, 23);
-		ArrayList<Coordinate> test_arr = d.shieldWallCapture(23);
-		assertTrue(0==test_arr.get(0).getX() && 3==test_arr.get(0).getY()
-			&& 0==test_arr.get(1).getX() && 4==test_arr.get(1).getY()
-			&& 0==test_arr.get(2).getX() && 5==test_arr.get(2).getY()
-			&& 0==test_arr.get(3).getX() && 6==test_arr.get(3).getY()
-			&& 0==test_arr.get(4).getX() && 7==test_arr.get(4).getY());
-	}
-	
-	// Tests shield wall captures without special spaces
-	// 	on west wall
-	public void westSWC()
 	{
 		Data d = new Data();
 		d.set(20, 43);
@@ -1216,11 +1202,61 @@ public class DataTest
 		d.set(5, 88);
 		d.set(19, 99);
 		ArrayList<Coordinate> test_arr = d.shieldWallCapture(99);
-		assertTrue(10==test_arr.get(0).getX() && 3==test_arr.get(0).getY()
-			&& 10==test_arr.get(1).getX() && 4==test_arr.get(1).getY()
+		assertTrue(10==test_arr.get(0).getX() && 7==test_arr.get(0).getY()
+			&& 10==test_arr.get(1).getX() && 6==test_arr.get(1).getY()
 			&& 10==test_arr.get(2).getX() && 5==test_arr.get(2).getY()
-			&& 10==test_arr.get(3).getX() && 6==test_arr.get(3).getY()
-			&& 10==test_arr.get(4).getX() && 7==test_arr.get(4).getY());
+			&& 10==test_arr.get(3).getX() && 4==test_arr.get(3).getY()
+			&& 10==test_arr.get(4).getX() && 3==test_arr.get(4).getY());
+	}
+	
+	// Tests shield wall captures without special spaces
+	// 	on west wall
+	@Test
+	public void westSWC()
+	{
+		
+		Data d = new Data();
+		d.set(19, 35);
+		d.set(21, 46);
+		d.set(23, 89);
+		d.set(27, 68);
+		d.set(29, 79);
+		d.set(1, 34);
+		d.set(2, 45);
+		d.set(3, 56);
+		d.set(4, 67);
+		d.set(5, 78);
+		d.set(31, 23);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(23);
+		assertTrue(0==test_arr.get(0).getX() && 3==test_arr.get(0).getY()
+			&& 0==test_arr.get(1).getX() && 4==test_arr.get(1).getY()
+			&& 0==test_arr.get(2).getX() && 5==test_arr.get(2).getY()
+			&& 0==test_arr.get(3).getX() && 6==test_arr.get(3).getY()
+			&& 0==test_arr.get(4).getX() && 7==test_arr.get(4).getY());
+	}
+	
+	// Tests shield wall captures on a king
+	// 	shouldn't capture anything
+	@Test
+	public void kingSWC()
+	{
+		Data d = new Data();
+		d.set(19, 35);
+		d.set(21, 46);
+		d.set(23, 89);
+		d.set(27, 68);
+		d.set(29, 79);
+		d.set(0, 34);
+		d.set(2, 45);
+		d.set(3, 56);
+		d.set(4, 67);
+		d.set(5, 78);
+		d.set(31, 23);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(23);
+		assertTrue(0==test_arr.get(0).getX() && 4==test_arr.get(0).getY()
+			&& 0==test_arr.get(1).getX() && 5==test_arr.get(1).getY()
+			&& 0==test_arr.get(2).getX() && 6==test_arr.get(2).getY()
+			&& 0==test_arr.get(3).getX() && 7==test_arr.get(3).getY());
 	}
 }
 
