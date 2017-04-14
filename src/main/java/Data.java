@@ -266,7 +266,7 @@ public class Data
 				System.out.println("STARTING AT"+" "+value+" *******************8");
 				int curr_spot=value-1; //going until 1 or 111
 				//while(!isSpecialSquare(curr_spot)) //special squares at end of row/column always stop there
-				while(curr_spot>0 && curr_spot!=111)
+				while(curr_spot>0 && curr_spot!=110)
 				{//need to find a white piece west
 					System.out.println(" in loop going left:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot))
@@ -289,7 +289,7 @@ public class Data
 				}
 				curr_spot=value+1; //going until 11 or 121
 				//while(!isSpecialSquare(curr_spot))
-				while(curr_spot!=12 && curr_spot!=121)
+				while(curr_spot!=12 && curr_spot!=122)
 				{//need to find a white piece east
 					System.out.println(" in loop going right:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot))
