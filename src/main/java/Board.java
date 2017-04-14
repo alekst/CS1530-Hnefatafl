@@ -348,7 +348,7 @@ public class Board extends JPanel
 						end();
 						setActive(false);
 					}
-					else if (movesWithoutCapture == 2) // 50 moves per player
+					else if (movesWithoutCapture == 100) // 50 moves per player
 					{
 						JOptionPane.showMessageDialog(null, "No capture for 50 last moves. It's a draw!");
 						end();
