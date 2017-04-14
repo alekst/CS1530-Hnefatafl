@@ -1253,7 +1253,10 @@ public class DataTest
 		d.set(5, 78);
 		d.set(31, 23);
 		ArrayList<Coordinate> test_arr = d.shieldWallCapture(23);
-		assertTrue(test_arr.size() == 0);
+		assertTrue(0==test_arr.get(0).getX() && 4==test_arr.get(0).getY()
+			&& 0==test_arr.get(1).getX() && 5==test_arr.get(1).getY()
+			&& 0==test_arr.get(2).getX() && 6==test_arr.get(2).getY()
+			&& 0==test_arr.get(3).getX() && 7==test_arr.get(3).getY());
 	}
 }
 

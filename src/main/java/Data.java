@@ -309,10 +309,17 @@ public class Data
 		int offset = 1;
 		if((coord.getX() - 1 < 0) && (coord.getY() - 1 >= 0)) // west wall
 		{
-			while(isMember(value - 11 * offset) && (isWhite(value - 11 * offset) != isWhite(value)) && (getIndex(value - 11 * offset) != 0)
+			while(isMember(value - 11 * offset) && (isWhite(value - 11 * offset) != isWhite(value))
 				&& isMember(value - 11 * offset + 1) && (isWhite(value - 11 * offset + 1) == isWhite(value)))
 				{
-					return_list.add(decode(value - 11 * offset));
+					if(getIndex(value - 11 * offset) != 0)
+					{	
+						return_list.add(decode(value - 11 * offset));
+					}
+					else
+					{
+						// It's a king...don't add to removal list
+					}
 					streak_count++;
 					if(((isMember(value - 11 * (offset + 1)) && (isWhite(value - 11 * (offset + 1)) == (isWhite(value)))) 
 						|| (isSpecialSquare(value - 11 * (offset + 1)))) && streak_count > 1)
@@ -322,11 +329,18 @@ public class Data
 					offset++;
 				}
 			offset = 1;
-			while(isMember(value + 11 * offset) && (isWhite(value + 11 * offset) != isWhite(value)) && (getIndex(value + 11 * offset) != 0)
+			while(isMember(value + 11 * offset) && (isWhite(value + 11 * offset) != isWhite(value))
 				&& isMember(value + 11 * offset + 1) && (isWhite(value + 11 * offset + 1) == isWhite(value)))
 				{
 					streak_count++;
-					return_list.add(decode(value + 11 * offset));
+					if(getIndex(value + 11 * offset) != 0)
+					{	
+						return_list.add(decode(value + 11 * offset));
+					}
+					else
+					{
+						// It's a king...don't add to removal list
+					}
 					if(((isMember(value + 11 * (offset + 1)) && (isWhite(value + 11 * (offset + 1)) == (isWhite(value))))
 						|| (isSpecialSquare(value + 11 * (offset + 1)))) && streak_count > 1)
 					{
@@ -337,11 +351,18 @@ public class Data
 		}	
 		else if((coord.getX() + 1 > 10) && (coord.getY() + 1 <= 10)) // east wall
 		{
-			while(isMember(value - 11 * offset) && (isWhite(value - 11 * offset) != isWhite(value)) && (getIndex(value - 11 * offset) != 0)
+			while(isMember(value - 11 * offset) && (isWhite(value - 11 * offset) != isWhite(value))
 				&& isMember(value - 11 * offset - 1) && (isWhite(value - 11 * offset - 1) == isWhite(value)))
 				{
 					streak_count++;
-					return_list.add(decode(value - 11 * offset));
+					if(getIndex(value - 11 * offset) != 0)
+					{	
+						return_list.add(decode(value - 11 * offset));
+					}
+					else
+					{
+						// It's a king...don't add to removal list
+					}
 					if(((isMember(value - 11 * (offset + 1)) && (isWhite(value - 11 * (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value - 11 * (offset + 1))) && streak_count > 1)
 					{
@@ -350,11 +371,18 @@ public class Data
 					offset++;
 				}
 			offset = 1;
-			while(isMember(value + 11 * offset) && (isWhite(value + 11 * offset) != isWhite(value)) && (getIndex(value + 11 * offset) != 0)
+			while(isMember(value + 11 * offset) && (isWhite(value + 11 * offset) != isWhite(value))
 				&& isMember(value + 11 * offset - 1) && (isWhite(value + 11 * offset - 1) == isWhite(value)))
 				{
 					streak_count++;
-					return_list.add(decode(value + 11 * offset));
+					if(getIndex(value + 11 * offset) != 0)
+					{	
+						return_list.add(decode(value + 11 * offset));
+					}
+					else
+					{
+						// It's a king...don't add to removal list
+					}
 					if(((isMember(value + 11 * (offset + 1)) && (isWhite(value + 11 * (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value + 11 * (offset + 1))) && streak_count > 1)
 					{
@@ -365,11 +393,18 @@ public class Data
 		}
 		else if((coord.getX() - 1 >= 0) && (coord.getY() + 1 > 10)) // south wall
 		{
-			while(isMember(value - offset) && (isWhite(value - offset) != isWhite(value)) && (getIndex(value - offset) != 0)
+			while(isMember(value - offset) && (isWhite(value - offset) != isWhite(value))
 				&& isMember(value - offset - 11) && (isWhite(value - offset - 11) == isWhite(value)))
 				{
 					streak_count++;
-					return_list.add(decode(value - offset));
+					if(getIndex(value - offset) != 0)
+					{	
+						return_list.add(decode(value - offset));
+					}
+					else
+					{
+						// It's a king...don't add to removal list
+					}
 					if(((isMember(value - (offset + 1)) && (isWhite(value - (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value - (offset + 1))) && streak_count > 1)
 					{
@@ -378,11 +413,18 @@ public class Data
 					offset++;
 				}
 			offset = 1;
-			while(isMember(value + offset) && (isWhite(value + offset) != isWhite(value)) && (getIndex(value + offset) != 0)
+			while(isMember(value + offset) && (isWhite(value + offset) != isWhite(value))
 				&& isMember(value + offset - 11) && (isWhite(value + offset - 11) == isWhite(value)))
 				{
 					streak_count++;
-					return_list.add(decode(value + offset));
+					if(getIndex(value + offset) != 0)
+					{	
+						return_list.add(decode(value + offset));
+					}
+					else
+					{
+						// It's a king...don't add to removal list
+					}
 					if(((isMember(value + (offset + 1)) && (isWhite(value + (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value + (offset + 1))) && streak_count > 1)
 					{
@@ -393,11 +435,18 @@ public class Data
 		}
 		else if((coord.getX() + 1 <= 10) && (coord.getY() - 1 < 0)) // north wall
 		{
-			while(isMember(value - offset) && (isWhite(value - offset) != isWhite(value)) && (getIndex(value - offset) != 0)
+			while(isMember(value - offset) && (isWhite(value - offset) != isWhite(value))
 				&& isMember(value - offset + 11) && (isWhite(value - offset + 11) == isWhite(value)))
 				{
 					streak_count++;
-					return_list.add(decode(value - offset));
+					if(getIndex(value - offset) != 0)
+					{	
+						return_list.add(decode(value - offset));
+					}
+					else
+					{
+						// It's a king...don't add to removal list
+					}
 					if(((isMember(value - (offset + 1)) && (isWhite(value - (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value - (offset + 1))) && streak_count > 1)
 					{
@@ -406,11 +455,18 @@ public class Data
 					offset++;
 				}
 			offset = 1;
-			while(isMember(value + offset) && (isWhite(value + offset) != isWhite(value)) && (getIndex(value + offset) != 0)
+			while(isMember(value + offset) && (isWhite(value + offset) != isWhite(value))
 				&& isMember(value + offset + 11) && (isWhite(value + offset + 11) == isWhite(value)))
 				{
 					streak_count++;
-					return_list.add(decode(value + offset));
+					if(getIndex(value + offset) != 0)
+					{	
+						return_list.add(decode(value + offset));
+					}
+					else
+					{
+						// It's a king...don't add to removal list
+					}
 					if(((isMember(value + (offset + 1)) && (isWhite(value + (offset + 1)) == (isWhite(value))))
 						|| isSpecialSquare(value + (offset + 1))) && streak_count > 1)
 					{
