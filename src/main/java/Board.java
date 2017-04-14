@@ -22,6 +22,7 @@ public class Board extends JPanel
 	private static final int numWhites = 12;
 	private static final int numBlacks = 24;
 	
+	private int movesWithoutCapture= 0; 
 	
 	private Coordinate first_clicked = new Coordinate(-1, -1);
 	private Coordinate second_clicked = new Coordinate(-1, -1);
@@ -328,6 +329,10 @@ public class Board extends JPanel
 					_manager.updateLocation(second_clicked, first_clicked);
 				
 					ArrayList<Coordinate>piecesToRemove=_manager.isPieceSurrounded(second_clicked); //sees if a piece(s) is captured
+					if (piecesToRemove.size() == 0)
+					{
+						movesWithoutCapture++;
+					}
 					for(int i=0; i<piecesToRemove.size(); i++) //removes pieces from board
 					{
 						enable(piecesToRemove.get(i)); //enable the spot where the piece used to reside
@@ -340,6 +345,12 @@ public class Board extends JPanel
 					if (_player.hasWon())
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You won!");
+						end();
+						setActive(false);
+					}
+					else if (movesWithoutCapture == 2) // 50 moves per player
+					{
+						JOptionPane.showMessageDialog(null, "No capture for 50 last moves. It's a draw!");
 						end();
 						setActive(false);
 					}
