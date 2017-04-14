@@ -1,4 +1,10 @@
- import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+//import javax.swing.ImageIcon;
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -22,7 +28,7 @@ public class Board extends JPanel
 	private static final int numWhites = 12;
 	private static final int numBlacks = 24;
 	
-	private static final String IMG_PATH = "images/laboon.png";
+	private static final String IMG_PATH = "src/main/java/images/laboon.png";
 	private ImageIcon icon;
 	
 	
@@ -91,10 +97,17 @@ public class Board extends JPanel
 		Color ochre = new Color(204, 119, 34);
 		JPanel boardConstrain = new JPanel(new GridBagLayout());
 		boardConstrain.setBackground(ochre);
-		boardConstrain.add(board);	
+		boardConstrain.add(board);
 		// set up the image
-        BufferedImage img = ImageIO.read(new File(IMG_PATH));
-        icon = new ImageIcon(img);
+		try
+		{
+			
+			BufferedImage img = ImageIO.read(new File(IMG_PATH));
+			icon = new ImageIcon(img);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
@@ -186,7 +199,8 @@ public class Board extends JPanel
 		
 		if (type.equals(whiteKing))
 		{
-			square.setText(icon);
+			//square.setText(whiteKing);
+			square.setIcon(icon);
 		}
 		else if (type.equals(whitePiece))
 		{
@@ -463,6 +477,8 @@ public class Board extends JPanel
 			
 		if (_manager.isKing(oldData))
 		{
+			Square square = boardSquares[oldData.getX()][oldData.getY()];
+			square.setIcon(null); // delete laboon
 			printPiece(newData, whiteKing);
 		}
 		else if(_player.isWhite())
