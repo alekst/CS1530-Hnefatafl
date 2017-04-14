@@ -1234,6 +1234,27 @@ public class DataTest
 			&& 0==test_arr.get(3).getX() && 6==test_arr.get(3).getY()
 			&& 0==test_arr.get(4).getX() && 7==test_arr.get(4).getY());
 	}
+	
+	// Tests shield wall captures on a king
+	// 	shouldn't capture anything
+	@Test
+	public void kingSWC()
+	{
+		Data d = new Data();
+		d.set(19, 35);
+		d.set(21, 46);
+		d.set(23, 89);
+		d.set(27, 68);
+		d.set(29, 79);
+		d.set(0, 34);
+		d.set(2, 45);
+		d.set(3, 56);
+		d.set(4, 67);
+		d.set(5, 78);
+		d.set(31, 23);
+		ArrayList<Coordinate> test_arr = d.shieldWallCapture(23);
+		assertTrue(test_arr.size() == 0);
+	}
 }
 
 
