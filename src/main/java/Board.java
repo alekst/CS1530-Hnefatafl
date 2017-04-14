@@ -333,6 +333,10 @@ public class Board extends JPanel
 					{
 						movesWithoutCapture++;
 					}
+					else
+					{
+						movesWithoutCapture = 0; // reset
+					}
 					for(int i=0; i<piecesToRemove.size(); i++) //removes pieces from board
 					{
 						enable(piecesToRemove.get(i)); //enable the spot where the piece used to reside
