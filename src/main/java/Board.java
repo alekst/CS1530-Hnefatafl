@@ -319,10 +319,6 @@ public class Board extends JPanel
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You have won!");
 					}
-					else if(_manager.isEncircled(second_clicked))
-					{
-						JOptionPane.showMessageDialog(null, "Congratulations! You have won via encirclement!");
-					}
 					_player.doneWithTurn(); //disable whole board
 					_other.newTurn();
 					resetClicks();
