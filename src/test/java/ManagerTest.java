@@ -3,6 +3,8 @@ import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.stream.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
 public class ManagerTest
 {
@@ -314,5 +316,150 @@ public class ManagerTest
 	{
 		Manager m = new Manager();
 		assertFalse(m.inSpecialSquare(3,4));
+	}
+	
+	/**
+	* This will test if the encoding returns the right value, given a Coordinate object
+	*/
+	@Test
+	public void testEncode()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(0, 0);
+		int expected = 1;
+		assertEquals(expected, m.encode(c));
+	}
+	
+	/**
+	* This will test if the encoding returns the right value, given a Coordinate object
+	*/
+	@Test
+	public void testEncodeWrong()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(10, 10);
+		int expected = 1;
+		assertNotEquals(expected, m.encode(c));
+	}
+	
+	/**
+	* This will test if it returns a proper index
+	*/
+	@Test
+	public void testKingIndex()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(5, 5); // should be the initial king position
+		int expected = 0; // the king's index
+		assertEquals(expected, m.getIndex(c));
+	}
+	
+	/**
+	* This will test if the king's index works. 
+	*/
+	@Test
+	public void testKingLocation()
+	{
+		Manager m = new Manager();
+		Coordinate expected = new Coordinate(5, 5); // should be the initial king position
+		assertEquals(expected.getX(), m.getKing().getX());
+		assertEquals(expected.getY(), m.getKing().getY());
+	}
+	
+	/**
+	* This will test if only the Whites are returned
+	*/
+	@Test
+	public void testGetWhites()
+	{
+		Manager m = new Manager();
+		int expected = 13;
+		assertEquals(expected, m.getWhites().length);
+	}
+	
+	/**
+	* This will test if only the Blacks are returned
+	*/
+	@Test
+	public void testGetBlacks()
+	{
+		Manager m = new Manager();
+		int expected = 24;
+		assertEquals(expected, m.getBlacks().length);
+	}
+	
+	/*
+	 * This will test getBoardStatus returns a Coordinate array of size 37. 
+	 */
+	@Test
+	public void testGetBoardStatus()
+	{
+		Manager m = new Manager();
+		int expected  = 37;
+		assertEquals(expected, m.getBoardStatus().length);
+	}
+	
+	//Tests if getBoardData returns a Data object
+	@Test
+	public void testGetBoardData()
+	{
+		Manager m = new Manager();
+		assertThat(m.getBoardData(), instanceOf(Data.class));
+	}
+	
+	
+	/*
+	 * This will test if someoneThere returns true when there is a piece in the square 
+	 */
+	@Test
+	public void testSomeoneThereTrue()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(5, 5); // the king's coordinate
+		assertTrue(m.someoneThere(c));
+	}
+	
+	/*
+	 * This will test if someoneThere returns false when there is no piece in the square 
+	 */
+	@Test
+	public void testSomeoneThereFalse()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(11, 0); // a special square
+		assertFalse(m.someoneThere(c));
+	}
+	
+	/*
+	 * This will test if the coordinate contains the King
+	 */
+	@Test
+	public void testIsKingTrue()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(5, 5); // the king's coordinate
+		assertTrue(m.isKing(c));
+	}
+	
+	/*
+	 * This will test if the coordinate does not contain the King
+	 */
+	@Test
+	public void testIsKingFalse()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(4, 5); // the king's neighboring coordinate
+		assertFalse(m.isKing(c));
+	}
+	
+	/*
+	 * This will test if the Data is loaded, given an array of Integers
+	 */
+	@Test
+	public void testLoadData()
+	{
+		Manager m = new Manager();
+		Integer[] board = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36};
+		assertEquals(m.loadData(board), 0);
 	}
 }

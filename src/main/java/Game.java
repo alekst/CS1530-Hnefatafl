@@ -37,8 +37,11 @@ public class Game
 		_whites = new Player(_manager);
 		_whites.setWhite();
 		
+		int numWhites = _manager.getWhites().length;
+		
 		// player info panel
-		_whiteInfo = new PlayerInfoPanel("Whites", 300, 13); // 300 seconds, 13 pieces.
+		_whiteInfo = new PlayerInfoPanel("Whites", 300, numWhites); // 300 seconds, 13 pieces.
+		
 		
 		// add the info panel to the player
 		_whites.addInfo(_whiteInfo);
@@ -47,8 +50,10 @@ public class Game
 		_blacks = new Player(_manager);
 		_blacks.setBlack();
 		
+		int numBlacks = _manager.getBlacks().length;
+		
 		// player info panel
-		_blackInfo = new PlayerInfoPanel("Blacks", 300, 24); // 300 seconds, 24 pieces
+		_blackInfo = new PlayerInfoPanel("Blacks", 300, numBlacks); // 300 seconds, 24 pieces
 		
 		// add player info to the player
 		_blacks.addInfo(_blackInfo);
@@ -74,12 +79,15 @@ public class Game
 		_manager = manager;	
 		// player 1 : right now resets player info on load
 		_whites = whites;
-		_whiteInfo = new PlayerInfoPanel("Whites", 300, 13); // 300 seconds
+		int numWhites = _manager.getWhites().length;
+		_whiteInfo = new PlayerInfoPanel("Whites", 300, numWhites); // 300 seconds
 		_whites.addInfo(_whiteInfo);
 		
 		// player 2 : right now resets player info on load
 		_blacks = blacks;
-		_blackInfo = new PlayerInfoPanel("Blacks", 300, 24); // temporary solution. It assumes that all the pieces are in tact in the saved game. This information should probably come from the Data array after it is loaded instead or come directly from the file.
+		int numBlacks = _manager.getBlacks().length;
+		_blackInfo = new PlayerInfoPanel("Blacks", 300, numBlacks);
+		
 		_blacks.addInfo(_blackInfo);
 		
 		_board = new Board(_manager, _whites, _blacks);

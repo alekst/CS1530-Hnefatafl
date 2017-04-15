@@ -9,9 +9,13 @@ import org.junit.Test;
  *	Internal "private" methods are inherently tested via these methods.
  *	Playing actions from user clicks are tested by hand
  */
+
 public class GameTest
 {
-  //Tests if queryManager returns a Manager object
+	/**
+  * Tests if queryManager returns a Manager object
+  */ 
+  
 	@Test
 	public void testQueryInstanceOfManager()
 	{
@@ -19,9 +23,9 @@ public class GameTest
 		assertThat(g.queryManager(), instanceOf(Manager.class));
 	}
   
-	/*
-	 *	This test tests that getTurn gets the player turn
-	 */
+	/**
+	* 	This test tests that getTurn gets the player turn
+	*/
 	@Test
 	public void testGetTurn()
 	{

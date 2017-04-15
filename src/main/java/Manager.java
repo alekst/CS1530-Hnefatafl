@@ -109,14 +109,14 @@ public class Manager
 		return _board;
 	}
 	
-		/** 
-		* @return a current board status as a Data object
-		*
-		*/ 
-		public Data getBoardData()
-		{
-			return _data;
-		}
+	/** 
+	* @return a current board status as a Data object
+	*
+	*/ 
+	public Data getBoardData()
+	{
+		return _data;
+	}
 		
 	/**
 	* @param coord-The coordinate object of a locatio

@@ -1,5 +1,7 @@
 import java.lang.*;
 import java.util.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.stream.*;
@@ -1238,7 +1240,7 @@ public class DataTest
 	// Tests shield wall captures on a king
 	// 	shouldn't capture anything
 	@Test
-	public void kingSWC()
+	public void kingSWC() 
 	{
 		Data d = new Data();
 		d.set(19, 35);
@@ -1258,6 +1260,15 @@ public class DataTest
 			&& 0==test_arr.get(2).getX() && 6==test_arr.get(2).getY()
 			&& 0==test_arr.get(3).getX() && 7==test_arr.get(3).getY());
 	}
+	
+	// Tests if print returns a string
+	@Test
+	public void testPrintData()
+	{
+		Data d = new Data();
+		assertThat(d.print(), instanceOf(String.class));
+	}
+	
 }
 
 

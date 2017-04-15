@@ -22,6 +22,7 @@ public class Board extends JPanel
 	private static final int numWhites = 12;
 	private static final int numBlacks = 24;
 	
+	private int movesWithoutCapture= 0; 
 	
 	private Coordinate first_clicked = new Coordinate(-1, -1);
 	private Coordinate second_clicked = new Coordinate(-1, -1);
@@ -292,6 +293,7 @@ public class Board extends JPanel
 	{
 		 public void doPerformAction(ActionEvent actionEvent)
  		{	
+			setActive(true);
  			Square b = (Square)actionEvent.getSource();
  			Coordinate coor = b.getCoord();
 			if(_player.getInfo().timerDone())
@@ -328,6 +330,14 @@ public class Board extends JPanel
 					_manager.updateLocation(second_clicked, first_clicked);
 				
 					ArrayList<Coordinate>piecesToRemove=_manager.isPieceSurrounded(second_clicked); //sees if a piece(s) is captured
+					if (piecesToRemove.size() == 0)
+					{
+						movesWithoutCapture++;
+					}
+					else
+					{
+						movesWithoutCapture = 0; // reset
+					}
 					for(int i=0; i<piecesToRemove.size(); i++) //removes pieces from board
 					{
 						enable(piecesToRemove.get(i)); //enable the spot where the piece used to reside
@@ -343,9 +353,15 @@ public class Board extends JPanel
 						end();
 						setActive(false);
 					}
+					else if (movesWithoutCapture == 100) // 50 moves per player
+					{
+						JOptionPane.showMessageDialog(null, "No capture for 50 last moves. It's a draw!");
+						end();
+						setActive(false);
+					}
 					else
 					{
-						_player.doneWithTurn(); //disable whole board
+						_player.doneWithTurn(); 
 						_other.newTurn();
 						resetClicks();
 						switchTurn(true); // this is an actual turn that has been made, so the flag is set to true 

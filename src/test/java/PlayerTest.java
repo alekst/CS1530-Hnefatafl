@@ -139,6 +139,23 @@ public class PlayerTest
 		assertEquals(panel, actual);
 	}
 	
+	// Checks if the getPieces() gets ... pieces. 
+	@Test
+	public void testGetPieces()
+	{
+		Manager m = new Manager();
+		Player w = new Player(m);
+		w.setWhite();
+		Player b = new Player(m);
+		b.setBlack();
+		Coordinate [] whites = w.getPieces();
+		Coordinate [] blacks = b.getPieces();
+		assertEquals(whites.length, 13);
+		assertEquals(blacks.length, 24);
+		
+		
+	}
+	
 	
 }
 		
