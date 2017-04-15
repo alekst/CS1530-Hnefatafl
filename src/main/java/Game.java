@@ -229,7 +229,7 @@ public class Game
 	
 	/**
 	* Receives turn flag and sets player turn accordingly 
-	* If the flag is 0, it is white's turn
+	* If the flag is 0, it is white's turn, changes turns
 	* If the flag is 1, it is black's turn (new game default)
 	*/
 	private void setPlayers(int turn) 
