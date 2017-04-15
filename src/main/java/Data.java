@@ -8,6 +8,22 @@ public class Data
 	public Integer[] boardData; // Should be public so that the Board object can actually access the coordinates
 	public Integer[] specialSquares; 
 	
+	
+	// Going to track the min and max coordinates for both whites
+	// 		and blacks in encirclement to make sure the loop
+	//		surrounds the whites
+	private Integer eWMinX;
+	private Integer eWMaxX;
+	private Integer eWMinY;
+	private Integer eWMaxY;
+	
+	private Integer eBMinX;
+	private Integer eBMaxX;
+	private Integer eBMinY;
+	private Integer eBMaxY;
+	
+	
+	
 	private ArrayList<Integer> seenPieces = new ArrayList<Integer>();
 	
 	/**
@@ -523,19 +539,50 @@ public class Data
 	{
 		seenPieces.clear();
 		
+		boolean return_val;
+		
 		if(isWhite(value)) // no need to check if the last move was a white move
 		{
 			return false;
 		}
 		else if(isLooped(value))
 		{
-			return isEncapsulated();
+			return_val = isEncapsulated();
+			setMinsMaxs();
+			System.out.println("eBMinx = " + eBMinX);
+			System.out.println("eBMaxX = " + eBMaxX);
+			System.out.println("eBMinY = " + eBMinY);
+			System.out.println("eBMaxY = " + eBMaxY);
+			if(eBMinX < eWMinX && eBMaxX > eWMaxX && eBMinY < eWMinY && eBMaxY > eWMaxY)
+			{
+				return return_val;
+			}
+			else
+			{
+				return false;
+			}
 		}
 		else
 		{
 			return false;
 		}
 		
+	}
+	
+	private void setMinsMaxs()
+	{
+		eBMinX = 12;
+		eBMaxX = 0;
+		eBMinY = 12;
+		eBMaxY = 0;
+		
+		for(int i = 0 ; i < seenPieces.size() ; i++)
+		{
+			if(decode(seenPieces.get(i)).getX() < eBMinX){eBMinX = decode(seenPieces.get(i)).getX();}
+			else if(decode(seenPieces.get(i)).getX() > eBMaxX){eBMaxX = decode(seenPieces.get(i)).getX();}
+			if(decode(seenPieces.get(i)).getY() < eBMinY){eBMinY = decode(seenPieces.get(i)).getY();}
+			else if(decode(seenPieces.get(i)).getY() > eBMaxY){eBMaxY = decode(seenPieces.get(i)).getY();}
+		}
 	}
 	
 	/*
@@ -628,6 +675,11 @@ public class Data
 		
 		boolean nothing = true;
 		
+		eWMinX = 12;
+		eWMaxX = 0;
+		eWMinY = 12;
+		eWMaxY = 0;
+		
 		for(int i = 1 ; i < 12 ; i++)
 		{
 			for(int j = 0 ; j < 11 ; j++)
@@ -643,6 +695,10 @@ public class Data
 				}
 				else if((first_seen) && isWhite(i + (11 * j)))
 				{
+					if(decode(i + (11 * j)).getX() < eWMinX){eWMinX = decode(i + (11 * j)).getX();}
+					else if(decode(i + (11 * j)).getX() > eWMaxX){eWMaxX = decode(i + (11 * j)).getX();}
+					if(decode(i + (11 * j)).getY() < eWMinY){eWMinY = decode(i + (11 * j)).getY();}
+					else if(decode(i + (11 * j)).getY() > eWMaxY){eWMaxY = decode(i + (11 * j)).getY();}
 					nothing = false;
 					second_seen = false;
 				}

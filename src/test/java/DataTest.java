@@ -1259,8 +1259,8 @@ public class DataTest
 			&& 0==test_arr.get(3).getX() && 7==test_arr.get(3).getY());
 	}
 	
-	// Tests to see if there is encapturing
-	public void encaptureTest()
+	// Tests to see if there is encircling with loop surrounding all whites
+	public void encircleTrueTest()
 	{
 		Data d = new Data();
 		d.set(21, 47);
@@ -1276,6 +1276,17 @@ public class DataTest
 		d.set(29, 81);
 		d.set(27, 69);
 		assertTrue(d.isEncircled(29));
+	}
+	
+	// Tests to see if there is no encircling when there is a loop
+	//	and all whites are surrounded, but the loop isn't surrounding
+	//		all whites
+	public void encircleFalseTest()
+	{
+		Data d = new Data();
+		d.set(15, 29);
+		d.set(17, 19);
+		assertFalse(d.isEncircled(29));
 	}
 }
 

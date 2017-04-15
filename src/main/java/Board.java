@@ -343,6 +343,12 @@ public class Board extends JPanel
 						end();
 						setActive(false);
 					}
+					else if(_manager.isEncircled(second_clicked))
+					{
+						JOptionPane.showMessageDialog(null, "Congratulations! You won!");
+						end();
+						setActive(false);
+					}
 					else
 					{
 						_player.doneWithTurn(); //disable whole board
