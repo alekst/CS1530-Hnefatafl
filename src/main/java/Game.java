@@ -172,7 +172,7 @@ public class Game
 	* @return int 1 if it is black's turn to move
 	* @return int 0 if it is white's turn to move
 	*/
-	private int getTurn()
+	public int getTurn()
 	{
 		int turn;
 		if(_blacks.myTurn())

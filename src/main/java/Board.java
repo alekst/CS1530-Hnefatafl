@@ -454,6 +454,7 @@ public class Board extends JPanel
   */
   public int setTurn(boolean turn)
   {
+    int result = 1; // for testing purposes; default is 1 meaning it is black's turn
     if (turn) {
       _player.doneWithTurn();
       _other.newTurn();
@@ -483,11 +484,12 @@ public class Board extends JPanel
           		
       // disable the passive player. 
       disable(_other);
-    } else { // default black's move 
-      // do nothing
+      result = 0;
+    } else { 
+      //black's turn; aka do nothing
     }
     
-    return 0; // upon completion return 0 for testing
+    return result; // upon completion return 0 for testing
   }
 	/**
 	* "Moves" the piece by deleting piece at old location and printing piece at new location 
