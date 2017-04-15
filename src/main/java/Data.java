@@ -543,20 +543,13 @@ public class Data
 	*/
 	public boolean rule_9(int location, int wall)
 	{
-		System.out.println("in data"+location);
 		Integer[] neighbors=getNeighbors(location);
 		boolean color=isWhite(location); //get piece color
-		System.out.println("color is: "+color);
-		for(int j=0; j<boardData.length; j++)
-		{
-			System.out.print(boardData[j]+" ,");
-		}
 		if(wall==1) //0,2,3
 		{
 
 			if((isMember(neighbors[0])&&isMember(neighbors[2])&&isMember(neighbors[3])) &&(isWhite(neighbors[0])!=color)&&(isWhite(neighbors[2])!=color)&&(isWhite(neighbors[3])!=color))
 			{
-				System.out.println("surrounded");
 				return true;
 			}
 		}
@@ -564,7 +557,6 @@ public class Data
 		{
 			if((isMember(neighbors[0])&&isMember(neighbors[1])&&isMember(neighbors[3])) &&(isWhite(neighbors[0])!=color)&&(isWhite(neighbors[1])!=color)&&(isWhite(neighbors[3])!=color))
 			{
-				System.out.println("surrounded");
 				return true;
 			}
 		}
@@ -573,7 +565,6 @@ public class Data
 		{
 			if((isMember(neighbors[1])&&isMember(neighbors[2])&&isMember(neighbors[3])) &&(isWhite(neighbors[1])!=color)&&(isWhite(neighbors[2])!=color)&&(isWhite(neighbors[3])!=color))
 			{
-				System.out.println("surrounded");
 				return true;
 			}
 		}
@@ -582,7 +573,6 @@ public class Data
 		{
 			if((isMember(neighbors[0])&&isMember(neighbors[1])&&isMember(neighbors[2])) &&(isWhite(neighbors[0])!=color)&&(isWhite(neighbors[1])!=color)&&(isWhite(neighbors[2])!=color))
 			{
-				System.out.println("surrounded");
 				return true;
 			}
 		}

@@ -308,8 +308,6 @@ public class Board extends JPanel
 				showPossibleMoves(first_clicked);
 				if(_player.getInfo().getNumPiece()==1)
 				{
-					System.out.println("1 left");
-					
 					//do check here
 					if(_manager.rule_9(first_clicked))
 					{
