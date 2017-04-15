@@ -446,6 +446,49 @@ public class Board extends JPanel
 		disable(_other);
 	}
 		
+    
+  /**
+  * Changes current player to "other" and "other" player to now be the current player to move
+  * Calls enable and disable methods for the respective players' pieces
+  * This is only called by loading a game. If "true", then the default black moving first is changed to white
+  */
+  public int setTurn(boolean turn)
+  {
+    if (turn) {
+      _player.doneWithTurn();
+      _other.newTurn();
+      resetClicks();
+          	
+      PlayerInfoPanel playerInfo = _player.getInfo();
+
+      // stop the active player timer
+      playerInfo.stopTimer(); // *** want to set timer rather than only stop
+      // if this is the end of an actual turn and not done in preparation for the game
+      //if (turn)
+      //{
+        // add three seconds to this player's time
+        //playerInfo.addTime();
+      //}		
+      // start the passive player timer
+      PlayerInfoPanel otherInfo = _other.getInfo();
+      otherInfo.startTimer(); // *** want to set timer before timer start
+          		
+      // switch players
+      Player temp = _player;
+      _player = _other;
+      _other = temp;
+          		
+      // enable the active player
+      enable(_player);
+          		
+      // disable the passive player. 
+      disable(_other);
+    } else { // default black's move 
+      // do nothing
+    }
+    
+    return 0; // upon completion return 0 for testing
+  }
 	/**
 	* "Moves" the piece by deleting piece at old location and printing piece at new location 
 	* @param oldData: Coordinate object indicating old location of the moving piece
