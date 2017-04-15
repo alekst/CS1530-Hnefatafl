@@ -128,8 +128,10 @@ public class Game
 		try {
       out = openOutStream();
       printBoard(out);
+			_board.showMsg("Game has been saved successfully.");
 		} catch(IOException e) 
 		{
+			_board.showMsg("Sorry, something went wrong in saving your game. Please try again.");
   		System.err.format("IOException: %s%n", e);
 		} finally {
 			closeOutStream(out);
@@ -155,15 +157,14 @@ public class Game
 				_manager.loadData(locs);
 				load_init(_manager, _whites, _blacks);
 
-			} else 
-			{
-				System.out.println("Sorry, there are no saved games to load!");
-			}
-
+			} 
+		} catch (java.nio.file.NoSuchFileException nf) 
+		{
+			_board.showMsg("Sorry, there are no saved games to load! To save a game, click \"Save\" below.");
 		} catch (IOException e) 
 		{
     	System.err.format("IOException: %s%n", e);
-		}
+		} 
 	}
 	
 	/**

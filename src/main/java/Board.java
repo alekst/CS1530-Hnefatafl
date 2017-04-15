@@ -691,6 +691,11 @@ public class Board extends JPanel
 			}
 		}
 	}
+  
+  public void showMsg(String msg)
+  {
+    JOptionPane.showMessageDialog(null, msg);
+  }
 }
 
 
