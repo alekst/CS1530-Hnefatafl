@@ -22,25 +22,54 @@ public class PlayerInfoPanel extends JPanel
 	
 	private JLabel timerLabel;
 	private JLabel nameLabel;
+	private JLabel textLabel, piecesLabel;
 	private TimerListener listener;
 	private Timer timer;
 	private int time, minutes, seconds;
+	private int pieces;
 	
-	public PlayerInfoPanel(String name, int t)
+	/**
+	 * An empty constructor used for testing purposes only. 
+	 */
+
+	public PlayerInfoPanel()
+	{
+		// an empty constructor
+	}
+	
+	/**
+	 * A constructor for the info panel. 
+	 * @param name - a Player's handle. 
+	 * @param t - the initial time on the clock in seconds
+	 * @param pieces - number of pieces for the player
+	 *
+	 */
+	public PlayerInfoPanel(String name, int t, int pieces)
 	{	
 		time = t;
+		this.pieces = pieces;
 		minutes  = convertMinutes();
 		seconds = convertSeconds();
 		timerLabel = new JLabel(String.format("%d:%02d", minutes, seconds));
+		timerLabel.setFont(new Font("Serif", Font.PLAIN, 90));
 		add(timerLabel);
 		listener = new TimerListener(timerLabel);
 		timer = new Timer(1000, listener); // creates actionEvents every second on a separate thread. 
-		
 		nameLabel = new JLabel(name);
+		nameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+		
+		textLabel = new JLabel("Pieces: ");
+		textLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+		
+		piecesLabel = new JLabel(Integer.toString(pieces));
+		piecesLabel.setFont(new Font("Serif", Font.PLAIN, 30));
+		
 		setPreferredSize(new Dimension(100, 150));
 		setLayout(new FlowLayout());
 		add(nameLabel);
 		add(timerLabel);
+		add(textLabel);
+		add(piecesLabel);
 	}
 	
 	/* 
@@ -50,6 +79,16 @@ public class PlayerInfoPanel extends JPanel
 	{
 		timer.start();
 	}
+	
+	/*
+	 * This method returns true if the countdown is equal or below zero. Otherwise, true. 
+	 */
+	public boolean timerDone()
+	{
+		System.out.println(listener.enabled);
+		return !listener.enabled;
+	} 
+	
 	
 	/* 
 	* This method stops a timer on a PlayerInfoPanel 
@@ -66,22 +105,77 @@ public class PlayerInfoPanel extends JPanel
 	*/
 	public void addTime()
 	{
-		listener.addToCountdown(); // adds three seconds for the running display in TimerListener
-		time = time + 3; // plus three seconds to the time
-		minutes = convertMinutes();
-		seconds = convertSeconds();
-		timerLabel.setText(String.format("%d:%02d", minutes, seconds)); // update the label
+		if (listener.getCountdown() == 0) // if the time has run out
+		{
+			//JOptionPane.showMessageDialog(null, "You've run out of time. You lost!");
+		}
+		else
+		{
+			listener.addToCountdown(); // adds three seconds for the running display in TimerListener
+			time = time + 3; // plus three seconds to the time
+			minutes = convertMinutes();
+			seconds = convertSeconds();
+			timerLabel.setText(String.format("%d:%02d", minutes, seconds)); // update the label
+		}
+		
+	}
+	/**
+	 * Converts time in seconds into complete minutes
+	 */ 
+	
+	/*
+	* This method takes the number of pieces as an argument and sets it to the info panel
+	*/
+	public void setNumPieces(int pieces)
+	{
+		this.pieces = pieces;
+	}
+	/*
+	* This method is useful for testing to see if the number of pieces was set correctly
+	*/
+	
+	public int getNumPiece()
+	{
+		return pieces;
 	}
 	
+	/*
+	 * This method decrements the number of pieces the player has left. It can only go down. 
+	 * 
+	 */
+	public void takeAPiece()
+	{
+		pieces--;
+	}
+	
+	/*
+	 * This method updates the label with the number of pieces.
+	 * 
+	 */
+	public void updatePieces()
+	{
+		piecesLabel.setText(Integer.toString(pieces));
+	}
+	
+	/**
+	 * A helper method to convert the time in seconds to show just whole minutes. 
+	 *
+	 */
 	private int convertMinutes()
 	{
 		return time / 60;
 	}
 	
+	/**
+
+	 * A helper method to convert the time in seconds to show just remainder of seconds to the complete minute. 
+	 *
+	 */
 	private int convertSeconds()
 	{
 		return time % 60;
 	}
+	
 	
 			
 	

@@ -283,7 +283,7 @@ public class Manager
 	* @return false-if the destination is not one of the special squares
 	* @return true-if the destination is one of the special squares
 	*/
-	private boolean inSpecialSquare(int x, int y)
+	public boolean inSpecialSquare(int x, int y)
 	{
 		if(x==0 && y==0)
 		{

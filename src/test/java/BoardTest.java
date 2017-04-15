@@ -1,6 +1,8 @@
 import java.lang.*;
+import javax.swing.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.instanceOf;
 
 /*
  *	This class holds all tests for the Board class. 
@@ -59,15 +61,31 @@ public class BoardTest
 	}
 	
 	/*
-	 *	This test tests that all of the pieces of the board (for each player) can be printed without error.
+	 *	This test tests that all of the pieces of the board can be printed without error.
 	 */
 	@Test
-	public void testPrintPieces()
+	public void testPrintAllPieces()
 	{
 		Game g = new Game();
 		Board b = g.queryBoard();
-		assertEquals(b.printPieces(g.queryPlayers()[0]), 0);
-		assertEquals(b.printPieces(g.queryPlayers()[1]), 0);
+		assertEquals(b.printAll(), 0);
 	}
-		
+	
+	/*
+	 *	This test tests that printBoard returns a string
+	 */
+	@Test
+	public void testprintBoardIsString()
+	{
+		Manager m = new Manager();
+		Player p1 = new Player(m);
+		PlayerInfoPanel in = new PlayerInfoPanel("weezy", 1, 12);
+		p1.addInfo(in);
+		Player p2 = new Player(m);
+		p2.addInfo(in);
+		Board b = new Board(m, p1, p2);
+		assertThat(b.printBoard(), instanceOf(String.class));
+	}
+	
+	
 }

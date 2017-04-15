@@ -22,7 +22,7 @@ public class Game
 	*/
 	public Game()
 	{
-		init();	
+		init();
 	}
 	
 	/**
@@ -37,9 +37,8 @@ public class Game
 		_whites = new Player(_manager);
 		_whites.setWhite();
 		
-		// TODO: set changeable values into a Settings object. 
 		// player info panel
-		_whiteInfo = new PlayerInfoPanel("Whites", 300); // 300 seconds
+		_whiteInfo = new PlayerInfoPanel("Whites", 300, 13); // 300 seconds, 13 pieces.
 		
 		// add the info panel to the player
 		_whites.addInfo(_whiteInfo);
@@ -49,7 +48,8 @@ public class Game
 		_blacks.setBlack();
 		
 		// player info panel
-		_blackInfo = new PlayerInfoPanel("Blacks", 300);
+		_blackInfo = new PlayerInfoPanel("Blacks", 300, 24); // 300 seconds, 24 pieces
+		
 		// add player info to the player
 		_blacks.addInfo(_blackInfo);
 
@@ -57,11 +57,11 @@ public class Game
 		_board = new Board(_manager, _whites, _blacks);
 		
 		//create the Game Info Panel
-		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo);
+		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo, _board);
 		// create the main frame
 		MainFrame _mf = new MainFrame(this, _gi);
 	}
-	
+
 	/**
 	* Initializes the game state with existing manager (related data) and players
 	* @param manager : Manager object with related Data
@@ -74,17 +74,17 @@ public class Game
 		_manager = manager;	
 		// player 1 : right now resets player info on load
 		_whites = whites;
-		_whiteInfo = new PlayerInfoPanel("Whites", 300); // 300 seconds
+		_whiteInfo = new PlayerInfoPanel("Whites", 300, 13); // 300 seconds
 		_whites.addInfo(_whiteInfo);
 		
 		// player 2 : right now resets player info on load
 		_blacks = blacks;
-		_blackInfo = new PlayerInfoPanel("Blacks", 300);
+		_blackInfo = new PlayerInfoPanel("Blacks", 300, 24); // temporary solution. It assumes that all the pieces are in tact in the saved game. This information should probably come from the Data array after it is loaded instead or come directly from the file.
 		_blacks.addInfo(_blackInfo);
 		
 		_board = new Board(_manager, _whites, _blacks);
 	
-		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo);
+		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo, _board);
 		MainFrame _mf = new MainFrame(this, _gi);
 	}
 	

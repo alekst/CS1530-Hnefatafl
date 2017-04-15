@@ -11,6 +11,11 @@ public class Square extends JButton
 	
 	private Coordinate coord;
 	
+	/**
+	 * A constructor for the Square object
+	 * @param coord - a Coordinate object containing the coordiates of the Square
+	 *
+	 */
 	public Square(Coordinate coord)
 	{
 		this.coord = coord;
@@ -21,7 +26,9 @@ public class Square extends JButton
 		setBorderPainted(true);
 		setFont(new Font("UNI-8", Font.PLAIN, 36));
 	}
-		
+	/**
+	 * @return the Coordinate object, containing the location of the Square
+	 */	
 	public Coordinate getCoord()
 	{
 		return coord;

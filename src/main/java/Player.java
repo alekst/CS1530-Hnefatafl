@@ -4,6 +4,7 @@ public class Player
 	private boolean _white;
 	private boolean _turn;
 	private PlayerInfoPanel _info;
+	private int _pieces;
 	
 	/**
 	* Constructor
