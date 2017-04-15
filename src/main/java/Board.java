@@ -251,7 +251,6 @@ public class Board extends JPanel
 	} 
 	
 	/**
-
 	* Enables pieces related to designated player 
 	*/
 	private void enable(Player player)
@@ -306,12 +305,34 @@ public class Board extends JPanel
 				first_clicked = coor;	
 				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
 				showPossibleMoves(first_clicked);
+				if(_player.getInfo().getNumPiece()==1)
+				{
+					System.out.println("1 left");
+					
+					//do check here
+					if(_manager.rule_9(first_clicked))
+					{
+						if(_player.isWhite())
+						{
+							JOptionPane.showMessageDialog(null, "Congratulations! Black team won!");
+							end();
+							setActive(false);	
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(null, "Congratulations! White team won!");
+							end();
+							setActive(false);
+						}
+					}
+
+				}
 			}
  			else if(first_clicked.equal(coor))
  			{
 // 				// Unselect it
  				boardSquares[coor.getX()][coor.getY()].setBackground(selected_color);
-				first_clicked = new Coordinate(-1,-1);
+				first_clicked = new Coordinate(-1,-1); 
 				hidePossibleMoves();
  			} 
 			else if(_manager.getIndex(coor) == -1)
@@ -326,6 +347,7 @@ public class Board extends JPanel
 					boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
 
 					_manager.updateLocation(second_clicked, first_clicked);
+					
 				
 					ArrayList<Coordinate>piecesToRemove=_manager.isPieceSurrounded(second_clicked); //sees if a piece(s) is captured
 					for(int i=0; i<piecesToRemove.size(); i++) //removes pieces from board

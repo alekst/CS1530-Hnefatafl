@@ -511,5 +511,61 @@ public class Data
 		return_list.clear();
 		return return_list;
 	}
+
+	/**
+	* if a player cannot move they lose the game
+	* @param location-location of the piece
+	* @param wall-the wall the piece is on
+	* @return true-if piece cannot move
+	* @return false if piece can move
+	*/
+	public boolean rule_9(int location, int wall)
+	{
+		System.out.println("in data"+location);
+		Integer[] neighbors=getNeighbors(location);
+		boolean color=isWhite(location); //get piece color
+		System.out.println("color is: "+color);
+		for(int j=0; j<boardData.length; j++)
+		{
+			System.out.print(boardData[j]+" ,");
+		}
+		if(wall==1) //0,2,3
+		{
+
+			if((isMember(neighbors[0])&&isMember(neighbors[2])&&isMember(neighbors[3])) &&(isWhite(neighbors[0])!=color)&&(isWhite(neighbors[2])!=color)&&(isWhite(neighbors[3])!=color))
+			{
+				System.out.println("surrounded");
+				return true;
+			}
+		}
+		else if(wall==2) //013
+		{
+			if((isMember(neighbors[0])&&isMember(neighbors[1])&&isMember(neighbors[3])) &&(isWhite(neighbors[0])!=color)&&(isWhite(neighbors[1])!=color)&&(isWhite(neighbors[3])!=color))
+			{
+				System.out.println("surrounded");
+				return true;
+			}
+		}
+
+		else if(wall==3)//123
+		{
+			if((isMember(neighbors[1])&&isMember(neighbors[2])&&isMember(neighbors[3])) &&(isWhite(neighbors[1])!=color)&&(isWhite(neighbors[2])!=color)&&(isWhite(neighbors[3])!=color))
+			{
+				System.out.println("surrounded");
+				return true;
+			}
+		}
+
+		else if(wall==4)//012
+		{
+			if((isMember(neighbors[0])&&isMember(neighbors[1])&&isMember(neighbors[2])) &&(isWhite(neighbors[0])!=color)&&(isWhite(neighbors[1])!=color)&&(isWhite(neighbors[2])!=color))
+			{
+				System.out.println("surrounded");
+				return true;
+			}
+		}
+
+		return false;
+	}
 	
 }

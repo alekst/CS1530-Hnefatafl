@@ -462,4 +462,39 @@ public class ManagerTest
 		Integer[] board = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36};
 		assertEquals(m.loadData(board), 0);
 	}
+
+	/*
+	* Tests rule 9 in manager
+	*/
+	@Test
+	public void test1_rule_9()
+	{
+		
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(114 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,15 ,5 ,6 ,7 ,8 ,17 ,37 ,40,45 ,55 ,56 ,59 ,53 ,66 ,67 ,77 ,78 ,87 ,103 ,113 ,115 ,116 ,117 ,74 ));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+		Coordinate temp=new Coordinate(3,10);
+		assertTrue(m.rule_9(temp));
+	}
+
+	/*
+	* Tests rule 9 in manager
+	*/
+	@Test
+	public void test2_rule_9()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(39 ,82 ,38 ,54 ,66 ,-1 ,-1 ,17 ,44 ,-1 ,84 ,73 ,95 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,55 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+		Coordinate temp=new Coordinate(10,4);
+		assertTrue(m.rule_9(temp));
+	}
+
+
+
+
 }
