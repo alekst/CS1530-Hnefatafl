@@ -222,7 +222,15 @@ public class Data
 		else
 		{
 			boolean teammate=isMember(temp_value)&&!isWhite(temp_value);
-			return teammate||temp_value==61;
+			//return teammate||temp_value==61;
+			boolean occupiedThrone=false;
+			if(temp_value==61 &&isMember(temp_value))
+			{
+				occupiedThrone=false;
+				return teammate&&occupiedThrone;
+			}
+
+			return teammate||isSpecialSquare(temp_value);
 		}
 	}
 
@@ -319,12 +327,8 @@ public class Data
 					{
 						if(isPieceRemoved(value-2,isWhite(value)))
 						{
-
 							if(getIndex(enemyNeighbors.get(i))!=0) //king can not be captured via sandwich capture
-							{
-								coordsToRemove.add(decode(enemyNeighbors.get(i)));
-
-							}
+								coordsToRemove.add(decode(enemyNeighbors.get(i)));	
 						}
 					}
 				}
