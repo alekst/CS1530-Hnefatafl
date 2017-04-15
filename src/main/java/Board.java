@@ -231,10 +231,10 @@ public class Board extends JPanel
 		Coordinate[] pieces = player.getPieces();
 		for(int i = 0 ; i < pieces.length; i++)
 		{
-      if (pieces[i] != null)
-      {
+			if (pieces[i] != null)
+			{
 				if(player.isWhite())
-			  {
+				{
 					if (i == 0)
 					{
 						printPiece(pieces[i], whiteKing);
@@ -244,14 +244,16 @@ public class Board extends JPanel
 						printPiece(pieces[i], whitePiece);
 					}	
 				}	
-		    else
-		  	{
+				else
+				{
 					printPiece(pieces[i], blackPiece);
 				}	
-			} else {
-        // do nothing
-      }
-  	}		
+			} 
+			else 
+			{
+				//do nothing
+			}
+		}		
 		return 0;
 	} 
 	
@@ -280,7 +282,7 @@ public class Board extends JPanel
 		for(int i = 0 ; i < pieces.length; i++)
 		{
 			disable(pieces[i]);
-    }
+		}
 	}
 	
 		
