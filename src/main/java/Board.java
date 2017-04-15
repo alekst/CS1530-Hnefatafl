@@ -291,6 +291,7 @@ public class Board extends JPanel
 	{
 		 public void doPerformAction(ActionEvent actionEvent)
  		{	
+ 			
  			Square b = (Square)actionEvent.getSource();
  			Coordinate coor = b.getCoord();
 			if(_player.getInfo().timerDone())

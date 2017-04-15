@@ -270,10 +270,12 @@ public class Data
 		{
 			//do nothing
 		}
-		else //time to check to see if piece will be captured
+		else //time to check to see if piece will be captured //check if piece is on left or right side
 		{
 			//will need to loop through array of enemies and check the direction of where they are in relation to value
 			//once direction is determined, see if there is a friendly piece 2 spaces away in that direction	
+
+			
 			for(int i=0; i<enemyNeighbors.size();i++) 
 			{
 				int direction=0;
@@ -296,18 +298,34 @@ public class Data
 				}
 				else if(direction==1) //right
 				{
-					if(isPieceRemoved(value+2,isWhite(value)))
+					int loc=enemyNeighbors.get(i).intValue();
+					if(loc%11==0){}
+					else if (loc==1 || loc==12 || loc==23 || loc==34 || loc==47 || loc==56 || loc==67 || loc==78 || loc==89 ||loc==100){}
+					else
 					{
-						if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
-							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						if(isPieceRemoved(value+2,isWhite(value)))
+						{
+							if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
+								coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						}
 					}
 				}
 				else if(direction==-1)//left
 				{	
-					if(isPieceRemoved(value-2,isWhite(value)))
+					int loc=enemyNeighbors.get(i).intValue();
+					if(loc==1 || loc==12 || loc==23 || loc==34 || loc==47 || loc==56 || loc==67 || loc==78 || loc==89 ||loc==100){}
+					else if(loc%11==0){}
+					else
 					{
-						if(getIndex(enemyNeighbors.get(i))!=0) //king can not be captured via sandwich capture
-							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						if(isPieceRemoved(value-2,isWhite(value)))
+						{
+
+							if(getIndex(enemyNeighbors.get(i))!=0) //king can not be captured via sandwich capture
+							{
+								coordsToRemove.add(decode(enemyNeighbors.get(i)));
+
+							}
+						}
 					}
 				}
 			}
