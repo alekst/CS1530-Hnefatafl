@@ -152,11 +152,11 @@ public class Game
 			if (reader != null) {
     		String line = null;
 				line = reader.readLine();
-
-				Integer[] locs = parseInput(line);
-				_manager.loadData(locs);
-				load_init(_manager, _whites, _blacks);
-
+			
+				Integer[] gameInfo = parseInput(line);
+				resetPlayers();
+				load_init(_manager, _whites, _blacks);	// data is set via the manager in the parseInput method
+				setPlayers(gameInfo[0]); // [0]: turn flag, 
 			} 
 		} catch (java.nio.file.NoSuchFileException nf) 
 		{
@@ -195,38 +195,48 @@ public class Game
 	{
 		String[] result = input.split(",");	// result is array of locations + turn int
 
-		int turn = Integer.parseInt(result[37]); // extracts turn flag 
-		setPlayers(turn);	// calls method to reset players and set turn
-		
+		// extract and set piece locations
 		Integer[] locs = new Integer[37];
 		for (int i = 0; i < 37; i++)
 		{
 			locs[i] = Integer.valueOf(result[i]);
 		}
-		return locs;
+		_manager.loadData(locs);
+		
+		// extract other saved game info
+		Integer[] gameInfo = new Integer[1]; // [0]: turn flag,  
+		for (int i = 0; i < 1; i++)
+		{
+			gameInfo[i] = Integer.parseInt(result[37 + i]); 
+		}
+	
+		return gameInfo;
 	}
 	
 	/**
-	* Resets players
-	* Receives turn flag and sets player turn accordingly 
-	* If the flag is 0, it is white's turn
-	* IF the flag is 1, it is black's turn (new game default)
-	*/
-	private void setPlayers(int turn) 
+	* Resets players by creating new players
+	*/ 
+	private void resetPlayers()
 	{
 		// player 1
 		_whites = new Player(_manager);
 		_whites.setWhite();
-				
+							
 		// player 2
 		_blacks = new Player(_manager);
-		_blacks.setBlack();
-		
+		_blacks.setBlack();	
+	}
+	
+	/**
+	* Receives turn flag and sets player turn accordingly 
+	* If the flag is 0, it is white's turn
+	* If the flag is 1, it is black's turn (new game default)
+	*/
+	private void setPlayers(int turn) 
+	{
 		if (turn == 0) //White's turn
 		{
-			_blacks.doneWithTurn();
-			_whites.newTurn();
-			//_board.switchTurn();
+			_board.setTurn(true); // switches player turn as if black has moved
 		}
 	}
 	
@@ -282,7 +292,8 @@ public class Game
 		{
 			String b = new String();
 			b = _board.printBoard();	// gets String of board (comma separated)
-			String turn  = Integer.toString(getTurn());
+			// print game info to file
+			String turn  = Integer.toString(getTurn()); //gets if it is black's turn
 			b = b + "," + turn;
 			byte[] boardBytes = b.getBytes("UTF-8");
 			// append timer data to array 
