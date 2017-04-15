@@ -1,7 +1,8 @@
 import java.lang.*;
-import javax.swing.*;
-import org.junit.Test;
+import java.util.*;
 import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import org.junit.Test;
 
 /*
  *	This class holds all tests for the Game class. 
@@ -10,6 +11,14 @@ import static org.junit.Assert.*;
  */
 public class GameTest
 {
+  //Tests if queryManager returns a Manager object
+	@Test
+	public void testQueryInstanceOfManager()
+	{
+		Game g = new Game();
+		assertThat(g.queryManager(), instanceOf(Manager.class));
+	}
+  
 	/*
 	 *	This test tests that getTurn gets the player turn
 	 */
