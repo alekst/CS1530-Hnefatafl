@@ -1163,6 +1163,62 @@ public class DataTest
 		d.set(17, 19);
 		assertFalse(d.isEncircled(29));
 	}
+
+	/*
+	* tests exitFort in data
+	*/
+	@Test
+	public void testExitFort()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(6,59,16,62,63,4,8,18,-1,71,17,73,83,3,37,14,43,10,22,34,44,45,55,56,57,65,66,67,77,78,88,105,114,115,116,117,118));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+ 		assertTrue(d.exitFort(6));
+	}
+
+	/*
+	* tests exitFort in data
+	*/
+	@Test
+	public void testExitFort_2()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(66,59,64,55,107,49,53,54,39,71,76,77,83,15,5,6,7,8,17,34,23,45,27,56,57,10,85,67,99,78,89,105,114,115,116,117,118));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+ 		assertTrue(d.exitFort(66));
+	}
+
+	/*
+	* tests exitFort in data
+	*/
+	@Test
+	public void testExitFort_3()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(116,59,60,62,118,49,105,51,39,71,115,73,106,4,5,6,7,8,17,34,44,45,55,56,57,65,66,67,77,78,88,110,114,-1,102,64,120));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+ 		assertTrue(d.exitFort(116));
+	}
+
+	/*
+	* tests exitFort in data
+	*/
+	@Test
+	public void testExitFort_4()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(56,91,78,57,63,45,50,51,39,68,72,73,83,4,5,6,7,8,17,37,44,26,55,3,2,65,66,103,77,100,88,105,114,115,116,117,118));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+ 		assertTrue(d.exitFort(56));
+	}
 }
 
 

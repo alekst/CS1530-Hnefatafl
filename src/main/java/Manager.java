@@ -430,6 +430,16 @@ public class Manager
 		return _data.kingLost(value);
 	}
 
+	/**
+	* @param coord-coordinate of king's location
+	* @return true-if exit fort has occured
+	* @return false-if exit fort has not occured
+	*/
+	public boolean exitFort(Coordinate coord)
+	{//need to test
+		int value=encode(coord);
+		return _data.exitFort(value);
+	}
 	
 	/**
 	* determines which pieces are captured
