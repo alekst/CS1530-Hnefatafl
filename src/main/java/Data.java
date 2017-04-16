@@ -549,10 +549,6 @@ public class Data
 		{
 			return_val = isEncapsulated();
 			setMinsMaxs();
-			System.out.println("eBMinx = " + eBMinX);
-			System.out.println("eBMaxX = " + eBMaxX);
-			System.out.println("eBMinY = " + eBMinY);
-			System.out.println("eBMaxY = " + eBMaxY);
 			if(eBMinX < eWMinX && eBMaxX > eWMaxX && eBMinY < eWMinY && eBMaxY > eWMaxY)
 			{
 				return return_val;

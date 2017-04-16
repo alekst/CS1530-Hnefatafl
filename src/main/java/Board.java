@@ -322,7 +322,9 @@ public class Board extends JPanel
 				{
 					hidePossibleMoves();
 					move(first_clicked, second_clicked);
-
+					_player.addRepetition(second_clicked);
+					_player.setLastMove(first_clicked);		
+					
 					boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
 
 					_manager.updateLocation(second_clicked, first_clicked);
@@ -336,7 +338,7 @@ public class Board extends JPanel
 						_other.getInfo().updatePieces(); // update the display label to reflect the change. 
 						_manager.removePiece(piecesToRemove.get(i)); //remove it from the backend
 					}
-				
+					
 					if (_player.hasWon())
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You won!");
@@ -348,6 +350,18 @@ public class Board extends JPanel
 						JOptionPane.showMessageDialog(null, "Congratulations! You won!");
 						end();
 						setActive(false);
+					}	
+					else if(_player.getRepetition() >= 5 && _other.getRepetition() >= 5)
+					{
+						JOptionPane.showMessageDialog(null, "You win via rule 8a");
+						end();
+						setActive(false);
+					}
+					else if(_player.getRepetition() >= 5 && _player.isWhite())
+					{
+						JOptionPane.showMessageDialog(null, "You lose via rule 8b");
+						end();
+						setActive(false);
 					}
 					else
 					{
@@ -355,7 +369,7 @@ public class Board extends JPanel
 						_other.newTurn();
 						resetClicks();
 						switchTurn(true); // this is an actual turn that has been made, so the flag is set to true 
-					}			
+					}
 				}
 			}
 			else

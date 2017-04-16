@@ -5,6 +5,8 @@ public class Player
 	private boolean _turn;
 	private PlayerInfoPanel _info;
 	private int _pieces;
+	private Coordinate last_move;
+	private int repetition_count;
 	
 	/**
 	* Constructor
@@ -12,6 +14,7 @@ public class Player
 	public Player()
 	{
 		// an empty constructor
+		repetition_count = 0;
 	}
 	
 	/**
@@ -21,6 +24,7 @@ public class Player
 	public Player(Manager manager)
 	{
 		_manager = manager;
+		repetition_count = 0;
 	}
 	
 	/**
@@ -147,8 +151,49 @@ public class Player
 		return false;
 	}
 	
+	/**
+	* sets the last_move variable to be used later
+	*/
+	public void setLastMove(Coordinate coord)
+	{
+		last_move = coord;
+	}
 
+	/**
+	* gets the last_move variable to be used later
+	*/
+	public Coordinate getLastMove()
+	{
+		return last_move;
+	}
 	
+	/**
+	* adds repetition value if move is the same as the last_move variable
+	*/
+	public void addRepetition(Coordinate coord)
+	{
+		if(last_move == null)
+		{
+			// Don't do anything
+			// wait so we can set last_move to something
+			// occurs on the first move
+		}
+		else if(last_move.getX() == coord.getX() && last_move.getY() == coord.getY())
+		{
+			repetition_count ++;
+		}
+		else
+		{
+			repetition_count = 0;
+		}
+	}
 	
+	/**
+	* returns the repetition_count
+	*/
+	public int getRepetition()
+	{
+		return repetition_count;
+	}
 	
 }
