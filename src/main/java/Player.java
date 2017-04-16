@@ -159,7 +159,6 @@ public class Player
 		Coordinate king=_manager.getKing();
 		if(_manager.exitFort(king))
 		{
-			System.out.println("exit fort!!!");
 			return true;
 		}
 		else

@@ -174,10 +174,6 @@ public class Data
 	public boolean exitFort(int value)
 	{//need to test, all methods this calls will be indirectly tested
 		int edge=isKingOnEdge(value); //get edge
-		for(int x=0; x<boardData.length; x++)
-			{
-				System.out.print(boardData[x]+",");
-			}
 		if(edge!=0 && canKingMove(value,edge))//king on edge
 		{
 			//check that pieces in the kings row/column
