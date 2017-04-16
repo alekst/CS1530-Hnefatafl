@@ -320,21 +320,37 @@ public class Game
 		return 0;
 	}
 	
+	/**
+	*	Gets the black player's current time
+	* @return int indicating color choice
+	*/
 	private int getBlackTimer()
 	{
 		return _blackInfo.getTime();
 	}
 	
+	/**
+	*	Gets the white player's current time
+	* @return int indicating color choice
+	*/
 	private int getWhiteTimer()
 	{
 		return _whiteInfo.getTime();
 	}
 	
+	/**
+	*	Returns the board's current color scheme
+	* @return int indicating color choice
+	*/
 	private int getColorScheme()
 	{
 		return _board.getColorScheme();
 	}
 	
+	/**
+	*	Sets the color scheme for the game based on saved integer value. Calls method to set tiles with the related string flag.
+	* @param color : int stored to saved file designating the color scheme of the board
+	*/
 	private void setColorScheme(int color)
 	{
 		String s = null;

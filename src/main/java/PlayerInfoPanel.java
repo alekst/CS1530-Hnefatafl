@@ -176,6 +176,10 @@ public class PlayerInfoPanel extends JPanel
 		return time % 60;
 	}
 	
+	/**
+	 * Accessor method to get the player's current time
+	 *
+	 */
 	public int getTime()
 	{
 		int saveTime = listener.getCountdown();

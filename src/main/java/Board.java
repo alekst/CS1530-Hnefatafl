@@ -760,11 +760,17 @@ public class Board extends JPanel
 		}
 	}
   
+  /**
+  * Simple wrapper class for displaying popup messages.
+  */ 
   public void showMsg(String msg)
   {
     JOptionPane.showMessageDialog(null, msg);
   }
   
+  /**
+  * Gets the user's selected color scheme for use in saving the game
+  */
   public int getColorScheme()
   {
     int color = 0;
