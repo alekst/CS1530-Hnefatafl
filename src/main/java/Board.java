@@ -22,6 +22,7 @@ public class Board extends JPanel
 	private static final int numWhites = 12;
 	private static final int numBlacks = 24;
 	
+	private int movesWithoutCapture= 0; 
 	
 	private Coordinate first_clicked = new Coordinate(-1, -1);
 	private Coordinate second_clicked = new Coordinate(-1, -1);
@@ -41,6 +42,8 @@ public class Board extends JPanel
 	private Manager _manager;
 	private Player _player;
 	private Player _other;
+  
+  private String colorScheme = "generic";
 	
 	
 	/**
@@ -220,7 +223,7 @@ public class Board extends JPanel
 		printPieces(_other);
 		return 0;
 	}
-	
+  
 	/**
 	* Prints the pieces for a particular player
 	* @param player: Player object indicating for which player to print
@@ -258,7 +261,6 @@ public class Board extends JPanel
 	} 
 	
 	/**
-
 	* Enables pieces related to designated player 
 	*/
 	private void enable(Player player)
@@ -297,6 +299,7 @@ public class Board extends JPanel
 	{
 		 public void doPerformAction(ActionEvent actionEvent)
  		{	
+			setActive(true);
  			Square b = (Square)actionEvent.getSource();
  			Coordinate coor = b.getCoord();
 			if(_player.getInfo().timerDone())
@@ -333,6 +336,14 @@ public class Board extends JPanel
 					_manager.updateLocation(second_clicked, first_clicked);
 				
 					ArrayList<Coordinate>piecesToRemove=_manager.isPieceSurrounded(second_clicked); //sees if a piece(s) is captured
+					if (piecesToRemove.size() == 0)
+					{
+						movesWithoutCapture++;
+					}
+					else
+					{
+						movesWithoutCapture = 0; // reset
+					}
 					for(int i=0; i<piecesToRemove.size(); i++) //removes pieces from board
 					{
 						enable(piecesToRemove.get(i)); //enable the spot where the piece used to reside
@@ -348,9 +359,15 @@ public class Board extends JPanel
 						end();
 						setActive(false);
 					}
+					else if (movesWithoutCapture == 100) // 50 moves per player
+					{
+						JOptionPane.showMessageDialog(null, "No capture for 50 last moves. It's a draw!");
+						end();
+						setActive(false);
+					}
 					else
 					{
-						_player.doneWithTurn(); //disable whole board
+						_player.doneWithTurn(); 
 						_other.newTurn();
 						resetClicks();
 						switchTurn(true); // this is an actual turn that has been made, so the flag is set to true 
@@ -451,6 +468,51 @@ public class Board extends JPanel
 		disable(_other);
 	}
 		
+    
+  /**
+  * Changes current player to "other" and "other" player to now be the current player to move
+  * Calls enable and disable methods for the respective players' pieces
+  * This is only called by loading a game. If "true", then the default black moving first is changed to white
+  */
+  public int setTurn(boolean turn)
+  {
+    int result = 1; // for testing purposes; default is 1 meaning it is black's turn
+    if (turn) {
+      _player.doneWithTurn();
+      _other.newTurn();
+      resetClicks();
+          	
+      PlayerInfoPanel playerInfo = _player.getInfo();
+
+      // stop the active player timer
+      playerInfo.stopTimer(); // *** want to set timer rather than only stop
+      // if this is the end of an actual turn and not done in preparation for the game
+      //if (turn)
+      //{
+        // add three seconds to this player's time
+        //playerInfo.addTime();
+      //}		
+      // start the passive player timer
+      PlayerInfoPanel otherInfo = _other.getInfo();
+      otherInfo.startTimer(); // *** want to set timer before timer start
+          		
+      // switch players
+      Player temp = _player;
+      _player = _other;
+      _other = temp;
+          		
+      // enable the active player
+      enable(_player);
+          		
+      // disable the passive player. 
+      disable(_other);
+      result = 0;
+    } else { 
+      //black's turn; aka do nothing
+    }
+    
+    return result; // upon completion return 0 for testing
+  }
 	/**
 	* "Moves" the piece by deleting piece at old location and printing piece at new location 
 	* @param oldData: Coordinate object indicating old location of the moving piece
@@ -627,6 +689,7 @@ public class Board extends JPanel
 			// Do nothing
 		}
 		reprintTileColors();
+    colorScheme = s;
 	}
 	
 	
@@ -696,6 +759,29 @@ public class Board extends JPanel
 			}
 		}
 	}
+  
+  public void showMsg(String msg)
+  {
+    JOptionPane.showMessageDialog(null, msg);
+  }
+  
+  public int getColorScheme()
+  {
+    int color = 0;
+    switch(colorScheme) {
+			case "autumn": color = 1;
+							       break;
+			case "winter": color = 2;
+							       break;
+			case "spring": color = 3;
+							       break;
+			case "summer": color = 4;
+							       break;
+			default: color = 0;
+							 break;
+		}
+    return color;
+  }
 }
 
 

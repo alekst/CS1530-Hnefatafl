@@ -22,6 +22,14 @@ public abstract class GameListener implements ActionListener
     public static void setActive(boolean active){
         GameListener.active = active;
     }
+	
+	/**
+	 * This method is a getter method for active variable and is used for testing only. 
+	 */
+	public static boolean getActive()
+	{
+		return active;
+	}
 
     protected abstract void doPerformAction(ActionEvent e);
 
