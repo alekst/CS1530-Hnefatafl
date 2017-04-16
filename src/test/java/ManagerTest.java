@@ -315,4 +315,36 @@ public class ManagerTest
 		Manager m = new Manager();
 		assertFalse(m.inSpecialSquare(3,4));
 	}
+	
+	// Tests to see if there is encircling with loop surrounding all whites
+	public void encircleManagerTrueTest()
+	{
+		Data d = new Data();
+		d.set(21, 47);
+		d.set(19, 37);
+		d.set(13, 27);
+		d.set(14, 29);
+		d.set(16, 29);
+		d.set(17, 41);
+		d.set(22, 63);
+		d.set(28, 75);
+		d.set(30, 85);
+		d.set(33, 93);
+		d.set(29, 81);
+		d.set(27, 69);
+		Manager m = new Manager(d);
+		assertTrue(m.isEncircled(new Coordinate(7, 3)));
+	}
+	
+	// Tests to see if there is no encircling when there is a loop
+	//	and all whites are surrounded, but the loop isn't surrounding
+	//		all whites
+	public void encircleManagerFalseTest()
+	{
+		Data d = new Data();
+		d.set(15, 29);
+		d.set(17, 19);
+		Manager m = new Manager(d);
+		assertFalse(m.isEncircled(new Coordinate(7,3)));
+	}
 }
