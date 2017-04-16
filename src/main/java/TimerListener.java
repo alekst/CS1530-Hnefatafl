@@ -25,6 +25,8 @@ public class TimerListener implements ActionListener
 	*/
     public void actionPerformed(ActionEvent e)
     {
+		// decrement the countdown
+		countdown--;
 		if(!enabled)
 		{
 			return;
@@ -48,8 +50,7 @@ public class TimerListener implements ActionListener
 			// and update the label
 			label.setText(String.format("%d:%02d", minutes, seconds));
 		}
-		// decrement the countdown
-		countdown--;
+		
 		
     }
 

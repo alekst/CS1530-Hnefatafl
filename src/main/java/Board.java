@@ -1,4 +1,10 @@
- import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+//import javax.swing.ImageIcon;
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -23,6 +29,10 @@ public class Board extends JPanel
 	private static final int numBlacks = 24;
 	
 	private int movesWithoutCapture= 0; 
+
+	private static final String IMG_PATH = "src/main/java/images/laboon.png";
+	private ImageIcon icon;
+	
 	
 	private Coordinate first_clicked = new Coordinate(-1, -1);
 	private Coordinate second_clicked = new Coordinate(-1, -1);
@@ -89,7 +99,17 @@ public class Board extends JPanel
 		Color ochre = new Color(204, 119, 34);
 		JPanel boardConstrain = new JPanel(new GridBagLayout());
 		boardConstrain.setBackground(ochre);
-		boardConstrain.add(board);	
+		boardConstrain.add(board);
+		// set up the image
+		try
+		{
+			
+			BufferedImage img = ImageIO.read(new File(IMG_PATH));
+			icon = new ImageIcon(img);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
@@ -181,7 +201,8 @@ public class Board extends JPanel
 		
 		if (type.equals(whiteKing))
 		{
-			square.setText(whiteKing);
+			//square.setText(whiteKing);
+			square.setIcon(icon);
 		}
 		else if (type.equals(whitePiece))
 		{
@@ -437,6 +458,8 @@ public class Board extends JPanel
 	{
 		
 		PlayerInfoPanel playerInfo = _player.getInfo();
+		playerInfo.setBackground(Color.lightGray);
+		
 
 		// stop the active player timer
 		playerInfo.stopTimer();
@@ -448,6 +471,9 @@ public class Board extends JPanel
 		}		
 		// start the passive player timer
 		PlayerInfoPanel otherInfo = _other.getInfo();
+		int color = (int) Long.parseLong("6495ed", 16);
+		otherInfo.setBackground(new Color (color));
+		
 		otherInfo.startTimer();
 		
 		// switch players
@@ -473,6 +499,8 @@ public class Board extends JPanel
 			
 		if (_manager.isKing(oldData))
 		{
+			Square square = boardSquares[oldData.getX()][oldData.getY()];
+			square.setIcon(null); // delete laboon
 			printPiece(newData, whiteKing);
 		}
 		else if(_player.isWhite())
