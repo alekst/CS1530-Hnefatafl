@@ -6,19 +6,17 @@ import javax.swing.*;
 
 public class TimerListener implements ActionListener
 {
-  private int countdown = 300;
+    private int countdown = 300;
 	private JLabel label;
 	private int moveTime = 0;
 	public boolean enabled = true;
 
-
-    /* 
-    * A constructor for load that takes a JLabel as an argument and the start countdown time
-    */   
-    public TimerListener(JLabel label, int loadTime)
+	/* 
+	* A basic constructor that takes a JLabel as an argument
+	*/   
+    public TimerListener(JLabel label)
     {
         this.label = label; 
-        this.countdown = loadTime;
     }
 	
 	

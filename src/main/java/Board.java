@@ -42,8 +42,6 @@ public class Board extends JPanel
 	private Manager _manager;
 	private Player _player;
 	private Player _other;
-  
-  private String colorScheme = "generic";
 	
 	
 	/**
@@ -223,7 +221,7 @@ public class Board extends JPanel
 		printPieces(_other);
 		return 0;
 	}
-  
+	
 	/**
 	* Prints the pieces for a particular player
 	* @param player: Player object indicating for which player to print
@@ -250,9 +248,6 @@ public class Board extends JPanel
 				printPiece(pieces[i], blackPiece);
 			}	
 		}		
-		return 0;
-	} 
-      
 		return 0;
 	} 
 	
@@ -688,7 +683,6 @@ public class Board extends JPanel
 			// Do nothing
 		}
 		reprintTileColors();
-    colorScheme = s;
 	}
 	
 	
@@ -762,24 +756,6 @@ public class Board extends JPanel
   public void showMsg(String msg)
   {
     JOptionPane.showMessageDialog(null, msg);
-  }
-  
-  public int getColorScheme()
-  {
-    int color = 0;
-    switch(colorScheme) {
-			case "autumn": color = 1;
-							       break;
-			case "winter": color = 2;
-							       break;
-			case "spring": color = 3;
-							       break;
-			case "summer": color = 4;
-							       break;
-			default: color = 0;
-							 break;
-		}
-    return color;
   }
 }
 
