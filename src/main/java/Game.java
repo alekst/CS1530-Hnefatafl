@@ -73,20 +73,20 @@ public class Game
 	* @param whites : white player
 	* @param blacks : black player
 	*/
-	private void load_init(Manager manager, Player whites, Player blacks)
+	private void load_init(Manager manager, Player whites, Player blacks, int whiteTime, int blackTime)
 	{
 		// manager
 		_manager = manager;	
 		// player 1 : right now resets player info on load
 		_whites = whites;
 		int numWhites = _manager.getWhites().length;
-		_whiteInfo = new PlayerInfoPanel("Whites", 300, numWhites); // 300 seconds
+		_whiteInfo = new PlayerInfoPanel("Whites", whiteTime, numWhites); // 300 seconds
 		_whites.addInfo(_whiteInfo);
 		
 		// player 2 : right now resets player info on load
 		_blacks = blacks;
 		int numBlacks = _manager.getBlacks().length;
-		_blackInfo = new PlayerInfoPanel("Blacks", 300, numBlacks);
+		_blackInfo = new PlayerInfoPanel("Blacks", blackTime, numBlacks);
 		
 		_blacks.addInfo(_blackInfo);
 		
@@ -163,8 +163,9 @@ public class Game
 			
 				Integer[] gameInfo = parseInput(line);
 				resetPlayers();
-				load_init(_manager, _whites, _blacks);	// data is set via the manager in the parseInput method
-				setPlayers(gameInfo[0]); // [0]: turn flag, 
+				load_init(_manager, _whites, _blacks, gameInfo[2], gameInfo[1]);	// data is set via the manager in the parseInput method
+				setPlayers(gameInfo[0]); // [0]: turn flag
+				setColorScheme(gameInfo[3]); // [3]: color scheme
 			} 
 		} catch (java.nio.file.NoSuchFileException nf) 
 		{
@@ -212,8 +213,9 @@ public class Game
 		_manager.loadData(locs);
 		
 		// extract other saved game info
-		Integer[] gameInfo = new Integer[1]; // [0]: turn flag,  
-		for (int i = 0; i < 1; i++)
+		// [0]: turn flag, [1]: black timer countdown, [2]: white timer countdown, [3]: color scheme
+		Integer[] gameInfo = new Integer[4]; // [0]: turn flag,  
+		for (int i = 0; i < 4; i++)
 		{
 			gameInfo[i] = Integer.parseInt(result[37 + i]); 
 		}
@@ -302,7 +304,11 @@ public class Game
 			b = _board.printBoard();	// gets String of board (comma separated)
 			// print game info to file
 			String turn  = Integer.toString(getTurn()); //gets if it is black's turn
-			b = b + "," + turn;
+			String blackTimer = Integer.toString(getBlackTimer()); //black timer first
+			String whiteTimer = Integer.toString(getWhiteTimer()); //white timer second
+			String color = Integer.toString(getColorScheme());
+			// sets last 4 ints to store game info — [0]: turn flag, [1]: black timer countdown, [2]: white timer countdown, [3]: color scheme
+			b = b + "," + turn + "," + blackTimer + "," + whiteTimer + "," + color;
 			byte[] boardBytes = b.getBytes("UTF-8");
 			// append timer data to array 
 			out.write(boardBytes);
@@ -312,6 +318,39 @@ public class Game
 			return 1;
 		}
 		return 0;
+	}
+	
+	private int getBlackTimer()
+	{
+		return _blackInfo.getTime();
+	}
+	
+	private int getWhiteTimer()
+	{
+		return _whiteInfo.getTime();
+	}
+	
+	private int getColorScheme()
+	{
+		return _board.getColorScheme();
+	}
+	
+	private void setColorScheme(int color)
+	{
+		String s = null;
+		switch(color) {
+			case 1: s = "autumn";
+							break;
+			case 2: s = "winter";
+							break;
+			case 3: s = "spring";
+							break;
+			case 4: s = "summer";
+							break;
+			default: s = "generic";
+							break;
+		}
+		_board.setTileColors(s);	
 	}
 	
 }
