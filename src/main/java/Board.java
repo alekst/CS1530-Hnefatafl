@@ -52,6 +52,8 @@ public class Board extends JPanel
 	private Manager _manager;
 	private Player _player;
 	private Player _other;
+  
+  private String colorScheme = "generic";
 	
 	
 	
@@ -243,7 +245,7 @@ public class Board extends JPanel
 		printPieces(_other);
 		return 0;
 	}
-	
+  
 	/**
 	* Prints the pieces for a particular player
 	* @param player: Player object indicating for which player to print
@@ -254,21 +256,28 @@ public class Board extends JPanel
 		Coordinate[] pieces = player.getPieces();
 		for(int i = 0 ; i < pieces.length; i++)
 		{
-			if(player.isWhite())
+			if (pieces[i] != null)
 			{
-				if (i == 0)
+				if(player.isWhite())
 				{
-					printPiece(pieces[i], whiteKing);
-				}
+					if (i == 0)
+					{
+						printPiece(pieces[i], whiteKing);
+					}
+					else
+					{
+						printPiece(pieces[i], whitePiece);
+					}	
+				}	
 				else
 				{
-					printPiece(pieces[i], whitePiece);
+					printPiece(pieces[i], blackPiece);
 				}	
-			}	
-			else
+			} 
+			else 
 			{
-				printPiece(pieces[i], blackPiece);
-			}	
+				//do nothing
+			}
 		}		
 		return 0;
 	} 
@@ -296,9 +305,7 @@ public class Board extends JPanel
 		
 		for(int i = 0 ; i < pieces.length; i++)
 		{
-			
 			disable(pieces[i]);
-		
 		}
 	}
 	
@@ -515,6 +522,51 @@ public class Board extends JPanel
 		disable(_other);
 	}
 		
+    
+  /**
+  * Changes current player to "other" and "other" player to now be the current player to move
+  * Calls enable and disable methods for the respective players' pieces
+  * This is only called by loading a game. If "true", then the default black moving first is changed to white
+  */
+  public int setTurn(boolean turn)
+  {
+    int result = 1; // for testing purposes; default is 1 meaning it is black's turn
+    if (turn) {
+      _player.doneWithTurn();
+      _other.newTurn();
+      resetClicks();
+          	
+      PlayerInfoPanel playerInfo = _player.getInfo();
+
+      // stop the active player timer
+      playerInfo.stopTimer(); // *** want to set timer rather than only stop
+      // if this is the end of an actual turn and not done in preparation for the game
+      //if (turn)
+      //{
+        // add three seconds to this player's time
+        //playerInfo.addTime();
+      //}		
+      // start the passive player timer
+      PlayerInfoPanel otherInfo = _other.getInfo();
+      otherInfo.startTimer(); // *** want to set timer before timer start
+          		
+      // switch players
+      Player temp = _player;
+      _player = _other;
+      _other = temp;
+          		
+      // enable the active player
+      enable(_player);
+          		
+      // disable the passive player. 
+      disable(_other);
+      result = 0;
+    } else { 
+      //black's turn; aka do nothing
+    }
+    
+    return result; // upon completion return 0 for testing
+  }
 	/**
 	* "Moves" the piece by deleting piece at old location and printing piece at new location 
 	* @param oldData: Coordinate object indicating old location of the moving piece
@@ -693,6 +745,7 @@ public class Board extends JPanel
 			// Do nothing
 		}
 		reprintTileColors();
+    colorScheme = s;
 	}
 	
 	
@@ -762,6 +815,35 @@ public class Board extends JPanel
 			}
 		}
 	}
+  
+  /**
+  * Simple wrapper class for displaying popup messages.
+  */ 
+  public void showMsg(String msg)
+  {
+    JOptionPane.showMessageDialog(null, msg);
+  }
+  
+  /**
+  * Gets the user's selected color scheme for use in saving the game
+  */
+  public int getColorScheme()
+  {
+    int color = 0;
+    switch(colorScheme) {
+			case "autumn": color = 1;
+							       break;
+			case "winter": color = 2;
+							       break;
+			case "spring": color = 3;
+							       break;
+			case "summer": color = 4;
+							       break;
+			default: color = 0;
+							 break;
+		}
+    return color;
+  }
 }
 
 

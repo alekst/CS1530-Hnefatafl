@@ -53,7 +53,7 @@ public class PlayerInfoPanel extends JPanel
 		timerLabel = new JLabel(String.format("%d:%02d", minutes, seconds));
 		timerLabel.setFont(new Font("Serif", Font.PLAIN, 90));
 		add(timerLabel);
-		listener = new TimerListener(timerLabel);
+		listener = new TimerListener(timerLabel, time);
 		timer = new Timer(1000, listener); // creates actionEvents every second on a separate thread. 
 		nameLabel = new JLabel(name);
 		nameLabel.setFont(new Font("Serif", Font.PLAIN, 20));
@@ -177,7 +177,15 @@ public class PlayerInfoPanel extends JPanel
 		return time % 60;
 	}
 	
-	
+	/**
+	 * Accessor method to get the player's current time
+	 *
+	 */
+	public int getTime()
+	{
+		int saveTime = listener.getCountdown();
+		return saveTime;
+	}
 			
 	
 }

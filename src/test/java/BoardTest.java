@@ -87,5 +87,27 @@ public class BoardTest
 		assertThat(b.printBoard(), instanceOf(String.class));
 	}
 	
+	/*
+	 *	This test tests that setTurn switches player turn to white
+	 */
+	@Test
+	public void testSetTurnToWhite()
+	{
+		Game g = new Game();
+		int turn = g.queryBoard().setTurn(true);
+		assertEquals(turn, g.getTurn());
+	}
+	
+	/*
+	 *	This test tests that setTurn switches player turn to black
+	 */
+	@Test
+	public void testSetTurnToBlack()
+	{
+		Game g = new Game();
+		int turn = g.queryBoard().setTurn(false);
+		assertEquals(turn, g.getTurn());
+	}
+	
 	
 }
