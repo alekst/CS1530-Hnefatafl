@@ -239,7 +239,15 @@ public class Data
 		else
 		{
 			boolean teammate=isMember(temp_value)&&!isWhite(temp_value);
-			return teammate||temp_value==61;
+			//return teammate||temp_value==61;
+			boolean occupiedThrone=false;
+			if(temp_value==61 &&isMember(temp_value))
+			{
+				occupiedThrone=false;
+				return teammate&&occupiedThrone;
+			}
+
+			return teammate||isSpecialSquare(temp_value);
 		}
 	}
 
@@ -287,10 +295,12 @@ public class Data
 		{
 			//do nothing
 		}
-		else //time to check to see if piece will be captured
+		else //time to check to see if piece will be captured //check if piece is on left or right side
 		{
 			//will need to loop through array of enemies and check the direction of where they are in relation to value
 			//once direction is determined, see if there is a friendly piece 2 spaces away in that direction	
+
+			
 			for(int i=0; i<enemyNeighbors.size();i++) 
 			{
 				int direction=0;
@@ -313,18 +323,30 @@ public class Data
 				}
 				else if(direction==1) //right
 				{
-					if(isPieceRemoved(value+2,isWhite(value)))
+					int loc=enemyNeighbors.get(i).intValue();
+					if(loc%11==0){}
+					else if (loc==1 || loc==12 || loc==23 || loc==34 || loc==47 || loc==56 || loc==67 || loc==78 || loc==89 ||loc==100){}
+					else
 					{
-						if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
-							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						if(isPieceRemoved(value+2,isWhite(value)))
+						{
+							if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
+								coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						}
 					}
 				}
 				else if(direction==-1)//left
 				{	
-					if(isPieceRemoved(value-2,isWhite(value)))
+					int loc=enemyNeighbors.get(i).intValue();
+					if(loc==1 || loc==12 || loc==23 || loc==34 || loc==47 || loc==56 || loc==67 || loc==78 || loc==89 ||loc==100){}
+					else if(loc%11==0){}
+					else
 					{
-						if(getIndex(enemyNeighbors.get(i))!=0) //king can not be captured via sandwich capture
-							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						if(isPieceRemoved(value-2,isWhite(value)))
+						{
+							if(getIndex(enemyNeighbors.get(i))!=0) //king can not be captured via sandwich capture
+								coordsToRemove.add(decode(enemyNeighbors.get(i)));	
+						}
 					}
 				}
 			}
@@ -527,6 +549,52 @@ public class Data
 		}
 		return_list.clear();
 		return return_list;
+	}
+
+	/**
+	* if a player cannot move they lose the game
+	* @param location-location of the piece
+	* @param wall-the wall the piece is on
+	* @return true-if piece cannot move
+	* @return false if piece can move
+	*/
+	public boolean rule_9(int location, int wall)
+	{
+		Integer[] neighbors=getNeighbors(location);
+		boolean color=isWhite(location); //get piece color
+		if(wall==1) //0,2,3
+		{
+
+			if((isMember(neighbors[0])&&isMember(neighbors[2])&&isMember(neighbors[3])) &&(isWhite(neighbors[0])!=color)&&(isWhite(neighbors[2])!=color)&&(isWhite(neighbors[3])!=color))
+			{
+				return true;
+			}
+		}
+		else if(wall==2) //013
+		{
+			if((isMember(neighbors[0])&&isMember(neighbors[1])&&isMember(neighbors[3])) &&(isWhite(neighbors[0])!=color)&&(isWhite(neighbors[1])!=color)&&(isWhite(neighbors[3])!=color))
+			{
+				return true;
+			}
+		}
+
+		else if(wall==3)//123
+		{
+			if((isMember(neighbors[1])&&isMember(neighbors[2])&&isMember(neighbors[3])) &&(isWhite(neighbors[1])!=color)&&(isWhite(neighbors[2])!=color)&&(isWhite(neighbors[3])!=color))
+			{
+				return true;
+			}
+		}
+
+		else if(wall==4)//012
+		{
+			if((isMember(neighbors[0])&&isMember(neighbors[1])&&isMember(neighbors[2])) &&(isWhite(neighbors[0])!=color)&&(isWhite(neighbors[1])!=color)&&(isWhite(neighbors[2])!=color))
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 	
 	/*
