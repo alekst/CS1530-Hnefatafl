@@ -252,12 +252,8 @@ public class Board extends JPanel
 		}		
 		return 0;
 	} 
-      
-		return 0;
-	} 
 	
 	/**
-
 	* Enables pieces related to designated player 
 	*/
 	private void enable(Player player)
