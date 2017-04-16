@@ -10,7 +10,7 @@ public class TimerListenerTest
 {
 
 	JLabel label = new JLabel("test");
-	TimerListener listener = new TimerListener(label);
+	TimerListener listener = new TimerListener(label, 300);
 	
 	// Checks if the moveTime is zero when the listener is created
 	@Test
