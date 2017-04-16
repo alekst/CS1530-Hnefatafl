@@ -1269,7 +1269,6 @@ public class DataTest
 		assertThat(d.print(), instanceOf(String.class));
 	}
 	
-
 	// Tests to see if there is encircling with loop surrounding all whites
 	public void encircleTrueTest()
 	{
