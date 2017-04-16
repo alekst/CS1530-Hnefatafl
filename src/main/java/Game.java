@@ -91,6 +91,7 @@ public class Game
 		_blacks.addInfo(_blackInfo);
 		
 		_board = new Board(_manager, _whites, _blacks);
+		
 	
 		GameInfoPanel _gi = new GameInfoPanel(_whiteInfo, _blackInfo, _board);
 		MainFrame _mf = new MainFrame(this, _gi);

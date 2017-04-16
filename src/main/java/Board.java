@@ -54,6 +54,7 @@ public class Board extends JPanel
 	private Player _other;
 	
 	
+	
 	/**
 	 *	Empty constructor for game initialization purposes. Overridden by constructor below when instantiated.
 	 */
