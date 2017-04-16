@@ -42,6 +42,8 @@ public class Board extends JPanel
 	private Manager _manager;
 	private Player _player;
 	private Player _other;
+  
+  private String colorScheme = "generic";
 	
 	
 	/**
@@ -221,7 +223,7 @@ public class Board extends JPanel
 		printPieces(_other);
 		return 0;
 	}
-	
+  
 	/**
 	* Prints the pieces for a particular player
 	* @param player: Player object indicating for which player to print
@@ -232,27 +234,33 @@ public class Board extends JPanel
 		Coordinate[] pieces = player.getPieces();
 		for(int i = 0 ; i < pieces.length; i++)
 		{
-			if(player.isWhite())
+			if (pieces[i] != null)
 			{
-				if (i == 0)
+				if(player.isWhite())
 				{
-					printPiece(pieces[i], whiteKing);
-				}
+					if (i == 0)
+					{
+						printPiece(pieces[i], whiteKing);
+					}
+					else
+					{
+						printPiece(pieces[i], whitePiece);
+					}	
+				}	
 				else
 				{
-					printPiece(pieces[i], whitePiece);
+					printPiece(pieces[i], blackPiece);
 				}	
-			}	
-			else
+			} 
+			else 
 			{
-				printPiece(pieces[i], blackPiece);
-			}	
+				//do nothing
+			}
 		}		
 		return 0;
 	} 
 	
 	/**
-
 	* Enables pieces related to designated player 
 	*/
 	private void enable(Player player)
@@ -275,9 +283,7 @@ public class Board extends JPanel
 		
 		for(int i = 0 ; i < pieces.length; i++)
 		{
-			
 			disable(pieces[i]);
-		
 		}
 	}
 	
@@ -683,6 +689,7 @@ public class Board extends JPanel
 			// Do nothing
 		}
 		reprintTileColors();
+    colorScheme = s;
 	}
 	
 	
@@ -756,6 +763,24 @@ public class Board extends JPanel
   public void showMsg(String msg)
   {
     JOptionPane.showMessageDialog(null, msg);
+  }
+  
+  public int getColorScheme()
+  {
+    int color = 0;
+    switch(colorScheme) {
+			case "autumn": color = 1;
+							       break;
+			case "winter": color = 2;
+							       break;
+			case "spring": color = 3;
+							       break;
+			case "summer": color = 4;
+							       break;
+			default: color = 0;
+							 break;
+		}
+    return color;
   }
 }
 
