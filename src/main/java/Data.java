@@ -172,31 +172,29 @@ public class Data
 	* @return false-if exit fort has not occured
 	*/
 	public boolean exitFort(int value)
-	{
+	{//need to test, all methods this calls will be indirectly tested
 		int edge=isKingOnEdge(value); //get edge
+		for(int x=0; x<boardData.length; x++)
+			{
+				System.out.print(boardData[x]+",");
+			}
 		if(edge!=0 && canKingMove(value,edge))//king on edge
-		{//fix canKingMove()
+		{
 			//check that pieces in the kings row/column
 			if(edge==1 || edge==2) //east/west wall check up and down first, +11 and -11
 			{
 				int friendly_1=0;
 				int friendly_2=0;
 				//loop through spots north and south from kings location
-				System.out.println("STARTING AT"+" "+value+" *******************");
 				int curr_spot=value-11;
-				//while(!isSpecialSquare(curr_spot)) //need to find a white piece north, use
-				//while(curr_spot!=0) //0 is off the board
 				while(curr_spot>0)
 				{
-					//System.out.println(" in loop going up:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot)) //blaack piece
 					{
-						//System.out.println("stop:"+" "+curr_spot);
 						break;
 					}
 					else if( (isWhite(curr_spot) && isMember(curr_spot)) || isSpecialSquare(curr_spot)) //white piece on board
 					{
-						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_1=curr_spot; //setting a friendly_1 var
 						break;
 						//when white piece  is found start checking in the spot directly perpendicular to it
@@ -204,58 +202,36 @@ public class Data
 					}
 					curr_spot=curr_spot-11;
 				}
-				/*
-				System.out.println("end of checking up: "+" curr_spot is: "+curr_spot);
-				if(friendly_1==0 && (curr_spot==11 || curr_spot==1)) //taking into account of special squares being a part of fort
-				{ //spots 11 and 1 are on the top of board
-					System.out.println("using edge as friendly_1");
-					friendly_1=curr_spot;
-				}
-				*/
 				if(friendly_1==0) //if 1 friendly is not found yet exit cannot occur
 				{
-					//System.out.println("no friendly_1");
 					return false;
 				}
 				//at this point we need to have a white piece on the same column
 				curr_spot=value+11;
-				//while(!isSpecialSquare(curr_spot)) //need to find a white piece south
-				//while(curr_spot!=132)
+
 				while(curr_spot<122)
 				{
-					//System.out.println(" in loop going down:"+ " "+ curr_spot);
 					if((!isWhite(curr_spot)&&isMember(curr_spot)))
 					{
-						//System.out.println("stop:"+" "+curr_spot);
+						
 						break;
 					}
 					else if((isWhite(curr_spot) && isMember(curr_spot))|| isSpecialSquare(curr_spot))
 					{
-						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_2=curr_spot; //setting friendly_2 var
 						break;
 					}
 					curr_spot=curr_spot+11;
 				}
-				/*
-				System.out.println("end of checking down: "+" curr_spot is: "+curr_spot);
-				if(friendly_2==0 && ( curr_spot==121 ||curr_spot==111)) //taking into account of special squares being a part of fort
-				{
-					System.out.println("using edge as friendly_2");
-					friendly_2=curr_spot;
-				}
-				*/
+				
 				if(friendly_2==0)
 				{
-					//System.out.println("no friendly_2");
 					return false;
 				}
 				else
 				{
-					System.out.println("**start finding loop");
 					ArrayList<Integer> prev_pieces = new ArrayList<Integer>(); 
 					ArrayList<Integer> loop_pieces = new ArrayList<Integer>(); 
-					//System.out.println("loop?"+" "+loop_(friendly_1, friendly_2, prev_pieces, value,loop_pieces));
 					return loop_(friendly_1, friendly_2, prev_pieces, value,loop_pieces);
 				}
 			}
@@ -263,20 +239,15 @@ public class Data
 			{
 				int friendly_1=0;
 				int friendly_2=0;
-				System.out.println("STARTING AT"+" "+value+" *******************8");
 				int curr_spot=value-1; //going until 1 or 111
-				//while(!isSpecialSquare(curr_spot)) //special squares at end of row/column always stop there
 				while(curr_spot>0 && curr_spot!=110)
 				{//need to find a white piece west
-					System.out.println(" in loop going left:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot))
 					{
-						//System.out.println("stop:"+" "+curr_spot);
 						break;
 					}
 					else if((isWhite(curr_spot) && isMember(curr_spot)) || isSpecialSquare(curr_spot)) 
 					{
-						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_1=curr_spot; //setting a friendly_1 var
 						break;
 					}
@@ -284,22 +255,17 @@ public class Data
 				}
 				if(friendly_1==0) //if 1 friendly is not found yet exit cannot occur
 				{
-					//System.out.println("no friendly_1");
 					return false;
 				}
 				curr_spot=value+1; //going until 11 or 121
-				//while(!isSpecialSquare(curr_spot))
 				while(curr_spot!=12 && curr_spot!=122)
 				{//need to find a white piece east
-					System.out.println(" in loop going right:"+ " "+ curr_spot);
 					if(!isWhite(curr_spot)&&isMember(curr_spot))
 					{
-						System.out.println("stop:"+" "+curr_spot);
 						break;
 					}
 					else if((isWhite(curr_spot) && isMember(curr_spot))|| isSpecialSquare(curr_spot))
 					{
-						System.out.println("friendly @:"+ " "+curr_spot);
 						friendly_2=curr_spot;
 						break;
 					}
@@ -307,21 +273,18 @@ public class Data
 				}
 				if(friendly_2==0)
 				{
-					//System.out.println("no friendly_2");
 					return false;
 				}
 				else
 				{
-					//System.out.println("**start finding loop");
 					ArrayList<Integer> prev_pieces = new ArrayList<Integer>(); 
 					ArrayList<Integer> loop_pieces = new ArrayList<Integer>();
-					//System.out.println("loop?"+" "+loop_(friendly_1, friendly_2, prev_pieces, value, loop_pieces));
 					return loop_(friendly_1, friendly_2, prev_pieces, value, loop_pieces);
 				}
 			}
+
 		}
-		else
-			System.out.print("no");
+		else{}
 		return false;
 	}
 
@@ -386,11 +349,7 @@ public class Data
 		if(start==stop)
 		{
 			loop_pieces.add(stop);
-			System.out.println("loop");
-			for(int i=0; i<loop_pieces.size(); i++)
-			{//check for vulnerable pieces h
-				System.out.println(loop_pieces.get(i));
-			}
+			
 			//now make sure no piece can be captured
 			return arePiecesVulnerable(loop_pieces);//, safe_spots);
 			//made valid loop
@@ -467,7 +426,7 @@ public class Data
 			}
 			//check southWest
 				int x_=start-10;
-				System.out.println("start is"+start+" checking south west spot, it is: "+x_);
+
 			if((isWhite(start-10)&&isMember(start-10) && !prev_pieces.contains(start-10) && (start-10)!=kingVal) || start-10==11)
 			{
 			
@@ -502,13 +461,11 @@ public class Data
 	*/
 	private boolean arePiecesVulnerable(ArrayList<Integer> loop_pieces) 
 	{
-		//System.out.println("check vulnerability");
 		boolean ret_val=true;
 		for(int i=0;i<loop_pieces.size(); i++)
 		{
 			Integer[] neighbors=getNeighbors(loop_pieces.get(i).intValue());//get neighbors of a loop piece
-			//System.out.println("neighbors for:"+" "+loop_pieces.get(i).intValue());
-			//System.out.println(neighbors[0]+" "+neighbors[1]+" "+neighbors[2]+" "+neighbors[3]);
+			
 			if(i==0 || i==loop_pieces.size()-1)//first and last pieces of array will be on edge
 			{
 				ret_val=true;
@@ -556,22 +513,18 @@ public class Data
 		Coordinate coord=decode(value);
 		if((coord.getX() - 1 < 0) && (coord.getY() - 1 >= 0)) // west wall
 		{
-			//System.out.println("West Wall");
 			return 1;
 		}
 		else if((coord.getX() + 1 > 10) && (coord.getY() + 1 <= 10)) //east wall
 		{
-			//System.out.println("East wall");
 			return 2;
 		}
 		else if((coord.getX() - 1 >= 0) && (coord.getY() + 1 > 10)) // south wall
 		{
-			//System.out.println("South wall");
 			return 3;
 		}
 		else if((coord.getX() + 1 <= 10) && (coord.getY() - 1 < 0)) // north wall
 		{
-			//System.out.println("North wall");
 			return 4;
 		}
 		else

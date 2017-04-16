@@ -402,7 +402,7 @@ public class Manager
 	* @return false-if exit fort has not occured
 	*/
 	public boolean exitFort(Coordinate coord)
-	{
+	{//need to test
 		int value=encode(coord);
 		return _data.exitFort(value);
 	}
