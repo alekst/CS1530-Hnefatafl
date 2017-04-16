@@ -1269,6 +1269,36 @@ public class DataTest
 		assertThat(d.print(), instanceOf(String.class));
 	}
 	
+
+	// Tests to see if there is encircling with loop surrounding all whites
+	public void encircleTrueTest()
+	{
+		Data d = new Data();
+		d.set(21, 47);
+		d.set(19, 37);
+		d.set(13, 27);
+		d.set(14, 29);
+		d.set(16, 29);
+		d.set(17, 41);
+		d.set(22, 63);
+		d.set(28, 75);
+		d.set(30, 85);
+		d.set(33, 93);
+		d.set(29, 81);
+		d.set(27, 69);
+		assertTrue(d.isEncircled(29));
+	}
+	
+	// Tests to see if there is no encircling when there is a loop
+	//	and all whites are surrounded, but the loop isn't surrounding
+	//		all whites
+	public void encircleFalseTest()
+	{
+		Data d = new Data();
+		d.set(15, 29);
+		d.set(17, 19);
+		assertFalse(d.isEncircled(29));
+	}
 }
 
 

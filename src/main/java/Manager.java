@@ -410,6 +410,17 @@ public class Manager
 		//will probs needed to return an array of pieces to remove
 		return piecesToRemove;
 	}
+	
+	/**
+	* determines if the game is in a state of encirclement
+	* @param coord - the coordinaet of the piece that was just moved
+	* @return boolean for if the white pieces are encircled or not
+	*/
+	public boolean isEncircled(Coordinate coord)
+	{
+		int value = encode(coord);
+		return _data.isEncircled(value);
+	}
 
 	/**
 	* removes a piece from the board utilizing the data.java

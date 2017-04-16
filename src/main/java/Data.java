@@ -9,6 +9,23 @@ public class Data
 	public Integer[] specialSquares; 
 	
 	
+	// Going to track the min and max coordinates for both whites
+	// 		and blacks in encirclement to make sure the loop
+	//		surrounds the whites
+	private Integer eWMinX;
+	private Integer eWMaxX;
+	private Integer eWMinY;
+	private Integer eWMaxY;
+	
+	private Integer eBMinX;
+	private Integer eBMaxX;
+	private Integer eBMinY;
+	private Integer eBMaxY;
+	
+	
+	
+	private ArrayList<Integer> seenPieces = new ArrayList<Integer>();
+	
 	/**
 	* The Data object constructor. Initializes the boardData array along with the specialSquares array. 
 	*/
@@ -512,4 +529,268 @@ public class Data
 		return return_list;
 	}
 	
+	/*
+	* checks to see if there is encircling and therefore a win
+	* @param value - location of last moved piece
+	* @return true - encircling is happening
+	* @return false - there is no encircling
+	*/
+	public boolean isEncircled(int value)
+	{
+		seenPieces.clear();
+		
+		boolean return_val;
+		
+		if(isWhite(value)) // no need to check if the last move was a white move
+		{
+			return false;
+		}
+		else if(isLooped(value))
+		{
+			return_val = isEncapsulated();
+			setMinsMaxs();
+			System.out.println("eBMinx = " + eBMinX);
+			System.out.println("eBMaxX = " + eBMaxX);
+			System.out.println("eBMinY = " + eBMinY);
+			System.out.println("eBMaxY = " + eBMaxY);
+			if(eBMinX < eWMinX && eBMaxX > eWMaxX && eBMinY < eWMinY && eBMaxY > eWMaxY)
+			{
+				return return_val;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return false;
+		}
+		
+	}
+	
+	private void setMinsMaxs()
+	{
+		eBMinX = 12;
+		eBMaxX = 0;
+		eBMinY = 12;
+		eBMaxY = 0;
+		
+		for(int i = 0 ; i < seenPieces.size() ; i++)
+		{
+			if(decode(seenPieces.get(i)).getX() < eBMinX){eBMinX = decode(seenPieces.get(i)).getX();}
+			else if(decode(seenPieces.get(i)).getX() > eBMaxX){eBMaxX = decode(seenPieces.get(i)).getX();}
+			if(decode(seenPieces.get(i)).getY() < eBMinY){eBMinY = decode(seenPieces.get(i)).getY();}
+			else if(decode(seenPieces.get(i)).getY() > eBMaxY){eBMaxY = decode(seenPieces.get(i)).getY();}
+		}
+	}
+	
+	/*
+	* returns whether or not there is a loop of black pieces connected by the last moved piece
+	* @param value - location of last moved piece
+	* @return true - there is a loop
+	* @return false - there is no loop
+	*/
+	
+	private boolean isLooped(int value)
+	{
+		seenPieces.add(value);
+		
+		Integer[] neighbor_values;
+		
+		if(value == 1)
+		{
+			neighbor_values = new Integer[] {value + 1, value + 11, value + 12};
+		}
+		else if(value == 11)
+		{
+			neighbor_values = new Integer[] {value - 1, value + 10, value + 11};
+		}
+		else if(value < 12)
+		{
+			neighbor_values = new Integer[] {value + 1, value - 1, value + 10, value + 11, value + 12};
+		}
+		else if(value == 111)
+		{
+			neighbor_values = new Integer[] {value + 1, value - 10, value - 11};
+		}
+		else if(value == 121)
+		{
+			neighbor_values = new Integer[] {value - 11, value - 12, value - 1};
+		}
+		else if(value % 11 == 1)
+		{
+			neighbor_values = new Integer[] {value + 1, value - 10, value - 11, value + 11, value + 12};
+		}
+		else if(value % 11 == 0)
+		{
+			neighbor_values = new Integer[] {value - 11, value - 12, value - 1, value + 10, value + 11};
+		}
+		else if(value > 111)
+		{
+			neighbor_values = new Integer[] {value + 1, value - 10, value - 11, value - 12, value - 1};
+		}
+		else 
+		{
+			neighbor_values = new Integer[] {value + 1, value - 10, value - 11, value - 12, value - 1, value + 10, value + 11, value + 12};
+		}
+		
+		if(seenPieces.size() > 3 && (seenPieces.get(seenPieces.size() - 1) == seenPieces.get(0)))
+		{
+			return true;
+		}
+		for(int i = 0 ; i < neighbor_values.length ; i++)
+		{
+			if(seenPieces.size() == 1)
+			{
+				if(isMember(neighbor_values[i]) && (! isWhite(neighbor_values[i])))
+				{
+					if(isLooped(neighbor_values[i]))
+					{
+						return true;
+					}
+				}
+			}
+			if(isMember(neighbor_values[i]) && (! isWhite(neighbor_values[i]) && (! seenPieces.subList(1, seenPieces.size()).contains(neighbor_values[i]))))
+			{
+				if(isLooped(neighbor_values[i]))
+				{
+					return true;
+				}
+			}
+		}
+		seenPieces.remove(seenPieces.size() - 1);
+		return false;
+	}
+	
+	/*
+	* checks to see if all white pieces are within two black pieces on the board
+	* acts as half of the isencircled method
+	* @return - returns whether or not there is encapsulation
+	*/
+	private boolean isEncapsulated()
+	{
+		boolean first_seen = false;
+		boolean second_seen = true;
+		
+		boolean nothing = true;
+		
+		eWMinX = 12;
+		eWMaxX = 0;
+		eWMinY = 12;
+		eWMaxY = 0;
+		
+		for(int i = 1 ; i < 12 ; i++)
+		{
+			for(int j = 0 ; j < 11 ; j++)
+			{
+				if((! first_seen) && isWhite(i + (11 * j)))
+				{
+					return false;
+				}
+				else if((! first_seen) && isMember(i + (11 * j)) && (! isWhite(i + (11 * j))))
+				{
+					nothing = false;
+					first_seen = true;
+				}
+				else if((first_seen) && isWhite(i + (11 * j)))
+				{
+					if(decode(i + (11 * j)).getX() < eWMinX){eWMinX = decode(i + (11 * j)).getX();}
+					else if(decode(i + (11 * j)).getX() > eWMaxX){eWMaxX = decode(i + (11 * j)).getX();}
+					if(decode(i + (11 * j)).getY() < eWMinY){eWMinY = decode(i + (11 * j)).getY();}
+					else if(decode(i + (11 * j)).getY() > eWMaxY){eWMaxY = decode(i + (11 * j)).getY();}
+					nothing = false;
+					second_seen = false;
+				}
+				else if((first_seen) && isMember(i + (11 * j)) && (! isWhite(i + (11 * j))))
+				{
+					nothing = false;
+					second_seen = true;
+				}
+			}
+			if((!(first_seen && second_seen)) && (! nothing))
+			{
+				return false;
+			}
+			else
+			{
+				nothing = true;
+				first_seen = false;
+				second_seen = true;
+			}
+		}
+		
+		first_seen = false;
+		second_seen = true;
+		for(int j = 1 ; j < 12 ; j++)
+		{
+			for(int i = 0 ; i < 11 ; i++)
+			{
+				if((! first_seen) && isWhite(i + (11 * j)))
+				{
+					return false;
+				}
+				else if((! first_seen) && isMember(i + (11 * j)) && (! isWhite(i + (11 * j))))
+				{
+					first_seen = true;
+				}
+				else if((first_seen) && isWhite(i + (11 * j)))
+				{
+					second_seen = false;
+				}
+				else if((first_seen) && isMember(i + (11 * j)) && (! isWhite(i + (11 * j))))
+				{
+					second_seen = true;
+				}
+			}
+			if((!(first_seen && second_seen)) && (! nothing))
+			{
+				return false;
+			}
+			else
+			{
+				nothing = true;
+				first_seen = false;
+				second_seen = true;
+			}
+		}
+		return true;
+		
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -379,6 +379,12 @@ public class Board extends JPanel
 						JOptionPane.showMessageDialog(null, "No capture for 50 last moves. It's a draw!");
 						end();
 						setActive(false);
+					}	
+					else if(_manager.isEncircled(second_clicked))
+					{
+						JOptionPane.showMessageDialog(null, "Congratulations! You won!");
+						end();
+						setActive(false);
 					}
 					else
 					{
