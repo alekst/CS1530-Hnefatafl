@@ -373,6 +373,7 @@ public class Game
 	
 	/**
 	*	Stops the previous running threads before creating new timer threads.
+	* Tested by user interaction. Expected behavior: timers both stop
 	*/
 	public void stopTimers()
 	{
