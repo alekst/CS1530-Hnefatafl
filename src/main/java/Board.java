@@ -440,7 +440,7 @@ public class Board extends JPanel
 	/**
 	* End game routine. It disables the current player and stops the timer.
 	*/
-	private void end()
+	public void end()
 	{
 		disable(_player);
 		_player.getInfo().stopTimer();
