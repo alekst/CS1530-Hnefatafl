@@ -80,7 +80,7 @@ public class Game
 		// player 1 : right now resets player info on load
 		_whites = whites;
 		int numWhites = _manager.getWhites().length;
-		_whiteInfo = new PlayerInfoPanel("Whites", whiteTime, numWhites); // 300 seconds
+		_whiteInfo = new PlayerInfoPanel("Whites", whiteTime, numWhites); // 300 seconds at init
 		_whites.addInfo(_whiteInfo);
 		
 		// player 2 : right now resets player info on load
@@ -163,6 +163,7 @@ public class Game
 				line = reader.readLine();
 			
 				Integer[] gameInfo = parseInput(line);
+				stopTimers();
 				resetPlayers();
 				load_init(_manager, _whites, _blacks, gameInfo[2], gameInfo[1]);	// data is set via the manager in the parseInput method
 				setPlayers(gameInfo[0]); // [0]: turn flag
@@ -368,6 +369,16 @@ public class Game
 							break;
 		}
 		_board.setTileColors(s);	
+	}
+	
+	/**
+	*	Stops the previous running threads before creating new timer threads.
+	* Tested by user interaction. Expected behavior: timers both stop
+	*/
+	public void stopTimers()
+	{
+		_whiteInfo.stopTimer(); 
+		_blackInfo.stopTimer(); 
 	}
 	
 }

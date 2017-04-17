@@ -30,8 +30,9 @@ public class NewGameButton extends JButton
 		*/
 		public void actionPerformed(ActionEvent e) 
 		{
+			_m.stopTimers();
 			_f.resetFrame();
-			new Game();
+			Game newGame = new Game();
 		}
 	}
 }

@@ -452,7 +452,7 @@ public class Board extends JPanel
 	/**
 	* End game routine. It disables the current player and stops the timer.
 	*/
-	private void end()
+	public void end()
 	{
 		disable(_player);
 		_player.getInfo().stopTimer();
@@ -551,16 +551,9 @@ public class Board extends JPanel
       PlayerInfoPanel playerInfo = _player.getInfo();
 
       // stop the active player timer
-      playerInfo.stopTimer(); // *** want to set timer rather than only stop
-      // if this is the end of an actual turn and not done in preparation for the game
-      //if (turn)
-      //{
-        // add three seconds to this player's time
-        //playerInfo.addTime();
-      //}		
-      // start the passive player timer
+      playerInfo.stopTimer(); 
       PlayerInfoPanel otherInfo = _other.getInfo();
-      otherInfo.startTimer(); // *** want to set timer before timer start
+      otherInfo.startTimer(); 
           		
       // switch players
       Player temp = _player;

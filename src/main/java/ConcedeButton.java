@@ -17,7 +17,7 @@ public class ConcedeButton extends JButton
     super("Concede");
 	  _m = m;
 	  addActionListener(new ConcedeButtonListener());
-    this.setEnabled(false);
+    this.setEnabled(true);
   }
 
   class ConcedeButtonListener implements ActionListener 
@@ -28,7 +28,17 @@ public class ConcedeButton extends JButton
 	*/
     public void actionPerformed(ActionEvent e) 
     {
-      
+      String s;
+      _m.stopTimers();
+      if (_m.getTurn() == 0)
+      {
+        s = "Game conceded by white. Black wins!";
+      } else 
+      {
+        s = "Game conceded by black. White wins!";
+      }
+      _m.queryBoard().showMsg(s);
+      _m.queryBoard().end();
 	  }
     
   }      
