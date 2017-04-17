@@ -80,7 +80,7 @@ public class Game
 		// player 1 : right now resets player info on load
 		_whites = whites;
 		int numWhites = _manager.getWhites().length;
-		_whiteInfo = new PlayerInfoPanel("Whites", whiteTime, numWhites); // 300 seconds
+		_whiteInfo = new PlayerInfoPanel("Whites", whiteTime, numWhites); // 300 seconds at init
 		_whites.addInfo(_whiteInfo);
 		
 		// player 2 : right now resets player info on load
