@@ -109,14 +109,14 @@ public class Manager
 		return _board;
 	}
 	
-		/** 
-		* @return a current board status as a Data object
-		*
-		*/ 
-		public Data getBoardData()
-		{
-			return _data;
-		}
+	/** 
+	* @return a current board status as a Data object
+	*
+	*/ 
+	public Data getBoardData()
+	{
+		return _data;
+	}
 		
 	/**
 	* @param coord-The coordinate object of a locatio
@@ -185,6 +185,40 @@ public class Manager
 		}
 		else
 			return false;
+	}
+
+	/**
+	* if a player cannot move they lose the game
+	* @param location-location of the piece
+	* @return true-if piece cannot move
+	* @return false if piece can move
+	*/
+	public boolean rule_9(Coordinate location)
+	{
+		int loc=encode(location);
+		//see if its sandwiched on edge
+		if(loc%11==0) //east wall
+		{
+			//get up, down and left neighbors
+			return _data.rule_9(loc,2);
+		}
+		else if(loc>1 && loc<11) //north wall
+		{
+			//get left, right, down neighbors
+			return _data.rule_9(loc, 1);
+		}
+		else if(loc>111 && loc<121) //south wall
+		{
+			return _data.rule_9(loc, 3);
+			//get up, left, right neighbors
+		}
+		else if(loc==1 || loc==12 || loc==23 || loc==34 || loc==47 || loc==56 || loc==67 || loc==78 || loc==89 ||loc==100) //west wall
+		{
+			return _data.rule_9(loc, 4);
+			//get up, down, right neighbors
+		}
+
+		return false;
 	}
 	
 
@@ -396,6 +430,16 @@ public class Manager
 		return _data.kingLost(value);
 	}
 
+	/**
+	* @param coord-coordinate of king's location
+	* @return true-if exit fort has occured
+	* @return false-if exit fort has not occured
+	*/
+	public boolean exitFort(Coordinate coord)
+	{//need to test
+		int value=encode(coord);
+		return _data.exitFort(value);
+	}
 	
 	/**
 	* determines which pieces are captured

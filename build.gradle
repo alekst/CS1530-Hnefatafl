@@ -1,7 +1,18 @@
 apply plugin: 'java'
 apply plugin: 'application'
+version = '1.0'
 
-mainClassName = "Hnefatafl"
+mainClassName = 'Hnefatafl'
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+manifest { 
+	attributes 'Main-Class': mainClassName
+	    }
 
 repositories {
 	mavenCentral()

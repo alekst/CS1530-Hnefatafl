@@ -3,6 +3,8 @@ import java.util.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.stream.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 
 public class ManagerTest
 {
@@ -315,4 +317,231 @@ public class ManagerTest
 		Manager m = new Manager();
 		assertFalse(m.inSpecialSquare(3,4));
 	}
+	
+	/**
+	* This will test if the encoding returns the right value, given a Coordinate object
+	*/
+	@Test
+	public void testEncode()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(0, 0);
+		int expected = 1;
+		assertEquals(expected, m.encode(c));
+	}
+	
+	/**
+	* This will test if the encoding returns the right value, given a Coordinate object
+	*/
+	@Test
+	public void testEncodeWrong()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(10, 10);
+		int expected = 1;
+		assertNotEquals(expected, m.encode(c));
+	}
+	
+	/**
+	* This will test if it returns a proper index
+	*/
+	@Test
+	public void testKingIndex()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(5, 5); // should be the initial king position
+		int expected = 0; // the king's index
+		assertEquals(expected, m.getIndex(c));
+	}
+	
+	/**
+	* This will test if the king's index works. 
+	*/
+	@Test
+	public void testKingLocation()
+	{
+		Manager m = new Manager();
+		Coordinate expected = new Coordinate(5, 5); // should be the initial king position
+		assertEquals(expected.getX(), m.getKing().getX());
+		assertEquals(expected.getY(), m.getKing().getY());
+	}
+	
+	/**
+	* This will test if only the Whites are returned
+	*/
+	@Test
+	public void testGetWhites()
+	{
+		Manager m = new Manager();
+		int expected = 13;
+		assertEquals(expected, m.getWhites().length);
+	}
+	
+	/**
+	* This will test if only the Blacks are returned
+	*/
+	@Test
+	public void testGetBlacks()
+	{
+		Manager m = new Manager();
+		int expected = 24;
+		assertEquals(expected, m.getBlacks().length);
+	}
+	
+	/*
+	 * This will test getBoardStatus returns a Coordinate array of size 37. 
+	 */
+	@Test
+	public void testGetBoardStatus()
+	{
+		Manager m = new Manager();
+		int expected  = 37;
+		assertEquals(expected, m.getBoardStatus().length);
+	}
+	
+	//Tests if getBoardData returns a Data object
+	@Test
+	public void testGetBoardData()
+	{
+		Manager m = new Manager();
+		assertThat(m.getBoardData(), instanceOf(Data.class));
+	}
+	
+	
+	/*
+	 * This will test if someoneThere returns true when there is a piece in the square 
+	 */
+	@Test
+	public void testSomeoneThereTrue()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(5, 5); // the king's coordinate
+		assertTrue(m.someoneThere(c));
+	}
+	
+	/*
+	 * This will test if someoneThere returns false when there is no piece in the square 
+	 */
+	@Test
+	public void testSomeoneThereFalse()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(11, 0); // a special square
+		assertFalse(m.someoneThere(c));
+	}
+	
+	/*
+	 * This will test if the coordinate contains the King
+	 */
+	@Test
+	public void testIsKingTrue()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(5, 5); // the king's coordinate
+		assertTrue(m.isKing(c));
+	}
+	
+	/*
+	 * This will test if the coordinate does not contain the King
+	 */
+	@Test
+	public void testIsKingFalse()
+	{
+		Manager m = new Manager();
+		Coordinate c = new Coordinate(4, 5); // the king's neighboring coordinate
+		assertFalse(m.isKing(c));
+	}
+	
+	/*
+	 * This will test if the Data is loaded, given an array of Integers
+	 */
+	@Test
+	public void testLoadData()
+	{
+		Manager m = new Manager();
+		Integer[] board = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36};
+		assertEquals(m.loadData(board), 0);
+	}
+
+	// Tests to see if there is encircling with loop surrounding all whites
+	public void encircleManagerTrueTest()
+	{
+		Data d = new Data();
+		d.set(21, 47);
+		d.set(19, 37);
+		d.set(13, 27);
+		d.set(14, 29);
+		d.set(16, 29);
+		d.set(17, 41);
+		d.set(22, 63);
+		d.set(28, 75);
+		d.set(30, 85);
+		d.set(33, 93);
+		d.set(29, 81);
+		d.set(27, 69);
+		Manager m = new Manager(d);
+		assertTrue(m.isEncircled(new Coordinate(7, 3)));
+	}
+	
+	// Tests to see if there is no encircling when there is a loop
+	//	and all whites are surrounded, but the loop isn't surrounding
+	//		all whites
+	public void encircleManagerFalseTest()
+	{
+		Data d = new Data();
+		d.set(15, 29);
+		d.set(17, 19);
+		Manager m = new Manager(d);
+		assertFalse(m.isEncircled(new Coordinate(7,3)));
+	}
+
+	/*
+	* Tests rule 9 in manager
+	*/
+	@Test
+	public void test1_rule_9()
+	{
+		
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(114 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,15 ,5 ,6 ,7 ,8 ,17 ,37 ,40,45 ,55 ,56 ,59 ,53 ,66 ,67 ,77 ,78 ,87 ,103 ,113 ,115 ,116 ,117 ,74 ));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+		Coordinate temp=new Coordinate(3,10);
+		assertTrue(m.rule_9(temp));
+	}
+
+	/*
+	* Tests rule 9 in manager
+	*/
+	@Test
+	public void test2_rule_9()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(39 ,82 ,38 ,54 ,66 ,-1 ,-1 ,17 ,44 ,-1 ,84 ,73 ,95 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,55 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+		Coordinate temp=new Coordinate(10,4);
+		assertTrue(m.rule_9(temp));
+	}
+
+
+	/*
+	* Tests the exitFort method in manager
+	*/
+	@Test
+	public void testExitFort()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(6,59,16,62,63,4,8,18,-1,71,17,73,83,3,37,14,43,10,22,34,44,45,55,56,57,65,66,67,77,78,88,105,114,115,116,117,118));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+		Coordinate temp=new Coordinate(5,0);
+ 		assertTrue(m.exitFort(temp));
+ 	}
+	
 }
+
+

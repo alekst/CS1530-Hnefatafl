@@ -192,6 +192,38 @@ public class PlayerTest
 		p.addRepetition(new Coordinate(2,1));
 		assertEquals(p.getRepetition(), 0);
 	}
+
+	// Checks if the getPieces() gets ... pieces. 
+	@Test
+	public void testGetPieces()
+	{
+		Manager m = new Manager();
+		Player w = new Player(m);
+		w.setWhite();
+		Player b = new Player(m);
+		b.setBlack();
+		Coordinate [] whites = w.getPieces();
+		Coordinate [] blacks = b.getPieces();
+		assertEquals(whites.length, 13);
+		assertEquals(blacks.length, 24);
+		
+		
+	}
+	
+
+	//tests exitFort
+	@Test
+	public void testExitFort()
+	{
+		Manager m=new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(6,59,16,62,63,4,8,18,-1,71,17,73,83,3,37,14,43,10,22,34,44,45,55,56,57,65,66,67,77,78,88,105,114,115,116,117,118));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+		Player p=new Player(m);
+		assertTrue(p.exitFort());
+	}
+
 }
 		
 

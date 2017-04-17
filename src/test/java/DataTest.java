@@ -1,5 +1,7 @@
 import java.lang.*;
 import java.util.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.stream.*;
@@ -495,113 +497,6 @@ public class DataTest
 	}
 
 	/**
-	* tests horizontal sandwich captures with top right special square for black pieces, capture should not occur
-	*/ 
-	@Test
-	public void topRightHorizBlackCapture()
-	{
-		Data d=new Data();
-		d.set(8,10);
-		d.set(17,9);
-		ArrayList<Coordinate> test_arr=d.pieceLost(9);
-		assertEquals(test_arr.size(),0);
-
-	}
-
-	/**
-	* tests vertical sandwich captures with top right special square for black pieces, capture should not occur
-	*/  
-	@Test
-	public void topRightVertBlackCapture()
-	{
-		Data d=new Data();
-		d.set(8,22);
-		d.set(20,33);
-		ArrayList<Coordinate> test_arr=d.pieceLost(33);
-		assertEquals(test_arr.size(),0);
-
-	}
-	
-	/**
-	* tests vertical sandwich captures with top left special square for black pieces, capture should not occur
-	*/  
-	@Test
-	public void topLeftVertBlackCapture()
-	{
-		Data d=new Data();
-		d.set(8,12);
-		d.set(19,23);
-		ArrayList<Coordinate> test_arr=d.pieceLost(23);
-		assertEquals(test_arr.size(),0);
-	}                        
-	
-	/**
-	* tests horizontal sandwich captures with top left special square for black pieces, capture should not occur
-	*/  
-	@Test
-	public void topLeftHorizBlackCapture()
-	{
-		Data d=new Data();
-		d.set(1,2);
-		d.set(13,3);
-		ArrayList<Coordinate> test_arr=d.pieceLost(3);
-		assertEquals(test_arr.size(),0);
-
-	}
-
-	/**
-	* tests horizontal sandwich captures with bottom left special square for black pieces, capture should not occur
-	*/  
-	@Test 
-	public void bottomleftHorizBlackCapture()
-	{
-		Data d=new Data();
-		d.set(9,112);
-		d.set(32,113);
-		ArrayList<Coordinate> test_arr=d.pieceLost(113);
-		assertEquals(test_arr.size(),0);
-	}
-
-	/**
-	* tests vertical sandwich captures with bottom left special square for black pieces, capture should not occur
-	*/  
-	@Test
-	public void bottomLeftVertBlackCapture()
-	{
-		Data d=new Data();
-		d.set(12,100);
-		d.set(29,89);
-		ArrayList<Coordinate> test_arr=d.pieceLost(89);
-		assertEquals(test_arr.size(),0);
-	}
-
-	/**
-	* tests horizontal sandwich captures with bottom right special square for black pieces, capture should not occur
-	*/  
-	@Test
-	public void bottomRightHorizBlackCapture()
-	{
-		Data d=new Data();
-		d.set(11,120);
-		d.set(36,119);
-		ArrayList<Coordinate> test_arr=d.pieceLost(119);
-		assertEquals(test_arr.size(),0);
-	}
-
-	/**
-	* tests vertical sandwich captures with bottom right special square for black pieces, capture should not occur
-	*/  
-	@Test
-	public void bottomRightVertBlackCapture()
-	{
-		Data d=new Data();
-		d.set(12,110);
-		d.set(30,99);
-		ArrayList<Coordinate> test_arr=d.pieceLost(99);
-		assertEquals(test_arr.size(),0);
-	}
-
-	/**
 	* Tests whether a black piece will be captured when it is to the right of the throne
 	* with the king on it. The black piece is then sandwiched by a white piece, capture should occur
 	*/
@@ -760,62 +655,6 @@ public class DataTest
 		d.set(12,84);
 		d.set(31,72);
 		d.set(12,83);
-		ArrayList<Coordinate> test_arr=d.pieceLost(83);
-		assertTrue(5==test_arr.get(0).getX() && 6==test_arr.get(0).getY());
-	}
-
-	/**
-	* Tests whether a white piece will be captured when it is to the right of the throne
-	* with the king on it. The white piece is then sandwiched by a black piece, capture should occur
-	*/
-	@Test
-	public void kingOnThroneWhitePieceRightBlackCapture()
-	{
-		Data d=new Data();
-		d.set(4,30);
-		d.set(25,63);
-		ArrayList<Coordinate> test_arr=d.pieceLost(63);
-		assertTrue(6==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
-	}
-
-	/**
-	* Tests whether a white piece will be captured when it is to the left of the throne
-	* with the king on it. The white piece is then sandwiched by a black piece, capture should occur
-	*/
-	@Test
-	public void kingOnThroneWhitePieceLeftBlackCapture()
-	{
-		Data d=new Data();
-		d.set(1,26);
-		d.set(24,59);
-		ArrayList<Coordinate> test_arr=d.pieceLost(59);
-		assertTrue(4==test_arr.get(0).getX() && 5==test_arr.get(0).getY());
-	}
-
-	/**
-	* Tests whether a white piece will be captured when it is north of the throne
-	* with the king on it. The white piece is then sandwiched by a black piece, capture should occur
-	*/
-	@Test
-	public void kingOnThroneWhitePieceUpBlackCapture()
-	{
-		Data d=new Data();
-		d.set(8,35);
-		d.set(18,39);
-		ArrayList<Coordinate> test_arr=d.pieceLost(39);
-		assertTrue(5==test_arr.get(0).getX() && 4==test_arr.get(0).getY());
-	}
-
-	/**
-	* Tests whether a white piece will be captured when it is south of the throne
-	* with the king on it. The white piece is then sandwiched by a black piece, capture should occur
-	*/
-	@Test
-	public void kingOnThroneWhitePieceDownBlackCapture()
-	{
-		Data d=new Data();
-		d.set(12,87);
-		d.set(31,83);
 		ArrayList<Coordinate> test_arr=d.pieceLost(83);
 		assertTrue(5==test_arr.get(0).getX() && 6==test_arr.get(0).getY());
 	}
@@ -1238,7 +1077,7 @@ public class DataTest
 	// Tests shield wall captures on a king
 	// 	shouldn't capture anything
 	@Test
-	public void kingSWC()
+	public void kingSWC() 
 	{
 		Data d = new Data();
 		d.set(19, 35);
@@ -1257,6 +1096,42 @@ public class DataTest
 			&& 0==test_arr.get(1).getX() && 5==test_arr.get(1).getY()
 			&& 0==test_arr.get(2).getX() && 6==test_arr.get(2).getY()
 			&& 0==test_arr.get(3).getX() && 7==test_arr.get(3).getY());
+	}
+	
+	// Tests if print returns a string
+	@Test
+	public void testPrintData()
+	{
+		Data d = new Data();
+		assertThat(d.print(), instanceOf(String.class));
+	}
+
+	/*
+	* Test rule 9 in data
+	*/
+	@Test
+	public void test_rule_9()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(114 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,15 ,5 ,6 ,7 ,8 ,17 ,37 ,40,45 ,55 ,56 ,59 ,53 ,66 ,67 ,77 ,78 ,87 ,103 ,113 ,115 ,116 ,117 ,74 ));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+		assertTrue(d.rule_9(114,3));	
+	}
+
+	/*
+	* Test rule 9 in data
+	*/
+	@Test
+	public void test2_rule_9()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(39 ,82 ,38 ,54 ,66 ,-1 ,-1 ,17 ,44 ,-1 ,84 ,73 ,95 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,55 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1 ,-1));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+		assertTrue(d.rule_9(55,2));	
 	}
 	
 	// Tests to see if there is encircling with loop surrounding all whites
@@ -1287,6 +1162,62 @@ public class DataTest
 		d.set(15, 29);
 		d.set(17, 19);
 		assertFalse(d.isEncircled(29));
+	}
+
+	/*
+	* tests exitFort in data
+	*/
+	@Test
+	public void testExitFort()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(6,59,16,62,63,4,8,18,-1,71,17,73,83,3,37,14,43,10,22,34,44,45,55,56,57,65,66,67,77,78,88,105,114,115,116,117,118));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+ 		assertTrue(d.exitFort(6));
+	}
+
+	/*
+	* tests exitFort in data
+	*/
+	@Test
+	public void testExitFort_2()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(66,59,64,55,107,49,53,54,39,71,76,77,83,15,5,6,7,8,17,34,23,45,27,56,57,10,85,67,99,78,89,105,114,115,116,117,118));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+ 		assertTrue(d.exitFort(66));
+	}
+
+	/*
+	* tests exitFort in data
+	*/
+	@Test
+	public void testExitFort_3()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(116,59,60,62,118,49,105,51,39,71,115,73,106,4,5,6,7,8,17,34,44,45,55,56,57,65,66,67,77,78,88,110,114,-1,102,64,120));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+ 		assertTrue(d.exitFort(116));
+	}
+
+	/*
+	* tests exitFort in data
+	*/
+	@Test
+	public void testExitFort_4()
+	{
+		Manager m = new Manager();
+		Data d = new Data();
+		ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(56,91,78,57,63,45,50,51,39,68,72,73,83,4,5,6,7,8,17,37,44,26,55,3,2,65,66,103,77,100,88,105,114,115,116,117,118));
+		d.boardData = list.toArray(d.boardData);
+		m.setData(d);
+ 		assertTrue(d.exitFort(56));
 	}
 }
 

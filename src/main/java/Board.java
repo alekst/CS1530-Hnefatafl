@@ -1,4 +1,10 @@
- import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+//import javax.swing.ImageIcon;
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -22,6 +28,11 @@ public class Board extends JPanel
 	private static final int numWhites = 12;
 	private static final int numBlacks = 24;
 	
+	private int movesWithoutCapture= 0; 
+
+	private static final String IMG_PATH = "src/main/java/images/laboon.png";
+	private ImageIcon icon;
+	
 	
 	private Coordinate first_clicked = new Coordinate(-1, -1);
 	private Coordinate second_clicked = new Coordinate(-1, -1);
@@ -41,6 +52,9 @@ public class Board extends JPanel
 	private Manager _manager;
 	private Player _player;
 	private Player _other;
+  
+  private String colorScheme = "generic";
+	
 	
 	
 	/**
@@ -88,7 +102,17 @@ public class Board extends JPanel
 		Color ochre = new Color(204, 119, 34);
 		JPanel boardConstrain = new JPanel(new GridBagLayout());
 		boardConstrain.setBackground(ochre);
-		boardConstrain.add(board);	
+		boardConstrain.add(board);
+		// set up the image
+		try
+		{
+			
+			BufferedImage img = ImageIO.read(new File(IMG_PATH));
+			icon = new ImageIcon(img);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
@@ -180,7 +204,8 @@ public class Board extends JPanel
 		
 		if (type.equals(whiteKing))
 		{
-			square.setText(whiteKing);
+			//square.setText(whiteKing);
+			square.setIcon(icon);
 		}
 		else if (type.equals(whitePiece))
 		{
@@ -220,7 +245,7 @@ public class Board extends JPanel
 		printPieces(_other);
 		return 0;
 	}
-	
+  
 	/**
 	* Prints the pieces for a particular player
 	* @param player: Player object indicating for which player to print
@@ -231,27 +256,33 @@ public class Board extends JPanel
 		Coordinate[] pieces = player.getPieces();
 		for(int i = 0 ; i < pieces.length; i++)
 		{
-			if(player.isWhite())
+			if (pieces[i] != null)
 			{
-				if (i == 0)
+				if(player.isWhite())
 				{
-					printPiece(pieces[i], whiteKing);
-				}
+					if (i == 0)
+					{
+						printPiece(pieces[i], whiteKing);
+					}
+					else
+					{
+						printPiece(pieces[i], whitePiece);
+					}	
+				}	
 				else
 				{
-					printPiece(pieces[i], whitePiece);
+					printPiece(pieces[i], blackPiece);
 				}	
-			}	
-			else
+			} 
+			else 
 			{
-				printPiece(pieces[i], blackPiece);
-			}	
+				//do nothing
+			}
 		}		
 		return 0;
 	} 
 	
 	/**
-
 	* Enables pieces related to designated player 
 	*/
 	private void enable(Player player)
@@ -274,9 +305,7 @@ public class Board extends JPanel
 		
 		for(int i = 0 ; i < pieces.length; i++)
 		{
-			
 			disable(pieces[i]);
-		
 		}
 	}
 	
@@ -292,6 +321,7 @@ public class Board extends JPanel
 	{
 		 public void doPerformAction(ActionEvent actionEvent)
  		{	
+			setActive(true);
  			Square b = (Square)actionEvent.getSource();
  			Coordinate coor = b.getCoord();
 			if(_player.getInfo().timerDone())
@@ -306,12 +336,32 @@ public class Board extends JPanel
 				first_clicked = coor;	
 				boardSquares[coor.getX()][coor.getY()].setBackground(Color.darkGray);
 				showPossibleMoves(first_clicked);
+				if(_player.getInfo().getNumPiece()==1)
+				{
+					//do check here
+					if(_manager.rule_9(first_clicked))
+					{
+						if(_player.isWhite())
+						{
+							JOptionPane.showMessageDialog(null, "Congratulations! Black team won!");
+							end();
+							setActive(false);	
+						}
+						else
+						{
+							JOptionPane.showMessageDialog(null, "Congratulations! White team won!");
+							end();
+							setActive(false);
+						}
+					}
+
+				}
 			}
  			else if(first_clicked.equal(coor))
  			{
 // 				// Unselect it
  				boardSquares[coor.getX()][coor.getY()].setBackground(selected_color);
-				first_clicked = new Coordinate(-1,-1);
+				first_clicked = new Coordinate(-1,-1); 
 				hidePossibleMoves();
  			} 
 			else if(_manager.getIndex(coor) == -1)
@@ -328,8 +378,17 @@ public class Board extends JPanel
 					boardSquares[first_clicked.getX()][first_clicked.getY()].setBackground(selected_color);
 
 					_manager.updateLocation(second_clicked, first_clicked);
+					
 				
 					ArrayList<Coordinate>piecesToRemove=_manager.isPieceSurrounded(second_clicked); //sees if a piece(s) is captured
+					if (piecesToRemove.size() == 0)
+					{
+						movesWithoutCapture++;
+					}
+					else
+					{
+						movesWithoutCapture = 0; // reset
+					}
 					for(int i=0; i<piecesToRemove.size(); i++) //removes pieces from board
 					{
 						enable(piecesToRemove.get(i)); //enable the spot where the piece used to reside
@@ -345,6 +404,12 @@ public class Board extends JPanel
 						end();
 						setActive(false);
 					}
+					else if (movesWithoutCapture == 100) // 50 moves per player
+					{
+						JOptionPane.showMessageDialog(null, "No capture for 50 last moves. It's a draw!");
+						end();
+						setActive(false);
+					}	
 					else if(_manager.isEncircled(second_clicked))
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You won!");
@@ -365,7 +430,7 @@ public class Board extends JPanel
 					}
 					else
 					{
-						_player.doneWithTurn(); //disable whole board
+						_player.doneWithTurn(); 
 						_other.newTurn();
 						resetClicks();
 						switchTurn(true); // this is an actual turn that has been made, so the flag is set to true 
@@ -441,6 +506,8 @@ public class Board extends JPanel
 	{
 		
 		PlayerInfoPanel playerInfo = _player.getInfo();
+		playerInfo.setBackground(Color.lightGray);
+		
 
 		// stop the active player timer
 		playerInfo.stopTimer();
@@ -452,6 +519,9 @@ public class Board extends JPanel
 		}		
 		// start the passive player timer
 		PlayerInfoPanel otherInfo = _other.getInfo();
+		int color = (int) Long.parseLong("6495ed", 16);
+		otherInfo.setBackground(new Color (color));
+		
 		otherInfo.startTimer();
 		
 		// switch players
@@ -466,6 +536,51 @@ public class Board extends JPanel
 		disable(_other);
 	}
 		
+    
+  /**
+  * Changes current player to "other" and "other" player to now be the current player to move
+  * Calls enable and disable methods for the respective players' pieces
+  * This is only called by loading a game. If "true", then the default black moving first is changed to white
+  */
+  public int setTurn(boolean turn)
+  {
+    int result = 1; // for testing purposes; default is 1 meaning it is black's turn
+    if (turn) {
+      _player.doneWithTurn();
+      _other.newTurn();
+      resetClicks();
+          	
+      PlayerInfoPanel playerInfo = _player.getInfo();
+
+      // stop the active player timer
+      playerInfo.stopTimer(); // *** want to set timer rather than only stop
+      // if this is the end of an actual turn and not done in preparation for the game
+      //if (turn)
+      //{
+        // add three seconds to this player's time
+        //playerInfo.addTime();
+      //}		
+      // start the passive player timer
+      PlayerInfoPanel otherInfo = _other.getInfo();
+      otherInfo.startTimer(); // *** want to set timer before timer start
+          		
+      // switch players
+      Player temp = _player;
+      _player = _other;
+      _other = temp;
+          		
+      // enable the active player
+      enable(_player);
+          		
+      // disable the passive player. 
+      disable(_other);
+      result = 0;
+    } else { 
+      //black's turn; aka do nothing
+    }
+    
+    return result; // upon completion return 0 for testing
+  }
 	/**
 	* "Moves" the piece by deleting piece at old location and printing piece at new location 
 	* @param oldData: Coordinate object indicating old location of the moving piece
@@ -477,6 +592,8 @@ public class Board extends JPanel
 			
 		if (_manager.isKing(oldData))
 		{
+			Square square = boardSquares[oldData.getX()][oldData.getY()];
+			square.setIcon(null); // delete laboon
 			printPiece(newData, whiteKing);
 		}
 		else if(_player.isWhite())
@@ -642,6 +759,7 @@ public class Board extends JPanel
 			// Do nothing
 		}
 		reprintTileColors();
+    colorScheme = s;
 	}
 	
 	
@@ -711,6 +829,35 @@ public class Board extends JPanel
 			}
 		}
 	}
+  
+  /**
+  * Simple wrapper class for displaying popup messages.
+  */ 
+  public void showMsg(String msg)
+  {
+    JOptionPane.showMessageDialog(null, msg);
+  }
+  
+  /**
+  * Gets the user's selected color scheme for use in saving the game
+  */
+  public int getColorScheme()
+  {
+    int color = 0;
+    switch(colorScheme) {
+			case "autumn": color = 1;
+							       break;
+			case "winter": color = 2;
+							       break;
+			case "spring": color = 3;
+							       break;
+			case "summer": color = 4;
+							       break;
+			default: color = 0;
+							 break;
+		}
+    return color;
+  }
 }
 
 

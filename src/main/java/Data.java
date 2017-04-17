@@ -182,6 +182,367 @@ public class Data
 		}
 		return false;	
 	}
+
+	/**
+	* @param value-encoded value of king's location
+	* @return true-if exit fort has occured
+	* @return false-if exit fort has not occured
+	*/
+	public boolean exitFort(int value)
+	{//need to test, all methods this calls will be indirectly tested
+		int edge=isKingOnEdge(value); //get edge
+		if(edge!=0 && canKingMove(value,edge))//king on edge
+		{
+			//check that pieces in the kings row/column
+			if(edge==1 || edge==2) //east/west wall check up and down first, +11 and -11
+			{
+				int friendly_1=0;
+				int friendly_2=0;
+				//loop through spots north and south from kings location
+				int curr_spot=value-11;
+				while(curr_spot>0)
+				{
+					if(!isWhite(curr_spot)&&isMember(curr_spot)) //blaack piece
+					{
+						break;
+					}
+					else if( (isWhite(curr_spot) && isMember(curr_spot)) || isSpecialSquare(curr_spot)) //white piece on board
+					{
+						friendly_1=curr_spot; //setting a friendly_1 var
+						break;
+						//when white piece  is found start checking in the spot directly perpendicular to it
+						//then check for a piece a diagonal it (more than 1 possible diagonal)
+					}
+					curr_spot=curr_spot-11;
+				}
+				if(friendly_1==0) //if 1 friendly is not found yet exit cannot occur
+				{
+					return false;
+				}
+				//at this point we need to have a white piece on the same column
+				curr_spot=value+11;
+
+				while(curr_spot<122)
+				{
+					if((!isWhite(curr_spot)&&isMember(curr_spot)))
+					{
+						
+						break;
+					}
+					else if((isWhite(curr_spot) && isMember(curr_spot))|| isSpecialSquare(curr_spot))
+					{
+						friendly_2=curr_spot; //setting friendly_2 var
+						break;
+					}
+					curr_spot=curr_spot+11;
+				}
+				
+				if(friendly_2==0)
+				{
+					return false;
+				}
+				else
+				{
+					ArrayList<Integer> prev_pieces = new ArrayList<Integer>(); 
+					ArrayList<Integer> loop_pieces = new ArrayList<Integer>(); 
+					return loop_(friendly_1, friendly_2, prev_pieces, value,loop_pieces);
+				}
+			}
+			else if(edge==3 || edge==4) //north and south walls
+			{
+				int friendly_1=0;
+				int friendly_2=0;
+				int curr_spot=value-1; //going until 1 or 111
+				while(curr_spot>0 && curr_spot!=110)
+				{//need to find a white piece west
+					if(!isWhite(curr_spot)&&isMember(curr_spot))
+					{
+						break;
+					}
+					else if((isWhite(curr_spot) && isMember(curr_spot)) || isSpecialSquare(curr_spot)) 
+					{
+						friendly_1=curr_spot; //setting a friendly_1 var
+						break;
+					}
+					curr_spot=curr_spot-1;
+				}
+				if(friendly_1==0) //if 1 friendly is not found yet exit cannot occur
+				{
+					return false;
+				}
+				curr_spot=value+1; //going until 11 or 121
+				while(curr_spot!=12 && curr_spot!=122)
+				{//need to find a white piece east
+					if(!isWhite(curr_spot)&&isMember(curr_spot))
+					{
+						break;
+					}
+					else if((isWhite(curr_spot) && isMember(curr_spot))|| isSpecialSquare(curr_spot))
+					{
+						friendly_2=curr_spot;
+						break;
+					}
+					curr_spot=curr_spot+1;
+				}
+				if(friendly_2==0)
+				{
+					return false;
+				}
+				else
+				{
+					ArrayList<Integer> prev_pieces = new ArrayList<Integer>(); 
+					ArrayList<Integer> loop_pieces = new ArrayList<Integer>();
+					return loop_(friendly_1, friendly_2, prev_pieces, value, loop_pieces);
+				}
+			}
+
+		}
+		else{}
+		return false;
+	}
+
+	/**
+	* Determines if the king is able to move, does by checking it's NSEW neighbors
+	* @param value-the int value of the king
+	* @param edge-the edge the king is on
+	* @return true-if the king is able to move
+	* @return false-if the king is not able to move
+	*/
+	private boolean canKingMove(int value, int edge)
+	{
+		boolean ret_val=false; //initially king cannot move
+		Integer [] neighb=getNeighbors(value);
+		if(edge==1)//west
+		{
+			boolean b1=!isMember(neighb[0]);
+			boolean b2=!isMember(neighb[1]);
+			boolean b3=!isMember(neighb[2]);
+			ret_val=b1||b2||b3;
+		}
+		else if(edge==2)
+		{
+			boolean b1=!isMember(neighb[0]);
+			boolean b2=!isMember(neighb[1]);
+			boolean b3=!isMember(neighb[3]);
+			ret_val=b1||b2||b3;
+		}
+		else if(edge==3)
+		{
+			boolean b1=!isMember(neighb[1]);
+			boolean b2=!isMember(neighb[2]);
+			boolean b3=!isMember(neighb[3]);
+			ret_val=b1||b2||b3;
+		}
+		else if(edge==4)
+		{
+			boolean b1=!isMember(neighb[0]);
+			boolean b2=!isMember(neighb[2]);
+			boolean b3=!isMember(neighb[3]);
+			ret_val=b1||b2||b3;
+		}
+		return ret_val;
+	}
+
+
+	//needs work, once a loop is found need to ensure that no captures can occur in it(no black pieces is in it)
+	//and need to make sure none of the pieces making the fort can be cap'd
+	/**
+	* Backtracking recursive method to find loop of white pieces around the king
+	* @param start-the starting int of the loop
+	* @param stop-the stopping int of the loop
+	* @param prev_pieces-array list of pieces already visited while searching for the loop
+	* @param kingVal-the int value of the king
+	* @param loop_pieces-array list of pieces in the loop
+	* @return true-if there is a valid loop
+	* @return false- if there is not a valid loop
+	*/
+	private boolean loop_(int start, int stop, ArrayList<Integer> prev_pieces, int kingVal, ArrayList<Integer> loop_pieces)
+	{
+		//base case
+		if(start==stop)
+		{
+			loop_pieces.add(stop);
+			
+			//now make sure no piece can be captured
+			return arePiecesVulnerable(loop_pieces);//, safe_spots);
+			//made valid loop
+		}
+		else
+		{
+			//add start to prev pieces
+			prev_pieces.add(start);
+			//check north
+			if(isWhite(start-11)&&isMember(start-11) && !prev_pieces.contains(start-11) && (start-11)!=kingVal)
+			{
+				loop_pieces.add(start);
+				if(loop_(start-11, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					return true;
+				}
+				else 
+					loop_pieces.remove(Integer.valueOf(start));
+			}
+			//check south
+			if(isWhite(start+11)&&isMember(start+11) && !prev_pieces.contains(start+11) && (start+11)!=kingVal)
+			{
+				loop_pieces.add(start);
+				if(loop_(start+11, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					return true;
+				}
+				else 
+					loop_pieces.remove(Integer.valueOf(start));
+			}
+			//check west
+			if(isWhite(start-1)&&isMember(start-1) && !prev_pieces.contains(start-1) && (start-1)!=kingVal)
+			{
+				loop_pieces.add(start);
+				if(loop_(start-1, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					return true;
+				}
+				else 
+					loop_pieces.remove(Integer.valueOf(start));
+			}
+			//check east
+			if(isWhite(start+1)&&isMember(start+1) && !prev_pieces.contains(start+1) && (start+1)!=kingVal)
+			{
+				loop_pieces.add(start);
+				if(loop_(start+1, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					return true;
+				}
+				else 
+					loop_pieces.remove(Integer.valueOf(start));
+			}
+			//check northWest
+			if((isWhite(start-12)&&isMember(start-12) && !prev_pieces.contains(start-12) && (start-12)!=kingVal)||start-12==1)
+			{
+				loop_pieces.add(start);
+				if(loop_(start-12, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					return true;
+				}
+				else 
+					loop_pieces.remove(Integer.valueOf(start));
+			}
+			//check northEast
+			if((isWhite(start+10)&&isMember(start+10) && !prev_pieces.contains(start+10) && (start+10)!=kingVal)||start+10==111)
+			{
+				loop_pieces.add(start);
+				if(loop_(start+10, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					return true;
+				}
+				else 
+					loop_pieces.remove(Integer.valueOf(start));
+			}
+			//check southWest
+				int x_=start-10;
+
+			if((isWhite(start-10)&&isMember(start-10) && !prev_pieces.contains(start-10) && (start-10)!=kingVal) || start-10==11)
+			{
+			
+				loop_pieces.add(start);
+				if(loop_(start-10, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					//loop_pieces.add(start-10);
+					return true;
+				}
+				else 
+					loop_pieces.remove(Integer.valueOf(start));
+			}//south east
+			if((isWhite(start+12)&&isMember(start+12) && !prev_pieces.contains(start+12) && (start+12)!=kingVal)||start+12==121)
+			{
+				loop_pieces.add(start);
+				if(loop_(start+12, stop, prev_pieces,kingVal, loop_pieces))
+				{
+					return true;
+				}
+				else 
+					loop_pieces.remove(Integer.valueOf(start));
+			}
+			return false;
+		}	
+	}
+
+	/**
+	* sees if any pieces creating the exit fort can be captured
+	* @param loop_pieces-array list of white pieces in the loop
+	* @return false-if a piece is vulnerable
+	* @return true-if pieces are not vulnerable
+	*/
+	private boolean arePiecesVulnerable(ArrayList<Integer> loop_pieces) 
+	{
+		boolean ret_val=true;
+		for(int i=0;i<loop_pieces.size(); i++)
+		{
+			Integer[] neighbors=getNeighbors(loop_pieces.get(i).intValue());//get neighbors of a loop piece
+			
+			if(i==0 || i==loop_pieces.size()-1)//first and last pieces of array will be on edge
+			{
+				ret_val=true;
+			}
+			else if(loop_pieces.contains(neighbors[0]) || loop_pieces.contains(neighbors[1])|| loop_pieces.contains(neighbors[2]) || loop_pieces.contains(neighbors[3]))
+			{
+				ret_val=true;
+			}
+			else
+			{
+				int temp=loop_pieces.get(i).intValue();
+				if(loop_pieces.contains(temp-10) && loop_pieces.contains(temp+10))//check ne and sw
+				{
+					//do nothing
+				}
+				else if(loop_pieces.contains(temp-12) && loop_pieces.contains(temp+12))
+				{
+					//do nothing
+				}
+				else if((loop_pieces.contains(temp-10) && isSpecialSquare(temp+10) ||(loop_pieces.contains(temp+10) && isSpecialSquare(temp-10)))) //diag is special square
+				{
+
+				}
+				else if((loop_pieces.contains(temp-12) && isSpecialSquare(temp+12) ||(loop_pieces.contains(temp+12) && isSpecialSquare(temp-12)))) //diag is special square
+				{
+
+				}
+				else
+					return false;
+			}
+		}
+		return ret_val;
+	}
+
+	/**
+	* @param value-encoded value of king's location
+	* @return 1-if king is on west wall
+	* @return 2-if king is on east wall
+	* @return 3-if king is on south wall
+	* @return 4-if king is on north wall
+	* @rerurn 0-if king is NOT on edge
+	*/
+	private int isKingOnEdge(int value)
+	{
+		Coordinate coord=decode(value);
+		if((coord.getX() - 1 < 0) && (coord.getY() - 1 >= 0)) // west wall
+		{
+			return 1;
+		}
+		else if((coord.getX() + 1 > 10) && (coord.getY() + 1 <= 10)) //east wall
+		{
+			return 2;
+		}
+		else if((coord.getX() - 1 >= 0) && (coord.getY() + 1 > 10)) // south wall
+		{
+			return 3;
+		}
+		else if((coord.getX() + 1 <= 10) && (coord.getY() - 1 < 0)) // north wall
+		{
+			return 4;
+		}
+		else
+			return 0; //not on edge
+	}
 	
 	/**
 	* Returns an array of integers of squares to check if they are taken
@@ -210,17 +571,17 @@ public class Data
 	*/
 	public String print()
 	{
-    String csv_out = new String();
-    for (int i=0; i < boardData.length; i++)
-    {
-      csv_out = csv_out + Integer.toString(boardData[i]);
-      if (i != (boardData.length - 1))
-      {
-        csv_out = csv_out + ',';
-      }
-    }
-    return csv_out;
-  }
+    	String csv_out = new String();
+    	for (int i=0; i < boardData.length; i++)
+   		{
+    		csv_out = csv_out + Integer.toString(boardData[i]);
+      		if (i != (boardData.length - 1))
+      		{
+        		csv_out = csv_out + ',';
+      		}
+    	}
+    	return csv_out;
+  	}
 
 	/**
 	* determines if a piece should be removed
@@ -239,7 +600,15 @@ public class Data
 		else
 		{
 			boolean teammate=isMember(temp_value)&&!isWhite(temp_value);
-			return teammate||temp_value==61;
+			//return teammate||temp_value==61;
+			boolean occupiedThrone=false;
+			if(temp_value==61 &&isMember(temp_value))
+			{
+				occupiedThrone=false;
+				return teammate&&occupiedThrone;
+			}
+
+			return teammate||isSpecialSquare(temp_value);
 		}
 	}
 
@@ -287,10 +656,12 @@ public class Data
 		{
 			//do nothing
 		}
-		else //time to check to see if piece will be captured
+		else //time to check to see if piece will be captured //check if piece is on left or right side
 		{
 			//will need to loop through array of enemies and check the direction of where they are in relation to value
 			//once direction is determined, see if there is a friendly piece 2 spaces away in that direction	
+
+			
 			for(int i=0; i<enemyNeighbors.size();i++) 
 			{
 				int direction=0;
@@ -313,18 +684,30 @@ public class Data
 				}
 				else if(direction==1) //right
 				{
-					if(isPieceRemoved(value+2,isWhite(value)))
+					int loc=enemyNeighbors.get(i).intValue();
+					if(loc%11==0){}
+					else if (loc==1 || loc==12 || loc==23 || loc==34 || loc==47 || loc==56 || loc==67 || loc==78 || loc==89 ||loc==100){}
+					else
 					{
-						if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
-							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						if(isPieceRemoved(value+2,isWhite(value)))
+						{
+							if(getIndex(enemyNeighbors.get(i))!=0)//king can not be captured via sandwich capture
+								coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						}
 					}
 				}
 				else if(direction==-1)//left
 				{	
-					if(isPieceRemoved(value-2,isWhite(value)))
+					int loc=enemyNeighbors.get(i).intValue();
+					if(loc==1 || loc==12 || loc==23 || loc==34 || loc==47 || loc==56 || loc==67 || loc==78 || loc==89 ||loc==100){}
+					else if(loc%11==0){}
+					else
 					{
-						if(getIndex(enemyNeighbors.get(i))!=0) //king can not be captured via sandwich capture
-							coordsToRemove.add(decode(enemyNeighbors.get(i)));
+						if(isPieceRemoved(value-2,isWhite(value)))
+						{
+							if(getIndex(enemyNeighbors.get(i))!=0) //king can not be captured via sandwich capture
+								coordsToRemove.add(decode(enemyNeighbors.get(i)));	
+						}
 					}
 				}
 			}
@@ -528,6 +911,52 @@ public class Data
 		return_list.clear();
 		return return_list;
 	}
+
+	/**
+	* if a player cannot move they lose the game
+	* @param location-location of the piece
+	* @param wall-the wall the piece is on
+	* @return true-if piece cannot move
+	* @return false if piece can move
+	*/
+	public boolean rule_9(int location, int wall)
+	{
+		Integer[] neighbors=getNeighbors(location);
+		boolean color=isWhite(location); //get piece color
+		if(wall==1) //0,2,3
+		{
+
+			if((isMember(neighbors[0])&&isMember(neighbors[2])&&isMember(neighbors[3])) &&(isWhite(neighbors[0])!=color)&&(isWhite(neighbors[2])!=color)&&(isWhite(neighbors[3])!=color))
+			{
+				return true;
+			}
+		}
+		else if(wall==2) //013
+		{
+			if((isMember(neighbors[0])&&isMember(neighbors[1])&&isMember(neighbors[3])) &&(isWhite(neighbors[0])!=color)&&(isWhite(neighbors[1])!=color)&&(isWhite(neighbors[3])!=color))
+			{
+				return true;
+			}
+		}
+
+		else if(wall==3)//123
+		{
+			if((isMember(neighbors[1])&&isMember(neighbors[2])&&isMember(neighbors[3])) &&(isWhite(neighbors[1])!=color)&&(isWhite(neighbors[2])!=color)&&(isWhite(neighbors[3])!=color))
+			{
+				return true;
+			}
+		}
+
+		else if(wall==4)//012
+		{
+			if((isMember(neighbors[0])&&isMember(neighbors[1])&&isMember(neighbors[2])) &&(isWhite(neighbors[0])!=color)&&(isWhite(neighbors[1])!=color)&&(isWhite(neighbors[2])!=color))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 	
 	/*
 	* checks to see if there is encircling and therefore a win
@@ -549,6 +978,7 @@ public class Data
 		{
 			return_val = isEncapsulated();
 			setMinsMaxs();
+			
 			if(eBMinX < eWMinX && eBMaxX > eWMaxX && eBMinY < eWMinY && eBMaxY > eWMaxY)
 			{
 				return return_val;
@@ -754,39 +1184,3 @@ public class Data
 		
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
