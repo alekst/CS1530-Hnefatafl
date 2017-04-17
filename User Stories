@@ -22,15 +22,9 @@ As a player, I want the ability to save my current game, so that I can resume pl
 
 As a player, I want the ability to load a saved game, so that I can resume what I couldn't finish earlier 8 (DONE)
 
-As a player, I want the ability to concede defeat at any moment during the game, so that I do not need to finish my game 4 
+As a player, I want the ability to concede defeat at any moment during the game, so that I do not need to finish my game 4 (DONE)
 
-As a player, I want the ability to see my available moves after clicking on the piece I would like to move, so that I can visualize all of my possible moves  8
-
-As a new player, I want the ability to pull up instructions on the game, so that I can learn how to play the game 2
-
-As a player, I want the ability to see past moves, so that I can learn strategy from previous moves 4
-
-As a player, I want the ability to look back in history of the game, so that I can see past moves 16
+As a player, I want the ability to see my available moves after clicking on the piece I would like to move, so that I can visualize all of my possible moves  8 (DONE)
 
 As a player, I want a countdown timer for each side, so that I can timebox the game 8 (DONE)
 
@@ -38,12 +32,12 @@ As a player, I want five minutes plus three seconds per move for each player, so
 
 As a player, I want to be able to create a shield wall, so that I can capture my opponent's pieces but not the king 4 (DONE)
 
-As a defender, I want to be able to create an exit fort for the king to escape, so that I can win the game 8
+As a defender, I want to be able to create an exit fort for the king to escape, so that I can win the game 8 (DONE)
 
-As an attacker, I want the defenders to not be able to create a draw fort, so that the game can progress 8
+As an attacker, I want the defenders to not be able to create a draw fort, so that the game can progress 8 (DONE)
 
-As a player, I want my opponent to not be able to perpetually move into the same positions, so that the game can progress 4
+As a player, I want my opponent to not be able to perpetually move into the same positions, so that the game can progress 4 (DONE)
 
-As an attacker, I want to be able to encircle my opponent's pieces for the king to not escape, so that I can win the game 16
+As an attacker, I want to be able to encircle my opponent's pieces for the king to not escape, so that I can win the game 16 (DONE)
 
-As a player, if there are no captures in 50 moves I want the game to finish, so that the game doesn't take forever 2
+`As a player, if there are no captures in 50 moves I want the game to finish, so that the game doesn't take forever` 2 (DONE)
