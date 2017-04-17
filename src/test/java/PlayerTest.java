@@ -65,7 +65,6 @@ public class PlayerTest
 		assertEquals(p.myTurn(), true);
 	}
 	
-	/* TEST WRITING IN PROGRESS
 	// Checks if getPieces with a black player returns
 	// 	correct black pieces	
 	@Test
@@ -77,8 +76,18 @@ public class PlayerTest
 		Player p = new Player(m);
 		p.setBlack();
 		
+		Coordinate[] pieces = p.getPieces();
+		boolean test_var = true;
 		
-		boolean test_var = p.getPieces().equals(m.getBlacks());
+		Integer[] pieceValues = {4, 5, 6, 7, 8, 17, 34, 44, 45, 55, 56, 57, 65, 66, 67, 77, 78, 88, 105, 114, 115, 116, 117, 118};
+		
+		for(int i = 0 ; i < pieces.length ; i++)
+		{
+			if(pieces[i].getX() != d.decode(pieceValues[i]).getX() ||  pieces[i].getY() != d.decode(pieceValues[i]).getY())
+			{
+				test_var = false;
+			}
+		}
 		assertEquals(test_var, true);
 	}
 	
@@ -93,11 +102,20 @@ public class PlayerTest
 		Player p = new Player(m);
 		p.setWhite();
 		
-		boolean test_var = p.getPieces().equals(m.getWhites());
+		Coordinate[] pieces = p.getPieces();
+		boolean test_var = true;
+		
+		Integer[] pieceValues = {61, 59, 60, 62, 63, 49, 50, 51, 39, 71, 72, 73, 83};
+		
+		for(int i = 0 ; i < pieces.length ; i++)
+		{
+			if(pieces[i].getX() != d.decode(pieceValues[i]).getX() ||  pieces[i].getY() != d.decode(pieceValues[i]).getY())
+			{
+				test_var = false;
+			}
+		}
 		assertEquals(test_var, true);
 	}
-	
-	*/
 	
 	// Checks if hasWon works when somebody has won
 	@Test
@@ -139,7 +157,41 @@ public class PlayerTest
 		assertEquals(panel, actual);
 	}
 	
+	// checks if setLastMove and getLastMove work 
+	@Test
+	public void testSetLastMoveGetLastMove()
+	{
+		Player p = new Player();
+		Coordinate coord = new Coordinate(1,1);
+		p.setLastMove(coord);
+		assertEquals(p.getLastMove(), coord);
+	}
 	
+	// checks to see if addRepitition adds correctly
+	@Test
+	public void testAddRepititionAdd()
+	{
+		Player p = new Player();
+		p.addRepetition(new Coordinate(1,1));
+		p.addRepetition(new Coordinate(1,2));
+		p.setLastMove(new Coordinate(1,1));
+		p.addRepetition(new Coordinate(1,1));
+		assertEquals(p.getRepetition(), 1);
+	}
+	
+	// checks to see if addRepitition sets to zero correctly
+	@Test
+	public void testAddRepititionZero()
+	{
+		Player p = new Player();
+		p.addRepetition(new Coordinate(1,1));
+		p.addRepetition(new Coordinate(1,2));
+		p.setLastMove(new Coordinate(1,1));
+		p.addRepetition(new Coordinate(1,1));
+		p.setLastMove(new Coordinate(1,2));
+		p.addRepetition(new Coordinate(2,1));
+		assertEquals(p.getRepetition(), 0);
+	}
 }
 		
 
