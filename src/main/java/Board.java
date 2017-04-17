@@ -33,7 +33,6 @@ public class Board extends JPanel
 	private static final String IMG_PATH = "src/main/java/images/laboon.png";
 	private ImageIcon icon;
 	
-	
 	private Coordinate first_clicked = new Coordinate(-1, -1);
 	private Coordinate second_clicked = new Coordinate(-1, -1);
 	private Color selected_color;
