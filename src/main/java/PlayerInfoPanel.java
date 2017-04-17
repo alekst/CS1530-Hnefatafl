@@ -86,7 +86,6 @@ public class PlayerInfoPanel extends JPanel
 	 */
 	public boolean timerDone()
 	{
-		System.out.println(listener.enabled);
 		return !listener.enabled;
 	} 
 	
