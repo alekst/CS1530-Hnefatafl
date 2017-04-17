@@ -163,6 +163,7 @@ public class Game
 				line = reader.readLine();
 			
 				Integer[] gameInfo = parseInput(line);
+				stopTimers();
 				resetPlayers();
 				load_init(_manager, _whites, _blacks, gameInfo[2], gameInfo[1]);	// data is set via the manager in the parseInput method
 				setPlayers(gameInfo[0]); // [0]: turn flag
@@ -368,6 +369,15 @@ public class Game
 							break;
 		}
 		_board.setTileColors(s);	
+	}
+	
+	/**
+	*	Stops the previous running threads before creating new timer threads.
+	*/
+	public void stopTimers()
+	{
+		_whiteInfo.stopTimer(); 
+		_blackInfo.stopTimer(); 
 	}
 	
 }
