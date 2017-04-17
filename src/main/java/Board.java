@@ -402,31 +402,29 @@ public class Board extends JPanel
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You won!");
 						end();
-						setActive(false);
 					}
 					else if (movesWithoutCapture == 100) // 50 moves per player
 					{
 						JOptionPane.showMessageDialog(null, "No capture for 50 last moves. It's a draw!");
 						end();
-						setActive(false);
 					}	
 					else if(_manager.isEncircled(second_clicked))
 					{
 						JOptionPane.showMessageDialog(null, "Congratulations! You won!");
 						end();
-						setActive(false);
+						//setActive(false);
 					}	
 					else if(_player.getRepetition() >= 5 && _other.getRepetition() >= 5)
 					{
 						JOptionPane.showMessageDialog(null, "You win via rule 8a");
 						end();
-						setActive(false);
+						//setActive(false);
 					}
 					else if(_player.getRepetition() >= 5 && _player.isWhite())
 					{
 						JOptionPane.showMessageDialog(null, "You lose via rule 8b");
 						end();
-						setActive(false);
+						//setActive(false);
 					}
 					else
 					{
